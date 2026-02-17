@@ -24,6 +24,18 @@ Page({
     this.initData();
   },
 
+  onShow: function () {
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+      const tabBar = this.getTabBar();
+      if (tabBar.updateTabBar) {
+        tabBar.updateTabBar();
+      }
+      if (tabBar.updateSelected) {
+        tabBar.updateSelected();
+      }
+    }
+  },
+
   initData: function () {
     var knowledgeData = [
       // 三年级数学
@@ -746,5 +758,10 @@ Page({
     this.setData({
       comparingItem: null
     });
+  },
+
+  // tabBar 更新回调
+  onTabBarUpdate: function () {
+    console.log('知识对标页面 tabBar 更新');
   }
 });

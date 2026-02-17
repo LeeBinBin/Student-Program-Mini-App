@@ -52,6 +52,57 @@ Page({
   },
 
   onLoad: function () {
+    this.checkPermission();
+  },
+
+  onShow: function () {
+    this.checkPermission();
+    
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+      const tabBar = this.getTabBar();
+      if (tabBar.updateTabBar) {
+        tabBar.updateTabBar();
+      }
+      if (tabBar.updateSelected) {
+        tabBar.updateSelected();
+      }
+    }
+  },
+
+  // 检查权限
+  checkPermission: function () {
+    const app = getApp();
+    const userType = app.globalData.userType;
+    const isLoggedIn = app.globalData.isLoggedIn;
+
+    if (!isLoggedIn) {
+      wx.showModal({
+        title: '提示',
+        content: '请先登录',
+        showCancel: false,
+        success: () => {
+          wx.switchTab({
+            url: '/pages/profile/index'
+          });
+        }
+      });
+      return;
+    }
+
+    if (userType !== 'teacher') {
+      wx.showModal({
+        title: '权限不足',
+        content: '教师中心仅对教师用户开放',
+        showCancel: false,
+        success: () => {
+          wx.switchTab({
+            url: '/pages/index/index'
+          });
+        }
+      });
+      return;
+    }
+
     console.log('教师中心初始化数据');
   },
 

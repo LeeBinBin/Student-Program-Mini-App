@@ -44,7 +44,7 @@ Page({
 
   // 导航到教师备课素材页面
   navigateToTeacher: function () {
-    wx.navigateTo({
+    wx.switchTab({
       url: '/pages/teacher/index'
     })
   },
@@ -107,11 +107,25 @@ Page({
 
   // 页面显示时检查登录状态
   onShow: function () {
-    // 检查登录状态是否更新
     const loginStatusUpdated = wx.getStorageSync('loginStatusUpdated') || false;
     if (loginStatusUpdated) {
       this.checkLoginStatus();
       wx.removeStorageSync('loginStatusUpdated');
     }
+
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+      const tabBar = this.getTabBar();
+      if (tabBar.updateTabBar) {
+        tabBar.updateTabBar();
+      }
+      if (tabBar.updateSelected) {
+        tabBar.updateSelected();
+      }
+    }
+  },
+
+  // tabBar 更新回调
+  onTabBarUpdate: function () {
+    this.checkLoginStatus();
   }
 })

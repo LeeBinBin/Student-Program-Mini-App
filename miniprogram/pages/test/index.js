@@ -182,5 +182,10 @@ Page({
 
   finishTest: function () {
     wx.navigateBack();
+  },
+
+  // tabBar 更新回调
+  onTabBarUpdate: function () {
+    console.log('测试页面 tabBar 更新');
   }
 });
