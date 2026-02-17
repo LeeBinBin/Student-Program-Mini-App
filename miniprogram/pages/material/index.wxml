@@ -1,0 +1,111 @@
+<view class="container">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <view class="page-title">双语辅导资料</view>
+  </view>
+
+  <!-- 分类导航 -->
+  <view class="filter-container">
+    <!-- 学科标签 -->
+    <view class="filter-tabs">
+      <view class="tab-item {{currentSubject === '全部' ? 'active' : ''}}" bindtap="switchSubject" data-subject="全部">全部</view>
+      <view class="tab-item {{currentSubject === '语文' ? 'active' : ''}}" bindtap="switchSubject" data-subject="语文">语文</view>
+      <view class="tab-item {{currentSubject === '数学' ? 'active' : ''}}" bindtap="switchSubject" data-subject="数学">数学</view>
+      <view class="tab-item {{currentSubject === '英语' ? 'active' : ''}}" bindtap="switchSubject" data-subject="英语">英语</view>
+      <view class="tab-item {{currentSubject === '物理' ? 'active' : ''}}" bindtap="switchSubject" data-subject="物理">物理</view>
+      <view class="tab-item {{currentSubject === '化学' ? 'active' : ''}}" bindtap="switchSubject" data-subject="化学">化学</view>
+      <view class="tab-item {{currentSubject === '生物' ? 'active' : ''}}" bindtap="switchSubject" data-subject="生物">生物</view>
+    </view>
+
+    <!-- 筛选条件 -->
+    <view class="filter-options">
+      <view class="filter-item">
+        <view class="filter-label">年级</view>
+        <view class="filter-picker">
+          <picker bindchange="bindGradeChange" value="{{gradeIndex}}" range="{{grades}}">
+            <view class="picker-text">{{grades[gradeIndex]}}</view>
+          </picker>
+        </view>
+      </view>
+      <view class="filter-item">
+        <view class="filter-label">语言</view>
+        <view class="filter-picker">
+          <picker bindchange="bindLanguageChange" value="{{languageIndex}}" range="{{languages}}">
+            <view class="picker-text">{{languages[languageIndex]}}</view>
+          </picker>
+        </view>
+      </view>
+      <view class="filter-item">
+        <view class="filter-label">资料类型</view>
+        <view class="filter-picker">
+          <picker bindchange="bindTypeChange" value="{{typeIndex}}" range="{{types}}">
+            <view class="picker-text">{{types[typeIndex]}}</view>
+          </picker>
+        </view>
+      </view>
+      <view class="filter-btn" bindtap="filterMaterials">筛选</view>
+    </view>
+  </view>
+
+  <!-- 资料列表 -->
+  <view class="material-grid">
+    <view wx:for="{{materials}}" wx:key="index" class="material-card">
+      <view class="card-body">
+        <view class="card-title">{{item.title}}</view>
+        <view class="card-type {{getTypeClass(item.type)}}">{{item.type}}</view>
+        <view class="card-desc">{{item.description}}</view>
+        <view class="card-stats">
+          <view class="stat-item">
+            <text class="stat-icon">👁️</text>
+            <text class="stat-text">{{item.views}}</text>
+          </view>
+          <view class="stat-item">
+            <text class="stat-icon">📥</text>
+            <text class="stat-text">{{item.downloads}}</text>
+          </view>
+        </view>
+        <view class="card-actions">
+          <view class="action-btn preview-btn" bindtap="previewMaterial" data-item="{{item}}">预览</view>
+          <view class="action-btn download-btn" bindtap="downloadMaterial" data-item="{{item}}">下载</view>
+          <view wx:if="item.type === '音频'" class="action-btn play-btn" bindtap="playAudio" data-item="{{item}}">播放</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:if="{{materials.length === 0}}" class="empty-state">
+    <image class="empty-icon" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Empty%20state%20icon%20for%20educational%20materials%2C%20simple%20line%20style%2C%20blue%20color%20scheme&image_size=square"></image>
+    <view class="empty-text">暂无相关资料</view>
+  </view>
+
+  <!-- 分页 -->
+  <view class="pagination" wx:if="{{materials.length > 0}}">
+    <view class="pagination-item" bindtap="prevPage" wx:if="{{currentPage > 1}}">上一页</view>
+    <view class="pagination-item {{currentPage === 1 ? 'active' : ''}}" bindtap="goToPage" data-page="1">1</view>
+    <view class="pagination-item {{currentPage === 2 ? 'active' : ''}}" bindtap="goToPage" data-page="2">2</view>
+    <view class="pagination-item {{currentPage === 3 ? 'active' : ''}}" bindtap="goToPage" data-page="3">3</view>
+    <view class="pagination-item" bindtap="nextPage" wx:if="{{currentPage < 3}}">下一页</view>
+  </view>
+
+  <!-- 音频播放控件 -->
+  <view class="audio-player" wx:if="{{showAudioPlayer}}">
+    <view class="audio-info">
+      <view class="audio-title">{{currentAudio.title}}</view>
+      <view class="audio-progress">
+        <view class="progress-bar">
+          <view class="progress-fill" style="width: {{audioProgress}}"></view>
+        </view>
+        <view class="audio-time">{{formatTime(currentTime)}} / {{formatTime(duration)}}</view>
+      </view>
+    </view>
+    <view class="audio-controls">
+      <view class="control-btn" bindtap="togglePlay">
+        <text class="control-icon">{{isPlaying ? '⏸️' : '▶️'}}</text>
+      </view>
+      <view class="control-btn" bindtap="hideAudioPlayer">
+        <text class="control-icon">✕</text>
+      </view>
+    </view>
+  </view>
+</view>

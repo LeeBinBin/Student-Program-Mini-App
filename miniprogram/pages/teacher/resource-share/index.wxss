@@ -1,0 +1,600 @@
+.container {
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  padding-bottom: 20rpx;
+}
+
+/* 顶部导航 */
+.top-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx;
+  background-color: #fff;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-back {
+  width: 60rpx;
+}
+
+.back-icon {
+  font-size: 36rpx;
+  color: #333;
+}
+
+.nav-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  flex: 1;
+  text-align: center;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+}
+
+.action-item {
+  margin-left: 20rpx;
+  padding: 10rpx;
+}
+
+.action-icon {
+  font-size: 32rpx;
+  color: #333;
+}
+
+/* 搜索和筛选 */
+.search-filter {
+  padding: 20rpx;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 12rpx;
+  padding: 0 20rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.search-icon {
+  font-size: 24rpx;
+  color: #999;
+  margin-right: 10rpx;
+}
+
+.search-input {
+  flex: 1;
+  font-size: 24rpx;
+  color: #333;
+  padding: 20rpx 0;
+}
+
+.filter-section {
+  display: flex;
+  gap: 20rpx;
+}
+
+.filter-item {
+  flex: 1;
+  background-color: #fff;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.filter-item text {
+  font-size: 24rpx;
+  color: #333;
+}
+
+.filter-arrow {
+  font-size: 20rpx;
+  color: #999;
+}
+
+/* 资源列表 */
+.resources-list {
+  padding: 0 20rpx;
+}
+
+.resource-item {
+  background-color: #fff;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.resource-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.teacher-info {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.teacher-avatar {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 15rpx;
+}
+
+.teacher-avatar image {
+  width: 100%;
+  height: 100%;
+}
+
+.teacher-details {
+  flex: 1;
+}
+
+.teacher-name {
+  font-size: 24rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5rpx;
+}
+
+.teacher-school {
+  font-size: 20rpx;
+  color: #666;
+}
+
+.resource-time {
+  font-size: 20rpx;
+  color: #999;
+}
+
+.resource-content {
+  margin-bottom: 20rpx;
+}
+
+.resource-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.resource-description {
+  font-size: 24rpx;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 15rpx;
+}
+
+.resource-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+  margin-bottom: 20rpx;
+}
+
+.tag {
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 20rpx;
+  color: #333;
+}
+
+.resource-materials {
+  background-color: #f9f9f9;
+  border-radius: 8rpx;
+  padding: 15rpx;
+}
+
+.materials-title {
+  font-size: 22rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.materials-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+}
+
+.material-item {
+  display: flex;
+  align-items: center;
+  padding: 10rpx;
+  background-color: #fff;
+  border-radius: 6rpx;
+}
+
+.material-icon {
+  font-size: 24rpx;
+  margin-right: 10rpx;
+}
+
+.material-name {
+  flex: 1;
+  font-size: 22rpx;
+  color: #333;
+}
+
+.material-download {
+  padding: 5rpx;
+}
+
+.download-icon {
+  font-size: 22rpx;
+  color: #165DFF;
+}
+
+/* 资源操作 */
+.resource-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-top: 20rpx;
+  border-top: 1rpx solid #f0f0f0;
+  margin-bottom: 20rpx;
+}
+
+.resource-actions .action-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.resource-actions .action-icon {
+  font-size: 32rpx;
+  margin-bottom: 5rpx;
+}
+
+.resource-actions .action-text {
+  font-size: 20rpx;
+  color: #666;
+}
+
+/* 评论区 */
+.resource-comments {
+  padding-top: 20rpx;
+  border-top: 1rpx solid #f0f0f0;
+}
+
+.comments-title {
+  font-size: 24rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15rpx;
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15rpx;
+  margin-bottom: 15rpx;
+}
+
+.comment-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 15rpx;
+}
+
+.comment-avatar {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.comment-avatar image {
+  width: 100%;
+  height: 100%;
+}
+
+.comment-content {
+  flex: 1;
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5rpx;
+}
+
+.comment-name {
+  font-size: 22rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.comment-time {
+  font-size: 18rpx;
+  color: #999;
+}
+
+.comment-text {
+  font-size: 22rpx;
+  color: #666;
+  line-height: 1.4;
+}
+
+.view-more-comments {
+  font-size: 22rpx;
+  color: #165DFF;
+  text-align: center;
+  padding: 10rpx;
+}
+
+/* 无数据提示 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 20rpx;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 30rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.empty-desc {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 筛选弹窗 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #fff;
+  border-radius: 12rpx;
+  width: 80%;
+  max-width: 500rpx;
+  overflow: hidden;
+}
+
+.publish-modal {
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.modal-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.modal-close {
+  font-size: 32rpx;
+  color: #999;
+  padding: 10rpx;
+}
+
+.modal-body {
+  padding: 20rpx;
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.filter-option:last-child {
+  border-bottom: none;
+}
+
+.option-text {
+  font-size: 24rpx;
+  color: #333;
+}
+
+.option-check {
+  font-size: 24rpx;
+  color: #165DFF;
+  font-weight: bold;
+}
+
+/* 发布表单 */
+.form-item {
+  margin-bottom: 25rpx;
+}
+
+.form-label {
+  font-size: 24rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.form-input {
+  width: 100%;
+  font-size: 24rpx;
+  color: #333;
+  padding: 15rpx;
+  border: 1rpx solid #f0f0f0;
+  border-radius: 8rpx;
+  background-color: #f9f9f9;
+}
+
+.form-textarea {
+  width: 100%;
+  font-size: 24rpx;
+  color: #333;
+  padding: 15rpx;
+  border: 1rpx solid #f0f0f0;
+  border-radius: 8rpx;
+  background-color: #f9f9f9;
+  min-height: 120rpx;
+  resize: none;
+}
+
+.form-select {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15rpx;
+  border: 1rpx solid #f0f0f0;
+  border-radius: 8rpx;
+  background-color: #f9f9f9;
+}
+
+.form-select text {
+  font-size: 24rpx;
+  color: #333;
+}
+
+.select-arrow {
+  font-size: 20rpx;
+  color: #999;
+}
+
+.form-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40rpx;
+  border: 2rpx dashed #f0f0f0;
+  border-radius: 8rpx;
+  background-color: #f9f9f9;
+  margin-bottom: 15rpx;
+}
+
+.upload-icon {
+  font-size: 48rpx;
+  color: #999;
+  margin-bottom: 10rpx;
+}
+
+.upload-text {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.uploaded-materials {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+}
+
+.uploaded-item {
+  display: flex;
+  align-items: center;
+  padding: 10rpx;
+  background-color: #f9f9f9;
+  border-radius: 6rpx;
+}
+
+.uploaded-item .material-remove {
+  font-size: 24rpx;
+  color: #ff4d4f;
+  margin-left: 10rpx;
+  padding: 5rpx;
+}
+
+.form-checkbox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.checkbox {
+  margin-right: 10rpx;
+}
+
+.checkbox-inner {
+  width: 30rpx;
+  height: 30rpx;
+  border-radius: 6rpx;
+  border: 2rpx solid #165DFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkbox-check {
+  font-size: 20rpx;
+  color: #fff;
+  font-weight: bold;
+}
+
+.checkbox-label {
+  font-size: 24rpx;
+  color: #333;
+}
+
+.form-actions {
+  display: flex;
+  gap: 20rpx;
+}
+
+.form-btn {
+  flex: 1;
+  padding: 20rpx;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+  text-align: center;
+}
+
+.cancel-btn {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.confirm-btn {
+  background-color: #165DFF;
+  color: #fff;
+}

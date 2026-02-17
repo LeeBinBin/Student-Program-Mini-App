@@ -1,0 +1,112 @@
+[
+  {
+    "grade": "三年级",
+    "subject": "数学",
+    "guangdong_knowledge": "分数的初步认识",
+    "hongkong_knowledge": "分数的基本概念",
+    "match_type": "重合",
+    "description": "认识分数的意义，掌握简单分数的读写",
+    "description_en": "Understand the meaning of fractions and master simple fraction reading and writing",
+    "description_zh": "認識分數的意義，掌握簡單分數的讀寫",
+    "example": "1/2 + 1/2 = 1"
+  },
+  {
+    "grade": "三年级",
+    "subject": "数学",
+    "guangdong_knowledge": "长方形和正方形的面积",
+    "hongkong_knowledge": "平面图形的面积计算",
+    "match_type": "重合",
+    "description": "掌握长方形和正方形的面积计算公式",
+    "description_en": "Master the area calculation formulas for rectangles and squares",
+    "description_zh": "掌握長方形和正方形的面積計算公式",
+    "example": "长方形面积 = 长 × 宽"
+  },
+  {
+    "grade": "三年级",
+    "subject": "数学",
+    "guangdong_knowledge": "小数的初步认识",
+    "hongkong_knowledge": "",
+    "match_type": "粤拓展",
+    "description": "认识小数的意义，掌握简单小数的读写",
+    "description_en": "Understand the meaning of decimals and master simple decimal reading and writing",
+    "description_zh": "認識小數的意義，掌握簡單小數的讀寫",
+    "example": "0.5 读作零点五"
+  },
+  {
+    "grade": "三年级",
+    "subject": "数学",
+    "guangdong_knowledge": "",
+    "hongkong_knowledge": "百分数的初步认识",
+    "match_type": "港拓展",
+    "description": "认识百分数的意义，掌握简单百分数的读写",
+    "description_en": "Understand the meaning of percentages and master simple percentage reading and writing",
+    "description_zh": "認識百分數的意義，掌握簡單百分數的讀寫",
+    "example": "50% 读作百分之五十"
+  },
+  {
+    "grade": "三年级",
+    "subject": "语文",
+    "guangdong_knowledge": "汉语拼音的复习",
+    "hongkong_knowledge": "",
+    "match_type": "粤拓展",
+    "description": "复习汉语拼音的声母、韵母和整体认读音节",
+    "description_en": "Review Pinyin initials, finals, and整体认读音节",
+    "description_zh": "複習漢語拼音的聲母、韻母和整體認讀音節",
+    "example": "b p m f d t n l"
+  },
+  {
+    "grade": "三年级",
+    "subject": "语文",
+    "guangdong_knowledge": "句子的理解和运用",
+    "hongkong_knowledge": "句子的理解和运用",
+    "match_type": "重合",
+    "description": "理解句子的意思，掌握句子的基本结构",
+    "description_en": "Understand the meaning of sentences and master basic sentence structure",
+    "description_zh": "理解句子的意思，掌握句子的基本結構",
+    "example": "小明在教室里认真学习。"
+  },
+  {
+    "grade": "三年级",
+    "subject": "英语",
+    "guangdong_knowledge": "基础词汇和句型",
+    "hongkong_knowledge": "基础词汇和句型",
+    "match_type": "重合",
+    "description": "掌握日常生活常用词汇和基本句型",
+    "description_en": "Master common daily vocabulary and basic sentence patterns",
+    "description_zh": "掌握日常生活常用詞彙和基本句型",
+    "example": "Hello, my name is Tom."
+  },
+  {
+    "grade": "三年级",
+    "subject": "英语",
+    "guangdong_knowledge": "",
+    "hongkong_knowledge": "英语语法基础",
+    "match_type": "港拓展",
+    "description": "初步了解英语语法的基本规则",
+    "description_en": "Preliminarily understand basic English grammar rules",
+    "description_zh": "初步了解英語語法的基本規則",
+    "example": "I am a student. You are a teacher."
+  },
+  {
+    "grade": "四年级",
+    "subject": "数学",
+    "guangdong_knowledge": "三位数乘两位数",
+    "hongkong_knowledge": "三位数乘两位数",
+    "match_type": "重合",
+    "description": "掌握三位数乘两位数的计算方法",
+    "description_en": "Master the calculation method of three-digit numbers multiplied by two-digit numbers",
+    "description_zh": "掌握三位數乘兩位數的計算方法",
+    "example": "123 × 45 = 5535"
+  },
+  {
+    "grade": "四年级",
+    "subject": "数学",
+    "guangdong_knowledge": "平行四边形和梯形",
+    "hongkong_knowledge": "平行四边形和梯形",
+    "match_type": "重合",
+    "description": "认识平行四边形和梯形的特征",
+    "description_en": "Understand the characteristics of parallelograms and trapezoids",
+    "description_zh": "認識平行四邊形和梯形的特徵",
+    "example": "平行四边形的对边平行且相等"
+  }
+]

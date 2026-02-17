@@ -1,0 +1,85 @@
+<view class="container">
+  <!-- 顶部：用户头像占位区 -->
+  <view class="avatar-section">
+    <view class="avatar-placeholder">
+      <view class="avatar-icon">👤</view>
+    </view>
+  </view>
+
+  <!-- 中部欢迎区 -->
+  <view class="welcome-section">
+    <view class="welcome-title">欢迎使用粤港通学</view>
+    <view class="welcome-subtitle">登录后可享受更多功能</view>
+  </view>
+
+  <!-- 核心操作区 -->
+  <view class="action-section">
+    <button class="wechat-login-btn" bindtap="wechatLogin">微信快捷登录</button>
+    <view class="login-buttons">
+      <view class="login-btn" bindtap="showLoginForm">账号登录</view>
+      <view class="register-btn" bindtap="showRegisterForm">注册</view>
+    </view>
+  </view>
+
+  <!-- 底部协议区 -->
+  <view class="agreement-section">
+    <view class="agreement-text">
+      登录即表示同意
+      <text class="agreement-link" bindtap="navigateToAgreement">《用户协议》</text>
+      和
+      <text class="agreement-link" bindtap="navigateToPrivacy">《隐私政策》</text>
+    </view>
+  </view>
+
+  <!-- 登录表单弹窗 -->
+  <view wx:if="{{showLoginModal}}" class="modal" catchtap="hideLoginForm">
+    <view class="modal-content" catchtap="catchTap">
+      <view class="modal-header">
+        <view class="modal-title">登录</view>
+        <view class="modal-close" bindtap="hideLoginForm">✕</view>
+      </view>
+      <view class="modal-body">
+        <view class="form-item">
+          <view class="form-label">用户名</view>
+          <input class="form-input" placeholder="请输入用户名" bindinput="bindUsernameInput" value="{{loginForm.username}}" />
+        </view>
+        <view class="form-item">
+          <view class="form-label">密码</view>
+          <input class="form-input" placeholder="请输入密码" password="true" bindinput="bindPasswordInput" value="{{loginForm.password}}" />
+        </view>
+        <view class="form-actions">
+          <view class="form-btn primary-btn" bindtap="login">登录</view>
+          <view class="form-btn secondary-btn" bindtap="hideLoginForm">取消</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 注册表单弹窗 -->
+  <view wx:if="{{showRegisterModal}}" class="modal" catchtap="hideRegisterForm">
+    <view class="modal-content" catchtap="catchTap">
+      <view class="modal-header">
+        <view class="modal-title">注册</view>
+        <view class="modal-close" bindtap="hideRegisterForm">✕</view>
+      </view>
+      <view class="modal-body">
+        <view class="form-item">
+          <view class="form-label">用户名</view>
+          <input class="form-input" placeholder="请输入用户名" bindinput="bindRegUsernameInput" value="{{registerForm.username}}" />
+        </view>
+        <view class="form-item">
+          <view class="form-label">密码</view>
+          <input class="form-input" placeholder="请输入密码" password="true" bindinput="bindRegPasswordInput" value="{{registerForm.password}}" />
+        </view>
+        <view class="form-item">
+          <view class="form-label">确认密码</view>
+          <input class="form-input" placeholder="请确认密码" password="true" bindinput="bindRegConfirmPasswordInput" value="{{registerForm.confirmPassword}}" />
+        </view>
+        <view class="form-actions">
+          <view class="form-btn primary-btn" bindtap="register">注册</view>
+          <view class="form-btn secondary-btn" bindtap="hideRegisterForm">取消</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

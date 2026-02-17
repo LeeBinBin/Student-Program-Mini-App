@@ -1,0 +1,122 @@
+<view class="container">
+  <!-- 登录状态 -->
+  <view wx:if="{{!isLoggedIn}}" class="login-container">
+    <view class="login-card">
+      <view class="login-icon">👤</view>
+      <view class="login-title">欢迎使用粤港通学</view>
+      <view class="login-desc">登录后可享受更多功能</view>
+      <button class="wechat-login-btn" bindtap="wechatLogin">微信快捷登录</button>
+      <view class="login-buttons">
+        <view class="login-btn" bindtap="showLoginForm">账号登录</view>
+        <view class="register-btn" bindtap="showRegisterForm">注册</view>
+      </view>
+      <view class="agreement">
+        登录即表示同意《用户协议》和《隐私政策》
+      </view>
+    </view>
+  </view>
+
+  <!-- 已登录状态 -->
+  <view wx:else class="user-container">
+    <view class="user-info">
+      <view class="user-avatar">
+        <image wx:if="{{userInfo.avatar && userInfo.avatar !== '👤'}}" src="{{userInfo.avatar}}" mode="aspectFill"></image>
+        <view wx:else>{{userInfo.avatar || '👤'}}</view>
+      </view>
+      <view class="user-details">
+        <view class="user-name">{{userInfo.nickname || '用户'}}</view>
+        <view class="user-id">ID: {{userInfo.id || '10000'}}</view>
+      </view>
+    </view>
+    
+    <view class="user-stats">
+      <view class="stat-item">
+        <view class="stat-value">{{userStats.downloads}}</view>
+        <view class="stat-label">下载资料</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value">{{userStats.views}}</view>
+        <view class="stat-label">浏览次数</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value">{{userStats.tests}}</view>
+        <view class="stat-label">完成测试</view>
+      </view>
+    </view>
+    
+    <view class="user-menu">
+      <view class="menu-item" bindtap="navigateToHistory">
+        <view class="menu-icon">📚</view>
+        <view class="menu-text">学习历史</view>
+        <view class="menu-arrow">→</view>
+      </view>
+      <view class="menu-item" bindtap="navigateToFavorites">
+        <view class="menu-icon">⭐</view>
+        <view class="menu-text">收藏夹</view>
+        <view class="menu-arrow">→</view>
+      </view>
+      <view class="menu-item" bindtap="navigateToSettings">
+        <view class="menu-icon">⚙️</view>
+        <view class="menu-text">设置</view>
+        <view class="menu-arrow">→</view>
+      </view>
+      <view class="menu-item" bindtap="logout">
+        <view class="menu-icon">🚪</view>
+        <view class="menu-text">退出登录</view>
+        <view class="menu-arrow">→</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 登录表单弹窗 -->
+  <view wx:if="{{showLoginModal}}" class="modal" catchtap="hideLoginForm">
+    <view class="modal-content" catchtap="catchTap">
+      <view class="modal-header">
+        <view class="modal-title">登录</view>
+        <view class="modal-close" bindtap="hideLoginForm">✕</view>
+      </view>
+      <view class="modal-body">
+        <view class="form-item">
+          <view class="form-label">用户名</view>
+          <input class="form-input" placeholder="请输入用户名" bindinput="bindUsernameInput" value="{{loginForm.username}}" />
+        </view>
+        <view class="form-item">
+          <view class="form-label">密码</view>
+          <input class="form-input" placeholder="请输入密码" password="true" bindinput="bindPasswordInput" value="{{loginForm.password}}" />
+        </view>
+        <view class="form-actions">
+          <view class="form-btn primary-btn" bindtap="login">登录</view>
+          <view class="form-btn secondary-btn" bindtap="hideLoginForm">取消</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 注册表单弹窗 -->
+  <view wx:if="{{showRegisterModal}}" class="modal" catchtap="hideRegisterForm">
+    <view class="modal-content" catchtap="catchTap">
+      <view class="modal-header">
+        <view class="modal-title">注册</view>
+        <view class="modal-close" bindtap="hideRegisterForm">✕</view>
+      </view>
+      <view class="modal-body">
+        <view class="form-item">
+          <view class="form-label">用户名</view>
+          <input class="form-input" placeholder="请输入用户名" bindinput="bindRegUsernameInput" value="{{registerForm.username}}" />
+        </view>
+        <view class="form-item">
+          <view class="form-label">密码</view>
+          <input class="form-input" placeholder="请输入密码" password="true" bindinput="bindRegPasswordInput" value="{{registerForm.password}}" />
+        </view>
+        <view class="form-item">
+          <view class="form-label">确认密码</view>
+          <input class="form-input" placeholder="请确认密码" password="true" bindinput="bindRegConfirmPasswordInput" value="{{registerForm.confirmPassword}}" />
+        </view>
+        <view class="form-actions">
+          <view class="form-btn primary-btn" bindtap="register">注册</view>
+          <view class="form-btn secondary-btn" bindtap="hideRegisterForm">取消</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

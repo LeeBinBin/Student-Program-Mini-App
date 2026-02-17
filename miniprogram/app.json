@@ -1,0 +1,58 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/knowledge/index",
+    "pages/material/index",
+    "pages/test/index",
+    "pages/teacher/index",
+    "pages/profile/index"
+  ],
+  "window": {
+    "backgroundColor": "#FFFFFF",
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#1E88E5",
+    "navigationBarTitleText": "粤港通学",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#666666",
+    "selectedColor": "#1E88E5",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/tab/home.png",
+        "selectedIconPath": "images/tab/home-active.png"
+      },
+      {
+        "pagePath": "pages/knowledge/index",
+        "text": "知识点对标",
+        "iconPath": "images/tab/knowledge.png",
+        "selectedIconPath": "images/tab/knowledge-active.png"
+      },
+      {
+        "pagePath": "pages/material/index",
+        "text": "辅导资料",
+        "iconPath": "images/tab/material.png",
+        "selectedIconPath": "images/tab/material-active.png"
+      },
+      {
+        "pagePath": "pages/teacher/index",
+        "text": "教师中心",
+        "iconPath": "images/tab/teacher.png",
+        "selectedIconPath": "images/tab/teacher-active.png"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "我",
+        "iconPath": "images/tab/my.png",
+        "selectedIconPath": "images/tab/my-active.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents"
+}

@@ -1,0 +1,92 @@
+<view class="container">
+  <!-- 顶部导航 -->
+  <view class="top-nav">
+    <view class="nav-back" bindtap="navigateBack">
+      <text class="back-icon">←</text>
+    </view>
+    <view class="nav-title">学生管理</view>
+    <view class="nav-actions">
+      <view class="action-item" bindtap="addStudent">
+        <text class="action-icon">+</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 搜索和筛选 -->
+  <view class="search-filter">
+    <view class="search-box">
+      <text class="search-icon">🔍</text>
+      <input class="search-input" placeholder="搜索学生姓名、ID或学校" bindinput="onSearch" value="{{searchKeyword}}" />
+    </view>
+    <view class="filter-section">
+      <view class="filter-item" bindtap="showFilter('type')">
+        <text>{{selectedType || '学生类型'}}</text>
+        <text class="filter-arrow">▼</text>
+      </view>
+      <view class="filter-item" bindtap="showFilter('school')">
+        <text>{{selectedSchool || '学校'}}</text>
+        <text class="filter-arrow">▼</text>
+      </view>
+      <view class="filter-item" bindtap="showFilter('grade')">
+        <text>{{selectedGrade || '年级'}}</text>
+        <text class="filter-arrow">▼</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 学生列表 -->
+  <view class="students-list">
+    <view wx:for="{{students}}" wx:key="id" class="student-item">
+      <view class="student-avatar">
+        <image wx:if="{{item.avatar}}" src="{{item.avatar}}" mode="aspectFill"></image>
+        <view wx:else class="avatar-placeholder">{{item.name.charAt(0)}}</view>
+      </view>
+      <view class="student-info">
+        <view class="student-name">{{item.name}}</view>
+        <view class="student-details">
+          <text class="detail-item">{{item.id}}</text>
+          <text class="detail-divider">|</text>
+          <text class="detail-item">{{item.school}}</text>
+          <text class="detail-divider">|</text>
+          <text class="detail-item">{{item.grade}}年级</text>
+        </view>
+        <view class="student-tags">
+          <view class="tag" style="background-color: {{item.type === 'cross-border' ? '#E0F2FE' : '#E0F2FE'}}">
+            {{item.type === 'cross-border' ? '跨境学生' : '本地学生'}}
+          </view>
+          <view class="tag" style="background-color: {{item.status === 'active' ? '#D9F99D' : '#FEE2E2'}}">
+            {{item.status === 'active' ? '在读' : '休学'}}
+          </view>
+        </view>
+      </view>
+      <view class="student-actions">
+        <view class="action-btn" bindtap="viewStudentDetail" data-id="{{item.id}}">
+          <text class="action-text">详情</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 无数据提示 -->
+  <view wx:if="{{students.length === 0}}" class="empty-state">
+    <text class="empty-icon">👥</text>
+    <view class="empty-text">暂无学生数据</view>
+    <view class="empty-desc">点击右上角添加学生</view>
+  </view>
+
+  <!-- 筛选弹窗 -->
+  <view wx:if="{{showFilterModal}}" class="modal" catchtap="hideFilter">
+    <view class="modal-content" catchtap="catchTap">
+      <view class="modal-header">
+        <view class="modal-title">{{filterTitle}}</view>
+        <view class="modal-close" bindtap="hideFilter">×</view>
+      </view>
+      <view class="modal-body">
+        <view wx:for="{{filterOptions}}" wx:key="index" class="filter-option" bindtap="selectFilter" data-value="{{item.value}}" data-label="{{item.label}}">
+          <text class="option-text">{{item.label}}</text>
+          <text wx:if="{{item.value === selectedFilterValue}}" class="option-check">✓</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,228 @@
+<!-- 导航栏 -->
+<view class="navbar">
+  <view class="navbar-container">
+    <view class="navbar-logo">
+      <image src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/61f654d2277f4105ad6f6dca5eaccfce~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=20260212120530174C3C7E44AD2A2B4B24&rrcfp=f06b921b&x-expires=1773461164&x-signature=F4p1wEqWoR%2FiqnOxJg9KLvW8Vf4%3D" alt="Logo" class="logo-img"></image>
+      <text class="logo-text">粤港通学</text>
+    </view>
+    <view class="navbar-buttons">
+    <view wx:if="{{!isLoggedIn}}" class="btn-login" bindtap="navigateToProfile">登录</view>
+    <view wx:if="{{!isLoggedIn}}" class="btn-register" bindtap="navigateToProfile">注册</view>
+    <view wx:else class="btn-user" bindtap="navigateToProfile">
+      <view class="user-info">
+        <view class="user-avatar">
+          <image wx:if="{{userInfo.avatar && userInfo.avatar !== '👤'}}" src="{{userInfo.avatar}}" mode="aspectFill"></image>
+          <view wx:else>{{userInfo.avatar || '👤'}}</view>
+        </view>
+        <view class="user-name">{{userInfo.nickname || '用户'}}</view>
+      </view>
+    </view>
+  </view>
+  </view>
+</view>
+
+<!-- 顶部登录提示弹窗 -->
+<view wx:if="{{!isLoggedIn && showLoginPopup}}" class="login-popup">
+  <view class="popup-content">
+    <view class="popup-title">欢迎使用粤港通学</view>
+    <view class="popup-desc">登录后可享受更多功能，如知识点对标、辅导资料下载等</view>
+    <view class="popup-buttons">
+      <view class="popup-btn cancel-btn" bindtap="closePopup">暂不登录</view>
+      <view class="popup-btn login-btn" bindtap="navigateToProfile">去登录</view>
+    </view>
+  </view>
+</view>
+
+<view class="container">
+  <!-- 顶部Banner -->
+  <view class="banner">
+    <image class="banner-img" src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/22d39e03711c4052af922914c0d5696a~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=20260212120530174C3C7E44AD2A2B4B24&rrcfp=f06b921b&x-expires=1773461148&x-signature=NQR%2BM7rG0%2BiCXtB2DB4ih3mP%2Fgw%3D"></image>
+    <view class="banner-overlay">
+      <view class="banner-content">
+        <view class="banner-title">粤港通学 学业适配</view>
+        <view class="banner-eng">Guangdong-Hong Kong Education Bridge</view>
+        <view class="banner-desc">为大湾区跨境中小学生提供学业适配辅导，打通粤港教育资源</view>
+        <view class="banner-btn" bindtap="learnMore">了解更多</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 核心功能 -->
+  <view class="core-features">
+    <view class="section-header">
+      <view class="section-title">核心功能</view>
+    </view>
+    <view class="grid-container">
+      <view class="grid-item" bindtap="navigateToKnowledge">
+        <view class="grid-icon knowledge-icon">
+          <view class="icon-inner">
+            <image class="icon-image" src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/61f654d2277f4105ad6f6dca5eaccfce~tplv-a9rns2rl98-image.image?lk3s=8e244e95&rcl=20260212120530174C3C7E44AD2A2B4B24&rrcfp=f06b921b&x-expires=1773461164&x-signature=F4p1wEqWoR%2FiqnOxJg9KLvW8Vf4%3D"></image>
+          </view>
+        </view>
+        <view class="grid-title">知识点对标查询</view>
+        <view class="grid-desc">查询粤港教材知识点对应关系，明确学习重点</view>
+      </view>
+      <view class="grid-item" bindtap="navigateToMaterial">
+        <view class="grid-icon material-icon">
+          <view class="icon-inner">
+            <image class="icon-image" src="/images/icons/material.svg"></image>
+          </view>
+        </view>
+        <view class="grid-title">双语辅导资料</view>
+        <view class="grid-desc">提供中、英、粤三语对照的学习资料和解析</view>
+      </view>
+      <view class="grid-item" bindtap="navigateToTest">
+        <view class="grid-icon test-icon">
+          <view class="icon-inner">
+            <image class="icon-image" src="/images/icons/test.svg"></image>
+          </view>
+        </view>
+        <view class="grid-title">学业诊断小测</view>
+        <view class="grid-desc">通过测试诊断学习薄弱点，获取针对性建议</view>
+      </view>
+      <view class="grid-item" bindtap="navigateToTeacher">
+        <view class="grid-icon teacher-icon">
+          <view class="icon-inner">
+            <image class="icon-image" src="/images/icons/teacher.svg"></image>
+          </view>
+        </view>
+        <view class="grid-title">教师备课素材</view>
+        <view class="grid-desc">提供跨境教学参考资料和课件模板</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 数据可视化模块 -->
+  <view class="chart-container">
+    <view class="chart-header">
+      <view class="chart-title">粤港教材知识点重合率</view>
+      <view class="chart-subtitle">数据来源：粤港教育部门官方教材</view>
+    </view>
+    <view class="chart-wrapper">
+      <view class="chart-content">
+        <view class="circle-chart">
+          <view class="circle-bg"></view>
+          <view class="circle-progress overlap"></view>
+          <view class="circle-progress guangdong"></view>
+          <view class="circle-progress hongkong"></view>
+          <view class="circle-center">
+            <view class="circle-percentage">65%</view>
+            <view class="circle-label">重合率</view>
+          </view>
+        </view>
+      </view>
+      <view class="chart-analysis">
+        <view class="analysis-title">数据解读</view>
+        <view class="analysis-list">
+          <view class="analysis-item">
+            <view class="analysis-color overlap"></view>
+            <view class="analysis-text">重合知识点：约65%的知识点在粤港教材中共同出现</view>
+          </view>
+          <view class="analysis-item">
+            <view class="analysis-color guangdong"></view>
+            <view class="analysis-text">广东拓展：约20%的知识点为广东教材特有内容</view>
+          </view>
+          <view class="analysis-item">
+            <view class="analysis-color hongkong"></view>
+            <view class="analysis-text">香港拓展：约15%的知识点为香港教材特有内容</view>
+          </view>
+        </view>
+        <view class="analysis-conclusion">通过知识点对标，跨境学生可以明确学习重点，有针对性地补充学习内容，提高学习效率。</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 特色功能 -->
+  <view class="features-section">
+    <view class="section-title">核心特色</view>
+    <view class="features-list">
+      <view class="feature-item">
+        <view class="feature-icon">🌉</view>
+        <view class="feature-content">
+          <view class="feature-title">大湾区特色</view>
+          <view class="feature-desc">专注粤港跨境教育场景，解决实际学业适配问题</view>
+        </view>
+      </view>
+      <view class="feature-item">
+        <view class="feature-icon">🌍</view>
+        <view class="feature-content">
+          <view class="feature-title">多语言支持</view>
+          <view class="feature-desc">提供中/英/粤三语学习资料，满足不同语言需求</view>
+        </view>
+      </view>
+      <view class="feature-item">
+        <view class="feature-icon">📊</view>
+        <view class="feature-content">
+          <view class="feature-title">数据可视化</view>
+          <view class="feature-desc">直观展示粤港教材知识点对标情况，便于理解差异</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 用户评价 -->
+  <view class="testimonials-section">
+    <view class="section-header">
+      <view class="section-title">用户评价</view>
+    </view>
+    <view class="testimonials-container">
+      <view class="testimonial-card">
+        <view class="testimonial-header">
+          <image class="testimonial-avatar" src="/images/icons/avatar.svg"></image>
+          <view class="testimonial-info">
+            <view class="testimonial-name">张同学</view>
+            <view class="testimonial-role">跨境中学生</view>
+          </view>
+        </view>
+        <view class="testimonial-rating">
+          <view class="star active"></view>
+          <view class="star active"></view>
+          <view class="star active"></view>
+          <view class="star active"></view>
+          <view class="star active"></view>
+        </view>
+        <view class="testimonial-content">"通过这个系统，我清楚地了解了粤港教材的差异，能够有针对性地学习，大大提高了学习效率。"</view>
+      </view>
+      <view class="testimonial-card">
+        <view class="testimonial-header">
+          <image class="testimonial-avatar"  src="/images/icons/avatar.svg"></image>
+          <view class="testimonial-info">
+            <view class="testimonial-name">李老师</view>
+            <view class="testimonial-role">跨境学校教师</view>
+          </view>
+        </view>
+        <view class="testimonial-rating">
+          <view class="star active"></view>
+          <view class="star active"></view>
+          <view class="star active"></view>
+          <view class="star active"></view>
+          <view class="star half-active"></view>
+        </view>
+        <view class="testimonial-content">"备课素材非常实用，帮助我更好地设计跨境教学方案，提高了教学质量。"</view>
+      </view>
+      <view class="testimonial-card">
+        <view class="testimonial-header">
+          <image class="testimonial-avatar" src="/images/icons/avatar.svg"></image>
+          <view class="testimonial-info">
+            <view class="testimonial-name">王家长</view>
+            <view class="testimonial-role">跨境学生家长</view>
+          </view>
+        </view>
+        <view class="testimonial-rating">
+          <view class="star active"></view>
+          <view class="star active"></view>
+          <view class="star active"></view>
+          <view class="star active"></view>
+          <view class="star"></view>
+        </view>
+        <view class="testimonial-content">"双语辅导资料帮助我更好地辅导孩子学习，解决了跨境教育衔接的问题。"</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部信息 -->
+  <view class="footer">
+    <view class="footer-text">© 2026 粤港通学 - 大湾区跨境教育</view>
+    <view class="footer-desc">为大湾区跨境中小学生提供学业适配辅导</view>
+  </view>
+</view>

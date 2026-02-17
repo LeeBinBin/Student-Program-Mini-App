@@ -1,0 +1,194 @@
+<view class="container">
+  <!-- 顶部导航 -->
+  <view class="top-nav">
+    <view class="nav-back" bindtap="navigateBack">
+      <text class="back-icon">←</text>
+    </view>
+    <view class="nav-title">资源分享</view>
+    <view class="nav-actions">
+      <view class="action-item" bindtap="publishResource">
+        <text class="action-icon">+</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 搜索和筛选 -->
+  <view class="search-filter">
+    <view class="search-box">
+      <text class="search-icon">🔍</text>
+      <input class="search-input" placeholder="搜索资源名称、关键词或教师" bindinput="onSearch" value="{{searchKeyword}}" />
+    </view>
+    <view class="filter-section">
+      <view class="filter-item" bindtap="showFilter('category')">
+        <text>{{selectedCategory || '分类'}}</text>
+        <text class="filter-arrow">▼</text>
+      </view>
+      <view class="filter-item" bindtap="showFilter('subject')">
+        <text>{{selectedSubject || '学科'}}</text>
+        <text class="filter-arrow">▼</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 资源列表 -->
+  <view class="resources-list">
+    <view wx:for="{{resources}}" wx:key="id" class="resource-item">
+      <view class="resource-header">
+        <view class="teacher-info">
+          <view class="teacher-avatar">
+            <image src="{{item.teacher.avatar}}" mode="aspectFill"></image>
+          </view>
+          <view class="teacher-details">
+            <view class="teacher-name">{{item.teacher.name}}</view>
+            <view class="teacher-school">{{item.teacher.school}}</view>
+          </view>
+        </view>
+        <view class="resource-time">{{item.publishTime}}</view>
+      </view>
+      <view class="resource-content">
+        <view class="resource-title">{{item.title}}</view>
+        <view class="resource-description">{{item.description}}</view>
+        <view class="resource-tags">
+          <view class="tag" style="background-color: {{item.category === '经验分享' ? '#E0F2FE' : item.category === '教学资源' ? '#D9F99D' : '#F3E8FF'}}">
+            {{item.category}}
+          </view>
+          <view class="tag" style="background-color: #FEF3C7">
+            {{item.subject}}
+          </view>
+          <view class="tag" wx:if="{{item.crossBorder}}" style="background-color: #E0F2FE">
+            跨境教育
+          </view>
+        </view>
+        <view class="resource-materials" wx:if="{{item.materials && item.materials.length > 0}}">
+          <view class="materials-title">相关素材：</view>
+          <view class="materials-list">
+            <view wx:for="{{item.materials}}" wx:key="index" class="material-item">
+              <text class="material-icon">{{item.type === '文档' ? '📄' : item.type === '课件' ? '📊' : item.type === '视频' ? '🎥' : '📁'}}</text>
+              <text class="material-name">{{item.name}}</text>
+              <view class="material-download" bindtap="downloadMaterial" data-id="{{item.id}}">
+                <text class="download-icon">📥</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="resource-actions">
+        <view class="action-item" bindtap="likeResource" data-id="{{item.id}}">
+          <text class="action-icon">{{item.liked ? '❤️' : '🤍'}}</text>
+          <text class="action-text">{{item.likeCount}}</text>
+        </view>
+        <view class="action-item" bindtap="commentResource" data-id="{{item.id}}">
+          <text class="action-icon">💬</text>
+          <text class="action-text">{{item.commentCount}}</text>
+        </view>
+        <view class="action-item" bindtap="shareResource" data-id="{{item.id}}">
+          <text class="action-icon">📤</text>
+          <text class="action-text">{{item.shareCount}}</text>
+        </view>
+      </view>
+      <view class="resource-comments" wx:if="{{item.comments && item.comments.length > 0}}">
+        <view class="comments-title">评论 ({{item.commentCount}})</view>
+        <view class="comments-list">
+          <view wx:for="{{item.comments}}" wx:key="index" class="comment-item">
+            <view class="comment-avatar">
+              <image src="{{item.avatar}}" mode="aspectFill"></image>
+            </view>
+            <view class="comment-content">
+              <view class="comment-header">
+                <view class="comment-name">{{item.name}}</view>
+                <view class="comment-time">{{item.time}}</view>
+              </view>
+              <view class="comment-text">{{item.text}}</view>
+            </view>
+          </view>
+        </view>
+        <view class="view-more-comments" bindtap="viewMoreComments" data-id="{{item.id}}">
+          查看更多评论
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 无数据提示 -->
+  <view wx:if="{{resources.length === 0}}" class="empty-state">
+    <text class="empty-icon">🤝</text>
+    <view class="empty-text">暂无分享资源</view>
+    <view class="empty-desc">点击右上角发布第一个资源</view>
+  </view>
+
+  <!-- 筛选弹窗 -->
+  <view wx:if="{{showFilterModal}}" class="modal" catchtap="hideFilter">
+    <view class="modal-content" catchtap="catchTap">
+      <view class="modal-header">
+        <view class="modal-title">{{filterTitle}}</view>
+        <view class="modal-close" bindtap="hideFilter">×</view>
+      </view>
+      <view class="modal-body">
+        <view wx:for="{{filterOptions}}" wx:key="index" class="filter-option" bindtap="selectFilter" data-value="{{item.value}}" data-label="{{item.label}}">
+          <text class="option-text">{{item.label}}</text>
+          <text wx:if="{{item.value === selectedFilterValue}}" class="option-check">✓</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 发布资源弹窗 -->
+  <view wx:if="{{showPublishModal}}" class="modal" catchtap="hidePublishModal">
+    <view class="modal-content publish-modal" catchtap="catchTap">
+      <view class="modal-header">
+        <view class="modal-title">发布资源</view>
+        <view class="modal-close" bindtap="hidePublishModal">×</view>
+      </view>
+      <view class="modal-body">
+        <view class="form-item">
+          <view class="form-label">标题</view>
+          <input class="form-input" placeholder="请输入资源标题" value="{{publishForm.title}}" bindinput="onPublishInput" data-field="title" />
+        </view>
+        <view class="form-item">
+          <view class="form-label">分类</view>
+          <view class="form-select" bindtap="selectPublishCategory">
+            <text>{{publishForm.category || '请选择分类'}}</text>
+            <text class="select-arrow">▼</text>
+          </view>
+        </view>
+        <view class="form-item">
+          <view class="form-label">学科</view>
+          <view class="form-select" bindtap="selectPublishSubject">
+            <text>{{publishForm.subject || '请选择学科'}}</text>
+            <text class="select-arrow">▼</text>
+          </view>
+        </view>
+        <view class="form-item">
+          <view class="form-label">描述</view>
+          <textarea class="form-textarea" placeholder="请输入资源描述" value="{{publishForm.description}}" bindinput="onPublishInput" data-field="description"></textarea>
+        </view>
+        <view class="form-item">
+          <view class="form-label">相关素材</view>
+          <view class="form-upload" bindtap="uploadMaterials">
+            <text class="upload-icon">+</text>
+            <text class="upload-text">点击上传素材</text>
+          </view>
+          <view class="uploaded-materials" wx:if="{{publishForm.materials && publishForm.materials.length > 0}}">
+            <view wx:for="{{publishForm.materials}}" wx:key="index" class="uploaded-item">
+              <text class="material-icon">{{item.type === '文档' ? '📄' : item.type === '课件' ? '📊' : item.type === '视频' ? '🎥' : '📁'}}</text>
+              <text class="material-name">{{item.name}}</text>
+              <text class="material-remove" bindtap="removeMaterial" data-index="{{index}}">×</text>
+            </view>
+          </view>
+        </view>
+        <view class="form-checkbox">
+          <view class="checkbox" bindtap="toggleCrossBorder">
+            <view class="checkbox-inner" style="background-color: {{publishForm.crossBorder ? '#165DFF' : 'transparent'}};">
+              <text wx:if="{{publishForm.crossBorder}}" class="checkbox-check">✓</text>
+            </view>
+          </view>
+          <view class="checkbox-label">跨境教育相关</view>
+        </view>
+        <view class="form-actions">
+          <view class="form-btn cancel-btn" bindtap="hidePublishModal">取消</view>
+          <view class="form-btn confirm-btn" bindtap="submitPublish">发布</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

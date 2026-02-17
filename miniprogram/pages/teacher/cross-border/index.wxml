@@ -1,0 +1,110 @@
+<view class="container">
+  <!-- 顶部导航 -->
+  <view class="top-nav">
+    <view class="nav-back" bindtap="navigateBack">
+      <text class="back-icon">←</text>
+    </view>
+    <view class="nav-title">跨境适配</view>
+    <view class="nav-actions">
+      <view class="action-item" bindtap="addComparison">
+        <text class="action-icon">+</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 搜索和筛选 -->
+  <view class="search-filter">
+    <view class="search-box">
+      <text class="search-icon">🔍</text>
+      <input class="search-input" placeholder="搜索知识点、关键词" bindinput="onSearch" value="{{searchKeyword}}" />
+    </view>
+    <view class="filter-section">
+      <view class="filter-item" bindtap="showFilter('subject')">
+        <text>{{selectedSubject || '学科'}}</text>
+        <text class="filter-arrow">▼</text>
+      </view>
+      <view class="filter-item" bindtap="showFilter('grade')">
+        <text>{{selectedGrade || '年级'}}</text>
+        <text class="filter-arrow">▼</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 知识点对标列表 -->
+  <view class="comparisons-list">
+    <view wx:for="{{comparisons}}" wx:key="id" class="comparison-item">
+      <view class="comparison-header">
+        <view class="comparison-title">{{item.name}}</view>
+        <view class="comparison-badge" style="background-color: {{item.status === 'completed' ? '#D9F99D' : '#FEF3C7'}}">
+          {{item.status === 'completed' ? '已完成' : '进行中'}}
+        </view>
+      </view>
+      <view class="comparison-details">
+        <view class="detail-row">
+          <text class="detail-label">学科:</text>
+          <text class="detail-value">{{item.subject}}</text>
+        </view>
+        <view class="detail-row">
+          <text class="detail-label">年级:</text>
+          <text class="detail-value">{{item.grade}}年级</text>
+        </view>
+        <view class="detail-row">
+          <text class="detail-label">知识点数量:</text>
+          <text class="detail-value">{{item.knowledgePoints.length}}个</text>
+        </view>
+        <view class="detail-row">
+          <text class="detail-label">创建时间:</text>
+          <text class="detail-value">{{item.createDate}}</text>
+        </view>
+      </view>
+      <view class="comparison-content">
+        <view class="knowledge-points-preview">
+          <view wx:for="{{item.knowledgePoints.slice(0, 3)}}" wx:key="index" class="knowledge-point-item">
+            <view class="point-guangdong">
+              <text class="point-region">广东:</text>
+              <text class="point-content">{{item.guangdong}}</text>
+            </view>
+            <view class="point-hongkong">
+              <text class="point-region">香港:</text>
+              <text class="point-content">{{item.hongkong}}</text>
+            </view>
+          </view>
+          <view wx:if="{{item.knowledgePoints.length > 3}}" class="more-points">
+            ... 还有 {{item.knowledgePoints.length - 3}} 个知识点
+          </view>
+        </view>
+      </view>
+      <view class="comparison-actions">
+        <view class="action-btn primary-btn" bindtap="viewComparison" data-id="{{item.id}}">
+          <text class="action-text">查看详情</text>
+        </view>
+        <view class="action-btn secondary-btn" bindtap="editComparison" data-id="{{item.id}}">
+          <text class="action-text">编辑</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 无数据提示 -->
+  <view wx:if="{{comparisons.length === 0}}" class="empty-state">
+    <text class="empty-icon">🌉</text>
+    <view class="empty-text">暂无对标数据</view>
+    <view class="empty-desc">点击右上角添加知识点对标</view>
+  </view>
+
+  <!-- 筛选弹窗 -->
+  <view wx:if="{{showFilterModal}}" class="modal" catchtap="hideFilter">
+    <view class="modal-content" catchtap="catchTap">
+      <view class="modal-header">
+        <view class="modal-title">{{filterTitle}}</view>
+        <view class="modal-close" bindtap="hideFilter">×</view>
+      </view>
+      <view class="modal-body">
+        <view wx:for="{{filterOptions}}" wx:key="index" class="filter-option" bindtap="selectFilter" data-value="{{item.value}}" data-label="{{item.label}}">
+          <text class="option-text">{{item.label}}</text>
+          <text wx:if="{{item.value === selectedFilterValue}}" class="option-check">✓</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,262 @@
+<view class="container">
+  <!-- 顶部导航 -->
+  <view class="top-nav">
+    <view class="nav-back" bindtap="navigateBack">
+      <text class="back-icon">←</text>
+    </view>
+    <view class="nav-title">学分互认与评价体系</view>
+    <view class="nav-actions">
+      <view class="action-item" bindtap="addRecognition">
+        <text class="action-icon">+</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能标签页 -->
+  <view class="tab-bar">
+    <view class="tab-item {{activeTab === 'credit' ? 'active' : ''}}" bindtap="switchTab('credit')">
+      <view class="tab-text">学分互认</view>
+      <view class="tab-indicator {{activeTab === 'credit' ? 'show' : ''}}"></view>
+    </view>
+    <view class="tab-item {{activeTab === 'evaluation' ? 'active' : ''}}" bindtap="switchTab('evaluation')">
+      <view class="tab-text">评价体系</view>
+      <view class="tab-indicator {{activeTab === 'evaluation' ? 'show' : ''}}"></view>
+    </view>
+  </view>
+
+  <!-- 学分互认内容 -->
+  <view wx:if="{{activeTab === 'credit'}}" class="credit-content">
+    <!-- 搜索和筛选 -->
+    <view class="search-filter">
+      <view class="search-box">
+        <text class="search-icon">🔍</text>
+        <input class="search-input" placeholder="搜索课程名称、关键词" bindinput="onCreditSearch" value="{{creditSearchKeyword}}" />
+      </view>
+      <view class="filter-section">
+        <view class="filter-item" bindtap="showCreditFilter('subject')">
+          <text>{{selectedCreditSubject || '学科'}}</text>
+          <text class="filter-arrow">▼</text>
+        </view>
+        <view class="filter-item" bindtap="showCreditFilter('level')">
+          <text>{{selectedCreditLevel || '级别'}}</text>
+          <text class="filter-arrow">▼</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 学分互认列表 -->
+    <view class="credit-list">
+      <view wx:for="{{creditCourses}}" wx:key="id" class="credit-item">
+        <view class="credit-header">
+          <view class="course-info">
+            <view class="course-title">{{item.courseName}}</view>
+            <view class="course-details">
+              <text class="detail-item">{{item.subject}}</text>
+              <text class="detail-divider">|</text>
+              <text class="detail-item">{{item.level}}</text>
+            </view>
+          </view>
+          <view class="credit-status" style="background-color: {{item.statusColor}}">{{item.status}}</view>
+        </view>
+        <view class="credit-body">
+          <view class="credit-comparison">
+            <view class="credit-side">
+              <view class="side-label">广东学分</view>
+              <view class="side-value">{{item.guangdongCredit}}学分</view>
+            </view>
+            <view class="credit-arrow">→</view>
+            <view class="credit-side">
+              <view class="side-label">香港学分</view>
+              <view class="side-value">{{item.hongkongCredit}}学分</view>
+            </view>
+          </view>
+          <view class="credit-description">{{item.description}}</view>
+        </view>
+        <view class="credit-actions">
+          <view class="action-btn primary-btn" bindtap="viewCreditDetail" data-id="{{item.id}}">
+            <text class="action-text">查看详情</text>
+          </view>
+          <view class="action-btn secondary-btn" bindtap="editCredit" data-id="{{item.id}}">
+            <text class="action-text">编辑</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 无数据提示 -->
+    <view wx:if="{{creditCourses.length === 0}}" class="empty-state">
+      <text class="empty-icon">🎓</text>
+      <view class="empty-text">暂无学分互认数据</view>
+      <view class="empty-desc">点击右上角添加学分互认记录</view>
+    </view>
+  </view>
+
+  <!-- 评价体系内容 -->
+  <view wx:if="{{activeTab === 'evaluation'}}" class="evaluation-content">
+    <!-- 搜索和筛选 -->
+    <view class="search-filter">
+      <view class="search-box">
+        <text class="search-icon">🔍</text>
+        <input class="search-input" placeholder="搜索评价标准、关键词" bindinput="onEvaluationSearch" value="{{evaluationSearchKeyword}}" />
+      </view>
+      <view class="filter-section">
+        <view class="filter-item" bindtap="showEvaluationFilter('subject')">
+          <text>{{selectedEvaluationSubject || '学科'}}</text>
+          <text class="filter-arrow">▼</text>
+        </view>
+        <view class="filter-item" bindtap="showEvaluationFilter('type')">
+          <text>{{selectedEvaluationType || '类型'}}</text>
+          <text class="filter-arrow">▼</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 评价体系列表 -->
+    <view class="evaluation-list">
+      <view wx:for="{{evaluationStandards}}" wx:key="id" class="evaluation-item">
+        <view class="evaluation-header">
+          <view class="standard-info">
+            <view class="standard-title">{{item.title}}</view>
+            <view class="standard-details">
+              <text class="detail-item">{{item.subject}}</text>
+              <text class="detail-divider">|</text>
+              <text class="detail-item">{{item.type}}</text>
+            </view>
+          </view>
+        </view>
+        <view class="evaluation-body">
+          <view class="standard-comparison">
+            <view class="standard-side">
+              <view class="side-label">广东评价标准</view>
+              <view class="side-content">{{item.guangdongStandard}}</view>
+            </view>
+            <view class="standard-divider"></view>
+            <view class="standard-side">
+              <view class="side-label">香港评价标准</view>
+              <view class="side-content">{{item.hongkongStandard}}</view>
+            </view>
+          </view>
+          <view class="standard-mapping">
+            <view class="mapping-title">对应关系</view>
+            <view class="mapping-content">{{item.mappingRelation}}</view>
+          </view>
+        </view>
+        <view class="evaluation-actions">
+          <view class="action-btn primary-btn" bindtap="viewEvaluationDetail" data-id="{{item.id}}">
+            <text class="action-text">查看详情</text>
+          </view>
+          <view class="action-btn secondary-btn" bindtap="editEvaluation" data-id="{{item.id}}">
+            <text class="action-text">编辑</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 无数据提示 -->
+    <view wx:if="{{evaluationStandards.length === 0}}" class="empty-state">
+      <text class="empty-icon">📊</text>
+      <view class="empty-text">暂无评价体系数据</view>
+      <view class="empty-desc">点击右上角添加评价标准对应关系</view>
+    </view>
+  </view>
+
+  <!-- 筛选弹窗 -->
+  <view wx:if="{{showFilterModal}}" class="modal" catchtap="hideFilterModal">
+    <view class="modal-content" catchtap="catchTap">
+      <view class="modal-header">
+        <view class="modal-title">{{filterTitle}}</view>
+        <view class="modal-close" bindtap="hideFilterModal">×</view>
+      </view>
+      <view class="modal-body">
+        <view wx:for="{{filterOptions}}" wx:key="index" class="filter-option" bindtap="selectFilterOption" data-value="{{item.value}}" data-label="{{item.label}}" data-type="{{filterType}}">
+          <text class="option-text">{{item.label}}</text>
+          <text wx:if="{{item.value === selectedFilterValue}}" class="option-check">✓</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 添加学分互认弹窗 -->
+  <view wx:if="{{showAddModal}}" class="modal" catchtap="hideAddModal">
+    <view class="modal-content add-modal" catchtap="catchTap">
+      <view class="modal-header">
+        <view class="modal-title">{{addModalType === 'credit' ? '添加学分互认' : '添加评价标准'}}</view>
+        <view class="modal-close" bindtap="hideAddModal">×</view>
+      </view>
+      <view class="modal-body">
+        <!-- 学分互认表单 -->
+        <view wx:if="{{addModalType === 'credit'}}" class="form-content">
+          <view class="form-item">
+            <view class="form-label">课程名称</view>
+            <input class="form-input" placeholder="请输入课程名称" value="{{addForm.courseName}}" bindinput="onAddInput" data-field="courseName" />
+          </view>
+          <view class="form-item">
+            <view class="form-label">学科</view>
+            <view class="form-select" bindtap="selectCreditSubject">
+              <text>{{addForm.subject || '请选择学科'}}</text>
+              <text class="select-arrow">▼</text>
+            </view>
+          </view>
+          <view class="form-item">
+            <view class="form-label">级别</view>
+            <view class="form-select" bindtap="selectCreditLevel">
+              <text>{{addForm.level || '请选择级别'}}</text>
+              <text class="select-arrow">▼</text>
+            </view>
+          </view>
+          <view class="form-item">
+            <view class="form-label">广东学分</view>
+            <input class="form-input" placeholder="请输入广东学分" value="{{addForm.guangdongCredit}}" bindinput="onAddInput" data-field="guangdongCredit" type="number" />
+          </view>
+          <view class="form-item">
+            <view class="form-label">香港学分</view>
+            <input class="form-input" placeholder="请输入香港学分" value="{{addForm.hongkongCredit}}" bindinput="onAddInput" data-field="hongkongCredit" type="number" />
+          </view>
+          <view class="form-item">
+            <view class="form-label">描述</view>
+            <textarea class="form-textarea" placeholder="请输入学分互认描述" value="{{addForm.description}}" bindinput="onAddInput" data-field="description"></textarea>
+          </view>
+        </view>
+
+        <!-- 评价标准表单 -->
+        <view wx:if="{{addModalType === 'evaluation'}}" class="form-content">
+          <view class="form-item">
+            <view class="form-label">标准名称</view>
+            <input class="form-input" placeholder="请输入评价标准名称" value="{{addForm.title}}" bindinput="onAddInput" data-field="title" />
+          </view>
+          <view class="form-item">
+            <view class="form-label">学科</view>
+            <view class="form-select" bindtap="selectEvaluationSubject">
+              <text>{{addForm.subject || '请选择学科'}}</text>
+              <text class="select-arrow">▼</text>
+            </view>
+          </view>
+          <view class="form-item">
+            <view class="form-label">类型</view>
+            <view class="form-select" bindtap="selectEvaluationType">
+              <text>{{addForm.type || '请选择类型'}}</text>
+              <text class="select-arrow">▼</text>
+            </view>
+          </view>
+          <view class="form-item">
+            <view class="form-label">广东评价标准</view>
+            <textarea class="form-textarea" placeholder="请输入广东评价标准" value="{{addForm.guangdongStandard}}" bindinput="onAddInput" data-field="guangdongStandard"></textarea>
+          </view>
+          <view class="form-item">
+            <view class="form-label">香港评价标准</view>
+            <textarea class="form-textarea" placeholder="请输入香港评价标准" value="{{addForm.hongkongStandard}}" bindinput="onAddInput" data-field="hongkongStandard"></textarea>
+          </view>
+          <view class="form-item">
+            <view class="form-label">对应关系</view>
+            <textarea class="form-textarea" placeholder="请输入对应关系" value="{{addForm.mappingRelation}}" bindinput="onAddInput" data-field="mappingRelation"></textarea>
+          </view>
+        </view>
+
+        <view class="form-actions">
+          <view class="form-btn cancel-btn" bindtap="hideAddModal">取消</view>
+          <view class="form-btn confirm-btn" bindtap="submitAddForm">{{addModalType === 'credit' ? '添加学分互认' : '添加评价标准'}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

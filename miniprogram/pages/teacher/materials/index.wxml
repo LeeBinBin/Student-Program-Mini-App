@@ -1,0 +1,102 @@
+<view class="container">
+  <!-- 顶部导航 -->
+  <view class="top-nav">
+    <view class="nav-back" bindtap="navigateBack">
+      <text class="back-icon">←</text>
+    </view>
+    <view class="nav-title">素材中心</view>
+    <view class="nav-actions">
+      <view class="action-item" bindtap="uploadMaterial">
+        <text class="action-icon">+</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 搜索和筛选 -->
+  <view class="search-filter">
+    <view class="search-box">
+      <text class="search-icon">🔍</text>
+      <input class="search-input" placeholder="搜索素材名称、关键词" bindinput="onSearch" value="{{searchKeyword}}" />
+    </view>
+    <view class="filter-section">
+      <view class="filter-item" bindtap="showFilter('subject')">
+        <text>{{selectedSubject || '学科'}}</text>
+        <text class="filter-arrow">▼</text>
+      </view>
+      <view class="filter-item" bindtap="showFilter('grade')">
+        <text>{{selectedGrade || '年级'}}</text>
+        <text class="filter-arrow">▼</text>
+      </view>
+      <view class="filter-item" bindtap="showFilter('type')">
+        <text>{{selectedType || '素材类型'}}</text>
+        <text class="filter-arrow">▼</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 素材列表 -->
+  <view class="materials-list">
+    <view wx:for="{{materials}}" wx:key="id" class="material-item">
+      <view class="material-thumbnail">
+        <image src="{{item.thumbnail}}" mode="aspectFill"></image>
+        <view class="material-type-tag">{{item.type}}</view>
+      </view>
+      <view class="material-info">
+        <view class="material-name">{{item.name}}</view>
+        <view class="material-details">
+          <text class="detail-item">{{item.subject}}</text>
+          <text class="detail-divider">|</text>
+          <text class="detail-item">{{item.grade}}年级</text>
+          <text class="detail-divider">|</text>
+          <text class="detail-item">{{item.fileSize}}</text>
+        </view>
+        <view class="material-description">{{item.description}}</view>
+        <view class="material-meta">
+          <view class="meta-item">
+            <text class="meta-icon">📅</text>
+            <text class="meta-text">{{item.uploadDate}}</text>
+          </view>
+          <view class="meta-item">
+            <text class="meta-icon">📥</text>
+            <text class="meta-text">{{item.downloadCount}}次下载</text>
+          </view>
+          <view class="meta-item" wx:if="{{item.crossBorder}}">
+            <text class="meta-icon">🌉</text>
+            <text class="meta-text">跨境适配</text>
+          </view>
+        </view>
+      </view>
+      <view class="material-actions">
+        <view class="action-btn primary-btn" bindtap="downloadMaterial" data-id="{{item.id}}">
+          <text class="action-text">下载</text>
+        </view>
+        <view class="action-btn secondary-btn" bindtap="previewMaterial" data-id="{{item.id}}">
+          <text class="action-text">预览</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 无数据提示 -->
+  <view wx:if="{{materials.length === 0}}" class="empty-state">
+    <text class="empty-icon">📖</text>
+    <view class="empty-text">暂无素材数据</view>
+    <view class="empty-desc">点击右上角上传素材</view>
+  </view>
+
+  <!-- 筛选弹窗 -->
+  <view wx:if="{{showFilterModal}}" class="modal" catchtap="hideFilter">
+    <view class="modal-content" catchtap="catchTap">
+      <view class="modal-header">
+        <view class="modal-title">{{filterTitle}}</view>
+        <view class="modal-close" bindtap="hideFilter">×</view>
+      </view>
+      <view class="modal-body">
+        <view wx:for="{{filterOptions}}" wx:key="index" class="filter-option" bindtap="selectFilter" data-value="{{item.value}}" data-label="{{item.label}}">
+          <text class="option-text">{{item.label}}</text>
+          <text wx:if="{{item.value === selectedFilterValue}}" class="option-check">✓</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

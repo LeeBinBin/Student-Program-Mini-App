@@ -1,0 +1,94 @@
+<view class="container">
+  <!-- 顶部导航 -->
+  <view class="top-nav">
+    <view class="nav-back" bindtap="navigateBack">
+      <text class="back-icon">←</text>
+    </view>
+    <view class="nav-title">多语言教学</view>
+    <view class="nav-actions">
+      <view class="action-item" bindtap="addTranslation">
+        <text class="action-icon">+</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 语言选择 -->
+  <view class="language-selector">
+    <view class="selector-title">选择教学语言</view>
+    <view class="language-tabs">
+      <view class="language-tab {{selectedLanguage === 'zh' ? 'active' : ''}}" bindtap="selectLanguage('zh')">
+        <text class="tab-icon">🇨🇳</text>
+        <text class="tab-text">中文</text>
+      </view>
+      <view class="language-tab {{selectedLanguage === 'en' ? 'active' : ''}}" bindtap="selectLanguage('en')">
+        <text class="tab-icon">🇬🇧</text>
+        <text class="tab-text">English</text>
+      </view>
+      <view class="language-tab {{selectedLanguage === 'yue' ? 'active' : ''}}" bindtap="selectLanguage('yue')">
+        <text class="tab-icon">🗣️</text>
+        <text class="tab-text">粤语</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 翻译工具 -->
+  <view class="translation-tool">
+    <view class="tool-title">实时翻译</view>
+    <view class="translation-input">
+      <textarea class="input-area" placeholder="输入需要翻译的内容" bindinput="onInput" value="{{inputText}}" />
+    </view>
+    <view class="translation-actions">
+      <view class="action-btn primary-btn" bindtap="translate">
+        <text class="action-text">翻译</text>
+      </view>
+      <view class="action-btn secondary-btn" bindtap="clearInput">
+        <text class="action-text">清空</text>
+      </view>
+    </view>
+    <view wx:if="{{translatedText}}" class="translation-result">
+      <view class="result-header">
+        <text class="result-label">翻译结果:</text>
+        <text class="result-language">{{languageNames[selectedLanguage]}}</text>
+      </view>
+      <view class="result-content">{{translatedText}}</view>
+      <view class="result-actions">
+        <view class="result-btn" bindtap="copyResult">
+          <text class="btn-icon">📋</text>
+          <text class="btn-text">复制</text>
+        </view>
+        <view class="result-btn" bindtap="saveTranslation">
+          <text class="btn-icon">💾</text>
+          <text class="btn-text">保存</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 常用短语 -->
+  <view class="common-phrases">
+    <view class="section-title">常用教学短语</view>
+    <view class="phrases-grid">
+      <view wx:for="{{commonPhrases}}" wx:key="id" class="phrase-item" bindtap="usePhrase" data-phrase="{{item.text}}">
+        <text class="phrase-text">{{item.text}}</text>
+        <text class="phrase-language">{{item.language}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 翻译历史 -->
+  <view class="translation-history">
+    <view class="section-title">翻译历史</view>
+    <view wx:if="{{history.length > 0}}" class="history-list">
+      <view wx:for="{{history}}" wx:key="index" class="history-item">
+        <view class="history-input">{{item.input}}</view>
+        <view class="history-arrow">→</view>
+        <view class="history-output">{{item.output}}</view>
+        <view class="history-language">{{languageNames[item.language]}}</view>
+      </view>
+    </view>
+    <view wx:else class="empty-history">
+      <text class="empty-icon">📝</text>
+      <view class="empty-text">暂无翻译历史</view>
+    </view>
+  </view>
+</view>

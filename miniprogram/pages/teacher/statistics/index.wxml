@@ -1,0 +1,199 @@
+<view class="container">
+  <!-- 顶部导航 -->
+  <view class="top-nav">
+    <view class="nav-back" bindtap="navigateBack">
+      <text class="back-icon">←</text>
+    </view>
+    <view class="nav-title">教学统计</view>
+    <view class="nav-actions">
+      <view class="action-item" bindtap="exportData">
+        <text class="action-icon">📤</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 统计概览 -->
+  <view class="stats-overview">
+    <view class="overview-item">
+      <view class="overview-value">{{totalStudents}}</view>
+      <view class="overview-label">总学生数</view>
+    </view>
+    <view class="overview-item">
+      <view class="overview-value">{{crossBorderStudents}}</view>
+      <view class="overview-label">跨境学生</view>
+    </view>
+    <view class="overview-item">
+      <view class="overview-value">{{totalCourses}}</view>
+      <view class="overview-label">总课程数</view>
+    </view>
+    <view class="overview-item">
+      <view class="overview-value">{{totalMaterials}}</view>
+      <view class="overview-label">教学素材</view>
+    </view>
+  </view>
+
+  <!-- 筛选条件 -->
+  <view class="filter-section">
+    <view class="filter-item" bindtap="showFilter('timeRange')">
+      <text>{{selectedTimeRange || '时间范围'}}</text>
+      <text class="filter-arrow">▼</text>
+    </view>
+    <view class="filter-item" bindtap="showFilter('subject')">
+      <text>{{selectedSubject || '学科'}}</text>
+      <text class="filter-arrow">▼</text>
+    </view>
+    <view class="filter-item" bindtap="showFilter('grade')">
+      <text>{{selectedGrade || '年级'}}</text>
+      <text class="filter-arrow">▼</text>
+    </view>
+  </view>
+
+  <!-- 学习数据分析 -->
+  <view class="stats-section">
+    <view class="section-header">
+      <view class="section-title">学习数据分析</view>
+      <view class="section-action" bindtap="viewDetail('learning')">
+        <text class="action-text">查看详情</text>
+        <text class="action-arrow">→</text>
+      </view>
+    </view>
+    <view class="learning-stats">
+      <view class="stats-card">
+        <view class="card-title">平均成绩趋势</view>
+        <view class="card-content">
+          <view class="chart-placeholder">
+            <text class="chart-icon">📈</text>
+            <text class="chart-text">成绩趋势图表</text>
+          </view>
+        </view>
+      </view>
+      <view class="stats-card">
+        <view class="card-title">学科成绩分布</view>
+        <view class="card-content">
+          <view class="chart-placeholder">
+            <text class="chart-icon">📊</text>
+            <text class="chart-text">成绩分布图表</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 跨境学生适应情况 -->
+  <view class="stats-section">
+    <view class="section-header">
+      <view class="section-title">跨境学生适应情况</view>
+      <view class="section-action" bindtap="viewDetail('adaptation')">
+        <text class="action-text">查看详情</text>
+        <text class="action-arrow">→</text>
+      </view>
+    </view>
+    <view class="adaptation-stats">
+      <view class="stats-card">
+        <view class="card-title">适应等级分布</view>
+        <view class="card-content">
+          <view class="adaptation-levels">
+            <view class="level-item">
+              <view class="level-name">优秀</view>
+              <view class="level-bar">
+                <view class="level-progress" style="width: 40%"></view>
+              </view>
+              <view class="level-count">12</view>
+            </view>
+            <view class="level-item">
+              <view class="level-name">良好</view>
+              <view class="level-bar">
+                <view class="level-progress" style="width: 35%"></view>
+              </view>
+              <view class="level-count">10</view>
+            </view>
+            <view class="level-item">
+              <view class="level-name">一般</view>
+              <view class="level-bar">
+                <view class="level-progress" style="width: 20%"></view>
+              </view>
+              <view class="level-count">6</view>
+            </view>
+            <view class="level-item">
+              <view class="level-name">需关注</view>
+              <view class="level-bar">
+                <view class="level-progress" style="width: 5%"></view>
+              </view>
+              <view class="level-count">2</view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="stats-card">
+        <view class="card-title">适应问题分析</view>
+        <view class="card-content">
+          <view class="problem-list">
+            <view class="problem-item">
+              <view class="problem-name">语言障碍</view>
+              <view class="problem-count">8</view>
+            </view>
+            <view class="problem-item">
+              <view class="problem-name">课程差异</view>
+              <view class="problem-count">6</view>
+            </view>
+            <view class="problem-item">
+              <view class="problem-name">学习习惯</view>
+              <view class="problem-count">4</view>
+            </view>
+            <view class="problem-item">
+              <view class="problem-name">文化差异</view>
+              <view class="problem-count">3</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 教学资源使用情况 -->
+  <view class="stats-section">
+    <view class="section-header">
+      <view class="section-title">教学资源使用情况</view>
+      <view class="section-action" bindtap="viewDetail('resources')">
+        <text class="action-text">查看详情</text>
+        <text class="action-arrow">→</text>
+      </view>
+    </view>
+    <view class="resources-stats">
+      <view class="stats-card">
+        <view class="card-title">素材下载量</view>
+        <view class="card-content">
+          <view class="chart-placeholder">
+            <text class="chart-icon">📥</text>
+            <text class="chart-text">下载量趋势图</text>
+          </view>
+        </view>
+      </view>
+      <view class="stats-card">
+        <view class="card-title">素材类型分布</view>
+        <view class="card-content">
+          <view class="chart-placeholder">
+            <text class="chart-icon">📁</text>
+            <text class="chart-text">类型分布图</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 筛选弹窗 -->
+  <view wx:if="{{showFilterModal}}" class="modal" catchtap="hideFilter">
+    <view class="modal-content" catchtap="catchTap">
+      <view class="modal-header">
+        <view class="modal-title">{{filterTitle}}</view>
+        <view class="modal-close" bindtap="hideFilter">×</view>
+      </view>
+      <view class="modal-body">
+        <view wx:for="{{filterOptions}}" wx:key="index" class="filter-option" bindtap="selectFilter" data-value="{{item.value}}" data-label="{{item.label}}">
+          <text class="option-text">{{item.label}}</text>
+          <text wx:if="{{item.value === selectedFilterValue}}" class="option-check">✓</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

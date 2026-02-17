@@ -1,0 +1,568 @@
+.container {
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  padding-bottom: 20rpx;
+}
+
+/* 顶部导航 */
+.top-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx;
+  background-color: #fff;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-back {
+  width: 60rpx;
+}
+
+.back-icon {
+  font-size: 36rpx;
+  color: #333;
+}
+
+.nav-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  flex: 1;
+  text-align: center;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+}
+
+.action-item {
+  margin-left: 20rpx;
+  padding: 10rpx;
+}
+
+.action-icon {
+  font-size: 32rpx;
+  color: #333;
+}
+
+/* 标签页 */
+.tab-bar {
+  display: flex;
+  background-color: #fff;
+  border-bottom: 1rpx solid #f0f0f0;
+  position: sticky;
+  top: 92rpx;
+  z-index: 90;
+}
+
+.tab-item {
+  flex: 1;
+  padding: 20rpx 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.tab-item.active .tab-text {
+  color: #165DFF;
+  font-weight: bold;
+}
+
+.tab-text {
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 5rpx;
+}
+
+.tab-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 25%;
+  width: 50%;
+  height: 4rpx;
+  background-color: #165DFF;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.tab-indicator.show {
+  transform: scaleX(1);
+}
+
+/* 搜索和筛选 */
+.search-filter {
+  padding: 20rpx;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 12rpx;
+  padding: 0 20rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.search-icon {
+  font-size: 24rpx;
+  color: #999;
+  margin-right: 10rpx;
+}
+
+.search-input {
+  flex: 1;
+  font-size: 24rpx;
+  color: #333;
+  padding: 20rpx 0;
+}
+
+.filter-section {
+  display: flex;
+  gap: 20rpx;
+}
+
+.filter-item {
+  flex: 1;
+  background-color: #fff;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.filter-item text {
+  font-size: 24rpx;
+  color: #333;
+}
+
+.filter-arrow {
+  font-size: 20rpx;
+  color: #999;
+}
+
+/* 学分互认列表 */
+.credit-list {
+  padding: 0 20rpx;
+}
+
+.credit-item {
+  background-color: #fff;
+  border-radius: 12rpx;
+  margin-bottom: 20rpx;
+  padding: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.credit-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.course-info {
+  flex: 1;
+  margin-right: 20rpx;
+}
+
+.course-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.course-details {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.detail-item {
+  font-size: 20rpx;
+  color: #666;
+}
+
+.detail-divider {
+  font-size: 20rpx;
+  color: #999;
+}
+
+.credit-status {
+  padding: 5rpx 15rpx;
+  border-radius: 20rpx;
+  font-size: 20rpx;
+  color: #fff;
+  font-weight: bold;
+}
+
+.credit-body {
+  margin-bottom: 20rpx;
+}
+
+.credit-comparison {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 15rpx;
+  padding: 20rpx;
+  background-color: #f9f9f9;
+  border-radius: 8rpx;
+}
+
+.credit-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.side-label {
+  font-size: 22rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+}
+
+.side-value {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #165DFF;
+}
+
+.credit-arrow {
+  font-size: 32rpx;
+  color: #165DFF;
+  font-weight: bold;
+}
+
+.credit-description {
+  font-size: 22rpx;
+  color: #666;
+  line-height: 1.5;
+}
+
+.credit-actions {
+  display: flex;
+  gap: 15rpx;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 15rpx;
+  border-radius: 8rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.primary-btn {
+  background-color: #165DFF;
+}
+
+.secondary-btn {
+  background-color: #f0f0f0;
+}
+
+.action-text {
+  font-size: 24rpx;
+  font-weight: bold;
+  color: #fff;
+}
+
+.secondary-btn .action-text {
+  color: #333;
+}
+
+/* 评价体系列表 */
+.evaluation-list {
+  padding: 0 20rpx;
+}
+
+.evaluation-item {
+  background-color: #fff;
+  border-radius: 12rpx;
+  margin-bottom: 20rpx;
+  padding: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.evaluation-header {
+  margin-bottom: 20rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.standard-info {
+  flex: 1;
+}
+
+.standard-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.standard-details {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.evaluation-body {
+  margin-bottom: 20rpx;
+}
+
+.standard-comparison {
+  display: flex;
+  align-items: flex-start;
+  gap: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.standard-side {
+  flex: 1;
+}
+
+.standard-side .side-label {
+  font-size: 22rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+  text-align: left;
+}
+
+.side-content {
+  font-size: 22rpx;
+  color: #666;
+  line-height: 1.5;
+  background-color: #f9f9f9;
+  padding: 15rpx;
+  border-radius: 8rpx;
+}
+
+.standard-divider {
+  width: 1rpx;
+  background-color: #f0f0f0;
+  margin: 0 10rpx;
+}
+
+.standard-mapping {
+  margin-top: 20rpx;
+}
+
+.mapping-title {
+  font-size: 22rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.mapping-content {
+  font-size: 22rpx;
+  color: #666;
+  line-height: 1.5;
+  background-color: #f0f9ff;
+  padding: 15rpx;
+  border-radius: 8rpx;
+}
+
+.evaluation-actions {
+  display: flex;
+  gap: 15rpx;
+}
+
+/* 无数据提示 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 20rpx;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 30rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.empty-desc {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 筛选弹窗 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #fff;
+  border-radius: 12rpx;
+  width: 80%;
+  max-width: 500rpx;
+  overflow: hidden;
+}
+
+.add-modal {
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.modal-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.modal-close {
+  font-size: 32rpx;
+  color: #999;
+  padding: 10rpx;
+}
+
+.modal-body {
+  padding: 20rpx;
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.filter-option:last-child {
+  border-bottom: none;
+}
+
+.option-text {
+  font-size: 24rpx;
+  color: #333;
+}
+
+.option-check {
+  font-size: 24rpx;
+  color: #165DFF;
+  font-weight: bold;
+}
+
+/* 表单样式 */
+.form-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.form-item {
+  margin-bottom: 0;
+}
+
+.form-label {
+  font-size: 24rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.form-input {
+  width: 100%;
+  font-size: 24rpx;
+  color: #333;
+  padding: 15rpx;
+  border: 1rpx solid #f0f0f0;
+  border-radius: 8rpx;
+  background-color: #f9f9f9;
+}
+
+.form-textarea {
+  width: 100%;
+  font-size: 24rpx;
+  color: #333;
+  padding: 15rpx;
+  border: 1rpx solid #f0f0f0;
+  border-radius: 8rpx;
+  background-color: #f9f9f9;
+  min-height: 120rpx;
+  resize: none;
+}
+
+.form-select {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15rpx;
+  border: 1rpx solid #f0f0f0;
+  border-radius: 8rpx;
+  background-color: #f9f9f9;
+}
+
+.form-select text {
+  font-size: 24rpx;
+  color: #333;
+}
+
+.select-arrow {
+  font-size: 20rpx;
+  color: #999;
+}
+
+.form-actions {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 30rpx;
+}
+
+.form-btn {
+  flex: 1;
+  padding: 20rpx;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+  text-align: center;
+}
+
+.cancel-btn {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.confirm-btn {
+  background-color: #165DFF;
+  color: #fff;
+}

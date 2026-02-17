@@ -1,0 +1,218 @@
+<view class="container">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <view class="page-title">知识点对标查询</view>
+  </view>
+
+  <!-- 筛选条件 -->
+  <view class="filter-container">
+    <view class="filter-content">
+      <view class="filter-item">
+        <view class="filter-label">年级</view>
+        <view class="filter-picker">
+          <picker bindchange="bindGradeChange" value="{{gradeIndex}}" range="{{grades}}">
+            <view class="picker-text">{{grades[gradeIndex]}}</view>
+          </picker>
+        </view>
+      </view>
+      <view class="filter-item">
+        <view class="filter-label">学科</view>
+        <view class="filter-picker">
+          <picker bindchange="bindSubjectChange" value="{{subjectIndex}}" range="{{subjects}}">
+            <view class="picker-text">{{subjects[subjectIndex]}}</view>
+          </picker>
+        </view>
+      </view>
+      <view class="filter-item">
+        <view class="filter-label">版本</view>
+        <view class="filter-picker">
+          <picker bindchange="bindVersionChange" value="{{versionIndex}}" range="{{versions}}">
+            <view class="picker-text">{{versions[versionIndex]}}</view>
+          </picker>
+        </view>
+      </view>
+    </view>
+    <view class="filter-btn" bindtap="searchKnowledge">查询</view>
+  </view>
+
+  <!-- 对标结果展示 -->
+  <view class="result-container">
+    <!-- 左侧知识点列表 -->
+    <view class="knowledge-container">
+      <!-- 标签切换 -->
+      <view class="knowledge-tabs">
+        <view class="tab-item {{activeTab === 'common' ? 'active' : ''}}" bindtap="switchTab" data-tab="common">重合知识点</view>
+        <view class="tab-item {{activeTab === 'guangdong' ? 'active' : ''}}" bindtap="switchTab" data-tab="guangdong">粤拓展知识点</view>
+        <view class="tab-item {{activeTab === 'hongkong' ? 'active' : ''}}" bindtap="switchTab" data-tab="hongkong">港拓展知识点</view>
+      </view>
+
+      <!-- 标签内容 -->
+      <view class="knowledge-content">
+        <!-- 重合知识点 -->
+        <view wx:if="{{activeTab === 'common'}}" class="tab-content">
+          <view class="knowledge-list">
+            <view wx:for="{{overlapKnowledges}}" wx:key="index" class="knowledge-item overlap-item" bindtap="showKnowledgeDetail" data-item="{{item}}"
+                  bindtouchstart="showComparison" bindtouchend="hideComparison" data-item="{{item}}">
+              <view class="knowledge-title">{{item.guangdong_knowledge || item.hongkong_knowledge}}</view>
+              <view class="knowledge-desc">{{item.description}}</view>
+              <!-- 对比信息 -->
+              <view class="comparison-info" wx:if="{{comparingItem && comparingItem === item}}">
+                <view class="comparison-item">
+                  <view class="comparison-label">粤教版：</view>
+                  <view class="comparison-value">{{item.guangdong_knowledge}}</view>
+                </view>
+                <view class="comparison-item">
+                  <view class="comparison-label">香港版：</view>
+                  <view class="comparison-value">{{item.hongkong_knowledge}}</view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <!-- 粤拓展知识点 -->
+        <view wx:if="{{activeTab === 'guangdong'}}" class="tab-content">
+          <view class="knowledge-list">
+            <view wx:for="{{guangdongKnowledges}}" wx:key="index" class="knowledge-item guangdong-item" bindtap="showKnowledgeDetail" data-item="{{item}}"
+                  bindtouchstart="showComparison" bindtouchend="hideComparison" data-item="{{item}}">
+              <view class="knowledge-title">{{item.guangdong_knowledge}}</view>
+              <view class="knowledge-desc">{{item.description}}</view>
+              <!-- 对比信息 -->
+              <view class="comparison-info" wx:if="{{comparingItem && comparingItem === item}}">
+                <view class="comparison-item">
+                  <view class="comparison-label">粤教版：</view>
+                  <view class="comparison-value">{{item.guangdong_knowledge}}</view>
+                </view>
+                <view class="comparison-item">
+                  <view class="comparison-label">香港版：</view>
+                  <view class="comparison-value">{{item.hongkong_knowledge || '无对应知识点'}}</view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <!-- 港拓展知识点 -->
+        <view wx:if="{{activeTab === 'hongkong'}}" class="tab-content">
+          <view class="knowledge-list">
+            <view wx:for="{{hongkongKnowledges}}" wx:key="index" class="knowledge-item hongkong-item" bindtap="showKnowledgeDetail" data-item="{{item}}"
+                  bindtouchstart="showComparison" bindtouchend="hideComparison" data-item="{{item}}">
+              <view class="knowledge-title">{{item.hongkong_knowledge}}</view>
+              <view class="knowledge-desc">{{item.description}}</view>
+              <!-- 对比信息 -->
+              <view class="comparison-info" wx:if="{{comparingItem && comparingItem === item}}">
+                <view class="comparison-item">
+                  <view class="comparison-label">粤教版：</view>
+                  <view class="comparison-value">{{item.guangdong_knowledge || '无对应知识点'}}</view>
+                </view>
+                <view class="comparison-item">
+                  <view class="comparison-label">香港版：</view>
+                  <view class="comparison-value">{{item.hongkong_knowledge}}</view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 右侧可视化对比图 -->
+    <view class="chart-container">
+      <view class="chart-stats">
+        <view class="stat-item">
+          <view class="stat-value">{{overlapCount}}</view>
+          <view class="stat-label">重合知识点</view>
+        </view>
+        <view class="stat-item">
+          <view class="stat-value">{{guangdongCount}}</view>
+          <view class="stat-label">粤拓展知识点</view>
+        </view>
+        <view class="stat-item">
+          <view class="stat-value">{{hongkongCount}}</view>
+          <view class="stat-label">港拓展知识点</view>
+        </view>
+      </view>
+      <view class="chart-legend">
+        <view class="legend-item">
+          <view class="legend-color overlap-color"></view>
+          <view class="legend-text">重合知识点</view>
+        </view>
+        <view class="legend-item">
+          <view class="legend-color guangdong-color"></view>
+          <view class="legend-text">粤拓展知识点</view>
+        </view>
+        <view class="legend-item">
+          <view class="legend-color hongkong-color"></view>
+          <view class="legend-text">港拓展知识点</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 知识点详情弹窗 -->
+  <view class="popup" wx:if="{{showDetail}}" bindtap="hideKnowledgeDetail">
+    <view class="popup-content" catchtap="catchTap">
+      <view class="popup-header">
+        <view class="popup-title">{{currentKnowledge.guangdong_knowledge || currentKnowledge.hongkong_knowledge}}</view>
+        <view class="popup-close" bindtap="hideKnowledgeDetail">
+          <text>×</text>
+        </view>
+      </view>
+      
+      <!-- 标签切换 -->
+      <view class="detail-tabs">
+        <view class="tab-item {{detailTab === 'chinese' ? 'active' : ''}}" bindtap="switchDetailTab" data-tab="chinese">中文</view>
+        <view class="tab-item {{detailTab === 'english' ? 'active' : ''}}" bindtap="switchDetailTab" data-tab="english">English</view>
+        <view class="tab-item {{detailTab === 'cantonese' ? 'active' : ''}}" bindtap="switchDetailTab" data-tab="cantonese">粵語</view>
+      </view>
+      
+      <!-- 标签内容 -->
+      <view class="detail-content">
+        <!-- 中文内容 -->
+        <view wx:if="{{detailTab === 'chinese'}}" class="tab-content">
+          <view class="content-section">
+            <view class="content-text">{{currentKnowledge.description}}</view>
+          </view>
+          <view class="content-section">
+            <view class="section-title">例题：</view>
+            <view class="content-text example">{{currentKnowledge.example}}</view>
+          </view>
+          <view class="content-section">
+            <view class="section-title">教学建议：</view>
+            <view class="content-text">{{currentKnowledge.teaching_suggestion || '通过图形直观展示，帮助学生理解知识点的核心概念。'}}</view>
+          </view>
+        </view>
+        
+        <!-- 英文内容 -->
+        <view wx:if="{{detailTab === 'english'}}" class="tab-content">
+          <view class="content-section">
+            <view class="content-text">{{currentKnowledge.description_en || 'Basic property of knowledge points. Please refer to Chinese version for detailed explanation.'}}</view>
+          </view>
+          <view class="content-section">
+            <view class="section-title">Example：</view>
+            <view class="content-text example">{{currentKnowledge.example_en || 'Example content will be provided in English.'}}</view>
+          </view>
+          <view class="content-section">
+            <view class="section-title">Teaching Suggestions：</view>
+            <view class="content-text">{{currentKnowledge.teaching_suggestion_en || 'Use visual representations to help students understand the core concepts.'}}</view>
+          </view>
+        </view>
+        
+        <!-- 粤语内容 -->
+        <view wx:if="{{detailTab === 'cantonese'}}" class="tab-content">
+          <view class="content-section">
+            <view class="content-text">{{currentKnowledge.description_zh || '知識點的基本性質。請參閱中文版本以獲取詳細解釋。'}}</view>
+          </view>
+          <view class="content-section">
+            <view class="section-title">例題：</view>
+            <view class="content-text example">{{currentKnowledge.example_zh || '例題內容將以粵語提供。'}}</view>
+          </view>
+          <view class="content-section">
+            <view class="section-title">教學建議：</view>
+            <view class="content-text">{{currentKnowledge.teaching_suggestion_zh || '通過圖形直觀展示，幫助學生理解知識點的核心概念。'}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

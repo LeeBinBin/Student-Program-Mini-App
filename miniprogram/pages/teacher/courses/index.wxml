@@ -1,0 +1,101 @@
+<view class="container">
+  <!-- 顶部导航 -->
+  <view class="top-nav">
+    <view class="nav-back" bindtap="navigateBack">
+      <text class="back-icon">←</text>
+    </view>
+    <view class="nav-title">课程管理</view>
+    <view class="nav-actions">
+      <view class="action-item" bindtap="addCourse">
+        <text class="action-icon">+</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 搜索和筛选 -->
+  <view class="search-filter">
+    <view class="search-box">
+      <text class="search-icon">🔍</text>
+      <input class="search-input" placeholder="搜索课程名称、学科或年级" bindinput="onSearch" value="{{searchKeyword}}" />
+    </view>
+    <view class="filter-section">
+      <view class="filter-item" bindtap="showFilter('subject')">
+        <text>{{selectedSubject || '学科'}}</text>
+        <text class="filter-arrow">▼</text>
+      </view>
+      <view class="filter-item" bindtap="showFilter('grade')">
+        <text>{{selectedGrade || '年级'}}</text>
+        <text class="filter-arrow">▼</text>
+      </view>
+      <view class="filter-item" bindtap="showFilter('type')">
+        <text>{{selectedType || '课程类型'}}</text>
+        <text class="filter-arrow">▼</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 课程列表 -->
+  <view class="courses-list">
+    <view wx:for="{{courses}}" wx:key="id" class="course-item">
+      <view class="course-header">
+        <view class="course-info">
+          <view class="course-name">{{item.name}}</view>
+          <view class="course-details">
+            <text class="detail-item">{{item.subject}}</text>
+            <text class="detail-divider">|</text>
+            <text class="detail-item">{{item.grade}}年级</text>
+            <text class="detail-divider">|</text>
+            <text class="detail-item">{{item.type}}</text>
+          </view>
+        </view>
+        <view class="course-status" style="background-color: {{item.status === 'active' ? '#D9F99D' : '#FEE2E2'}}">
+          {{item.status === 'active' ? '进行中' : '已结束'}}
+        </view>
+      </view>
+      <view class="course-content">
+        <view class="course-description">{{item.description}}</view>
+        <view class="course-meta">
+          <view class="meta-item">
+            <text class="meta-icon">👥</text>
+            <text class="meta-text">{{item.studentCount}}名学生</text>
+          </view>
+          <view class="meta-item">
+            <text class="meta-icon">📅</text>
+            <text class="meta-text">{{item.startDate}} 至 {{item.endDate}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="course-actions">
+        <view class="action-btn primary-btn" bindtap="viewCourseDetail" data-id="{{item.id}}">
+          <text class="action-text">查看详情</text>
+        </view>
+        <view class="action-btn secondary-btn" bindtap="editCourse" data-id="{{item.id}}">
+          <text class="action-text">编辑</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 无数据提示 -->
+  <view wx:if="{{courses.length === 0}}" class="empty-state">
+    <text class="empty-icon">📚</text>
+    <view class="empty-text">暂无课程数据</view>
+    <view class="empty-desc">点击右上角添加课程</view>
+  </view>
+
+  <!-- 筛选弹窗 -->
+  <view wx:if="{{showFilterModal}}" class="modal" catchtap="hideFilter">
+    <view class="modal-content" catchtap="catchTap">
+      <view class="modal-header">
+        <view class="modal-title">{{filterTitle}}</view>
+        <view class="modal-close" bindtap="hideFilter">×</view>
+      </view>
+      <view class="modal-body">
+        <view wx:for="{{filterOptions}}" wx:key="index" class="filter-option" bindtap="selectFilter" data-value="{{item.value}}" data-label="{{item.label}}">
+          <text class="option-text">{{item.label}}</text>
+          <text wx:if="{{item.value === selectedFilterValue}}" class="option-check">✓</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

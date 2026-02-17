@@ -1,0 +1,117 @@
+<view class="container">
+  <!-- 页面标题 -->
+  <view class="page-title">学业诊断小测</view>
+  <view class="page-subtitle">知识点掌握情况诊断</view>
+
+  <!-- 测试选择 -->
+  <view class="test-selection" wx:if="!showResult && !showTest">
+    <view class="selection-container">
+      <view class="selection-title">选择测试科目和年级</view>
+      <view class="selection-grid">
+        <view class="selection-item">
+          <view class="selection-label">年级</view>
+          <view class="selection-picker">
+            <picker bindchange="bindGradeChange" value="{{gradeIndex}}" range="{{grades}}">
+              <view class="picker-text">{{grades[gradeIndex]}}</view>
+            </picker>
+          </view>
+        </view>
+        <view class="selection-item">
+          <view class="selection-label">学科</view>
+          <view class="selection-picker">
+            <picker bindchange="bindSubjectChange" value="{{subjectIndex}}" range="{{subjects}}">
+              <view class="picker-text">{{subjects[subjectIndex]}}</view>
+            </picker>
+          </view>
+        </view>
+      </view>
+      <view class="start-btn" bindtap="startTest">开始测试</view>
+    </view>
+  </view>
+
+  <!-- 测试进度 -->
+  <view class="progress-container" wx:if="showTest && !showResult">
+    <view class="progress-info">
+      <view class="progress-text">当前进度</view>
+      <view class="progress-num">{{currentQuestion + 1}}/{{questions.length}}</view>
+    </view>
+    <view class="progress-bar">
+      <view class="progress-fill" style="width: {{(currentQuestion + 1) / questions.length * 100}}%"></view>
+    </view>
+  </view>
+
+  <!-- 题目区域 -->
+  <view class="question-container" wx:if="showTest && !showResult">
+    <view class="question-item">
+      <view class="question-header">
+        <view class="question-index">第{{currentQuestion + 1}}题</view>
+        <view class="question-point">{{questions[currentQuestion].knowledge_point}}</view>
+      </view>
+      <view class="question-content">{{questions[currentQuestion].question}}</view>
+      <view class="question-options">
+        <view wx:for="{{questions[currentQuestion].options}}" wx:key="index" class="option-item {{selectedOptions[currentQuestion] == index ? 'selected' : ''}}" bindtap="selectOption" data-index="{{index}}">
+          <view class="option-radio">{{String.fromCharCode(65 + index)}}</view>
+          <view class="option-text">{{item}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 题目导航 -->
+  <view class="question-nav" wx:if="showTest && !showResult">
+    <view wx:for="{{questions}}" wx:key="index" class="nav-item {{selectedOptions[index] != null ? 'answered' : ''}} {{currentQuestion == index ? 'current' : ''}}" bindtap="jumpToQuestion" data-index="{{index}}">{{index + 1}}</view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-buttons" wx:if="showTest && !showResult">
+    <view class="btn prev-btn" bindtap="prevQuestion" wx:if="currentQuestion > 0">上一题</view>
+    <view class="btn next-btn" bindtap="nextQuestion" wx:if="currentQuestion < questions.length - 1">下一题</view>
+    <view class="btn submit-btn" bindtap="submitTest" wx:if="currentQuestion == questions.length - 1">提交测试</view>
+  </view>
+
+  <!-- 结果展示 -->
+  <view class="result-container" wx:if="showResult">
+    <view class="result-header">
+      <view class="result-title">测试结果</view>
+    </view>
+    
+    <!-- 得分 -->
+    <view class="result-score-container">
+      <view class="score-circle">
+        <svg class="circle-svg" viewBox="0 0 80 80">
+          <circle cx="40" cy="40" r="35" fill="none" stroke="#e5e7eb" stroke-width="10"></circle>
+          <circle cx="40" cy="40" r="35" fill="none" stroke="#1e40af" stroke-width="10" stroke-dasharray="220" stroke-dashoffset="{{220 - masteryRate * 2.2}}" transform="rotate(-90 40 40)"></circle>
+        </svg>
+        <div class="score-content">
+          <span class="score-value">{{score}}</span>
+          <span class="score-label">分</span>
+        </div>
+      </view>
+    </view>
+
+    <!-- 知识点掌握情况 -->
+    <view class="result-mastery">
+      <view class="mastery-title">知识点掌握情况</view>
+      <view class="mastery-list">
+        <view wx:for="{{masteryItems}}" wx:key="index" class="mastery-item">
+          <div class="mastery-header">
+            <span class="mastery-name">{{item.name}}</span>
+            <span class="mastery-percent">{{item.percent}}%</span>
+          </div>
+          <div class="mastery-bar">
+            <div class="mastery-fill" style="width: {{item.percent}}%"></div>
+          </div>
+        </view>
+      </view>
+    </view>
+
+    <view class="result-feedback">
+      <view class="feedback-title">知识点薄弱点提示</view>
+      <view class="feedback-content">{{feedback}}</view>
+    </view>
+    <view class="result-actions">
+      <view class="btn retry-btn" bindtap="retryTest">重新测试</view>
+      <view class="btn finish-btn" bindtap="finishTest">完成</view>
+    </view>
+  </view>
+</view>

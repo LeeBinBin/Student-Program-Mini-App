@@ -1,0 +1,508 @@
+/* 全局样式 */
+.container {
+  min-height: 100vh;
+  background-color: #F8F9FA;
+}
+
+/* 顶部导航 */
+.top-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32rpx 48rpx;
+  background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%);
+  color: #FFFFFF;
+  box-shadow: 0 4rpx 12rpx rgba(30, 64, 175, 0.2);
+}
+
+.nav-back {
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.nav-back:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.back-icon {
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.nav-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  flex: 1;
+  text-align: center;
+  margin: 0 48rpx;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+}
+
+.action-item {
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.action-item:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.action-icon {
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+/* 搜索和筛选 */
+.search-filter {
+  padding: 32rpx 48rpx;
+  background-color: #FFFFFF;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background-color: #F3F4F6;
+  border-radius: 24rpx;
+  padding: 0 24rpx;
+  margin-bottom: 24rpx;
+  transition: all 0.3s ease;
+}
+
+.search-box:focus-within {
+  box-shadow: 0 0 0 8rpx rgba(59, 130, 246, 0.1);
+  background-color: #FFFFFF;
+  border: 2rpx solid #3B82F6;
+}
+
+.search-icon {
+  font-size: 24rpx;
+  color: #6B7280;
+  margin-right: 16rpx;
+}
+
+.search-input {
+  flex: 1;
+  padding: 24rpx 0;
+  font-size: 28rpx;
+  color: #333333;
+}
+
+.search-input::placeholder {
+  color: #9CA3AF;
+}
+
+.filter-section {
+  display: flex;
+  gap: 16rpx;
+  flex-wrap: wrap;
+}
+
+.filter-item {
+  flex: 1;
+  min-width: 160rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 24rpx;
+  background-color: #F3F4F6;
+  border-radius: 16rpx;
+  border: 2rpx solid #E5E7EB;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.filter-item:hover {
+  background-color: #E5E7EB;
+  transform: translateY(-2rpx);
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+.filter-arrow {
+  font-size: 20rpx;
+  color: #6B7280;
+  margin-left: 8rpx;
+}
+
+/* 知识点对标列表 */
+.comparisons-list {
+  padding: 32rpx 48rpx;
+}
+
+.comparison-item {
+  background-color: #FFFFFF;
+  border-radius: 24rpx;
+  padding: 28rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.comparison-item:hover {
+  transform: translateY(-4rpx);
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.15);
+}
+
+.comparison-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.comparison-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333333;
+  flex: 1;
+  margin-right: 20rpx;
+}
+
+.comparison-badge {
+  padding: 8rpx 16rpx;
+  border-radius: 12rpx;
+  font-size: 18rpx;
+  font-weight: 600;
+  color: #333333;
+}
+
+.comparison-details {
+  margin-bottom: 20rpx;
+  border-bottom: 2rpx solid #F3F4F6;
+  padding-bottom: 20rpx;
+}
+
+.detail-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.detail-row:last-child {
+  margin-bottom: 0;
+}
+
+.detail-label {
+  font-size: 24rpx;
+  font-weight: 500;
+  color: #666666;
+  width: 120rpx;
+}
+
+.detail-value {
+  font-size: 24rpx;
+  color: #333333;
+  flex: 1;
+}
+
+.comparison-content {
+  margin-bottom: 24rpx;
+}
+
+.knowledge-points-preview {
+  background-color: #F9FAFB;
+  border-radius: 16rpx;
+  padding: 20rpx;
+}
+
+.knowledge-point-item {
+  margin-bottom: 16rpx;
+  padding-bottom: 16rpx;
+  border-bottom: 2rpx dashed #E5E7EB;
+}
+
+.knowledge-point-item:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.point-guangdong,
+.point-hongkong {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 8rpx;
+}
+
+.point-hongkong {
+  margin-bottom: 0;
+}
+
+.point-region {
+  font-size: 20rpx;
+  font-weight: 600;
+  color: #3B82F6;
+  width: 80rpx;
+  flex-shrink: 0;
+}
+
+.point-content {
+  font-size: 20rpx;
+  color: #333333;
+  flex: 1;
+  line-height: 1.4;
+}
+
+.more-points {
+  font-size: 20rpx;
+  color: #666666;
+  text-align: center;
+  margin-top: 12rpx;
+  font-style: italic;
+}
+
+.comparison-actions {
+  display: flex;
+  gap: 16rpx;
+  justify-content: flex-end;
+}
+
+.action-btn {
+  padding: 14rpx 28rpx;
+  border-radius: 12rpx;
+  font-size: 20rpx;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%);
+  color: #FFFFFF;
+  box-shadow: 0 4rpx 12rpx rgba(59, 130, 246, 0.3);
+}
+
+.primary-btn:hover {
+  transform: translateY(-2rpx);
+  box-shadow: 0 6rpx 16rpx rgba(59, 130, 246, 0.4);
+}
+
+.secondary-btn {
+  background-color: #F3F4F6;
+  color: #333333;
+  border: 2rpx solid #E5E7EB;
+}
+
+.secondary-btn:hover {
+  background-color: #E5E7EB;
+  transform: translateY(-2rpx);
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+/* 无数据提示 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx 48rpx;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 128rpx;
+  margin-bottom: 32rpx;
+  opacity: 0.5;
+}
+
+.empty-text {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #666666;
+  margin-bottom: 16rpx;
+}
+
+.empty-desc {
+  font-size: 24rpx;
+  color: #999999;
+}
+
+/* 筛选弹窗 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #FFFFFF;
+  border-radius: 32rpx;
+  width: 90%;
+  max-width: 500rpx;
+  box-shadow: 0 20rpx 60rpx rgba(0, 0, 0, 0.3);
+  animation: modalScale 0.3s ease;
+}
+
+@keyframes modalScale {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32rpx 40rpx;
+  border-bottom: 2rpx solid #E5E7EB;
+  background-color: #F9FAFB;
+  border-radius: 32rpx 32rpx 0 0;
+}
+
+.modal-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333333;
+}
+
+.modal-close {
+  font-size: 36rpx;
+  color: #6B7280;
+  cursor: pointer;
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+  background-color: #E5E7EB;
+  color: #333333;
+}
+
+.modal-body {
+  padding: 32rpx 40rpx;
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24rpx 0;
+  border-bottom: 2rpx solid #F3F4F6;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.filter-option:last-child {
+  border-bottom: none;
+}
+
+.filter-option:hover {
+  background-color: #F9FAFB;
+  padding-left: 16rpx;
+  border-radius: 12rpx;
+}
+
+.option-text {
+  font-size: 28rpx;
+  color: #333333;
+}
+
+.option-check {
+  font-size: 24rpx;
+  color: #3B82F6;
+  font-weight: bold;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .top-nav {
+    padding: 24rpx 32rpx;
+  }
+
+  .nav-title {
+    font-size: 32rpx;
+  }
+
+  .search-filter {
+    padding: 24rpx 32rpx;
+  }
+
+  .comparisons-list {
+    padding: 24rpx 32rpx;
+  }
+
+  .comparison-item {
+    padding: 24rpx;
+  }
+
+  .comparison-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .comparison-badge {
+    margin-top: 12rpx;
+    align-self: flex-start;
+  }
+
+  .comparison-actions {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .filter-section {
+    flex-direction: column;
+  }
+
+  .filter-item {
+    width: 100%;
+  }
+
+  .detail-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .detail-label {
+    width: 100%;
+    margin-bottom: 4rpx;
+  }
+
+  .knowledge-point-item {
+    padding: 16rpx;
+    background-color: #FFFFFF;
+    border-radius: 12rpx;
+    margin-bottom: 12rpx;
+  }
+}

@@ -1,0 +1,135 @@
+<view class="container">
+  <!-- 顶部导航 -->
+  <view class="top-nav">
+    <view class="nav-back" bindtap="navigateBack">
+      <text class="back-icon">←</text>
+    </view>
+    <view class="nav-title">教师培训</view>
+    <view class="nav-actions">
+      <view class="action-item" bindtap="myCourses">
+        <text class="action-icon">📚</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 搜索和筛选 -->
+  <view class="search-filter">
+    <view class="search-box">
+      <text class="search-icon">🔍</text>
+      <input class="search-input" placeholder="搜索培训课程、关键词或讲师" bindinput="onSearch" value="{{searchKeyword}}" />
+    </view>
+    <view class="filter-section">
+      <view class="filter-item" bindtap="showFilter('category')">
+        <text>{{selectedCategory || '分类'}}</text>
+        <text class="filter-arrow">▼</text>
+      </view>
+      <view class="filter-item" bindtap="showFilter('level')">
+        <text>{{selectedLevel || '级别'}}</text>
+        <text class="filter-arrow">▼</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 培训课程列表 -->
+  <view class="courses-list">
+    <view wx:for="{{courses}}" wx:key="id" class="course-item">
+      <view class="course-thumbnail">
+        <image src="{{item.thumbnail}}" mode="aspectFill"></image>
+        <view class="course-tag" style="background-color: {{item.tagColor}}">{{item.tag}}</view>
+      </view>
+      <view class="course-content">
+        <view class="course-header">
+          <view class="course-title">{{item.title}}</view>
+          <view class="course-rating">
+            <text class="rating-icon">⭐</text>
+            <text class="rating-text">{{item.rating}}</text>
+          </view>
+        </view>
+        <view class="course-description">{{item.description}}</view>
+        <view class="course-meta">
+          <view class="meta-item">
+            <text class="meta-icon">👨‍🏫</text>
+            <text class="meta-text">{{item.instructor}}</text>
+          </view>
+          <view class="meta-item">
+            <text class="meta-icon">⏱️</text>
+            <text class="meta-text">{{item.duration}}</text>
+          </view>
+          <view class="meta-item">
+            <text class="meta-icon">👥</text>
+            <text class="meta-text">{{item.students}}人学习</text>
+          </view>
+        </view>
+        <view class="course-tags">
+          <view class="tag" style="background-color: #E0F2FE">{{item.category}}</view>
+          <view class="tag" style="background-color: #D9F99D">{{item.level}}</view>
+          <view class="tag" wx:if="{{item.crossBorder}}" style="background-color: #FEF3C7">跨境教育</view>
+        </view>
+        <view class="course-actions">
+          <view class="action-btn primary-btn" bindtap="enrollCourse" data-id="{{item.id}}">
+            <text class="action-text">{{item.enrolled ? '继续学习' : '立即报名'}}</text>
+          </view>
+          <view class="action-btn secondary-btn" bindtap="previewCourse" data-id="{{item.id}}">
+            <text class="action-text">预览</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 无数据提示 -->
+  <view wx:if="{{courses.length === 0}}" class="empty-state">
+    <text class="empty-icon">🎓</text>
+    <view class="empty-text">暂无培训课程</view>
+    <view class="empty-desc">请稍后再来查看</view>
+  </view>
+
+  <!-- 筛选弹窗 -->
+  <view wx:if="{{showFilterModal}}" class="modal" catchtap="hideFilter">
+    <view class="modal-content" catchtap="catchTap">
+      <view class="modal-header">
+        <view class="modal-title">{{filterTitle}}</view>
+        <view class="modal-close" bindtap="hideFilter">×</view>
+      </view>
+      <view class="modal-body">
+        <view wx:for="{{filterOptions}}" wx:key="index" class="filter-option" bindtap="selectFilter" data-value="{{item.value}}" data-label="{{item.label}}">
+          <text class="option-text">{{item.label}}</text>
+          <text wx:if="{{item.value === selectedFilterValue}}" class="option-check">✓</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 我的课程弹窗 -->
+  <view wx:if="{{showMyCoursesModal}}" class="modal" catchtap="hideMyCoursesModal">
+    <view class="modal-content my-courses-modal" catchtap="catchTap">
+      <view class="modal-header">
+        <view class="modal-title">我的课程</view>
+        <view class="modal-close" bindtap="hideMyCoursesModal">×</view>
+      </view>
+      <view class="modal-body">
+        <view wx:if="{{myCourses.length > 0}}" class="my-courses-list">
+          <view wx:for="{{myCourses}}" wx:key="id" class="my-course-item">
+            <view class="my-course-info">
+              <view class="my-course-title">{{item.title}}</view>
+              <view class="my-course-progress">
+                <view class="progress-bar">
+                  <view class="progress-fill" style="width: {{item.progress}}%"></view>
+                </view>
+                <view class="progress-text">{{item.progress}}%</view>
+              </view>
+            </view>
+            <view class="my-course-action" bindtap="continueCourse" data-id="{{item.id}}">
+              <text class="action-text">继续学习</text>
+            </view>
+          </view>
+        </view>
+        <view wx:else class="empty-courses">
+          <text class="empty-icon">📚</text>
+          <view class="empty-text">暂无已报名课程</view>
+          <view class="empty-desc">快去报名感兴趣的培训课程吧</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

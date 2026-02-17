@@ -1,0 +1,65 @@
+<view class="container">
+  <!-- 顶部导航 -->
+  <view class="top-nav">
+    <view class="nav-back" bindtap="navigateBack">
+      <text class="back-icon">←</text>
+    </view>
+    <view class="nav-title">教学资源整合</view>
+    <view class="nav-actions">
+      <view class="action-item" bindtap="addResource">
+        <text class="action-icon">+</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 搜索和筛选 -->
+  <view class="search-filter">
+    <view class="search-box">
+      <text class="search-icon">🔍</text>
+      <input class="search-input" placeholder="搜索资源名称、关键词" bindinput="onSearch" value="{{searchKeyword}}" />
+    </view>
+    <view class="filter-section">
+      <view class="filter-item" bindtap="showFilter('type')">
+        <text>{{selectedType || '资源类型'}}</text>
+        <text class="filter-arrow">▼</text>
+      </view>
+      <view class="filter-item" bindtap="showFilter('subject')">
+        <text>{{selectedSubject || '学科'}}</text>
+        <text class="filter-arrow">▼</text>
+      </view>
+      <view class="filter-item" bindtap="showFilter('region')">
+        <text>{{selectedRegion || '适用地区'}}</text>
+        <text class="filter-arrow">▼</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 资源整合列表 -->
+  <view class="resources-list">
+    <view wx:for="{{resources}}" wx:key="id" class="resource-item">
+      <view class="resource-header">
+        <view class="resource-info">
+          <view class="resource-name">{{item.name}}</view>
+          <view class="resource-details">
+            <text class="detail-item">{{item.type}}</text>
+            <text class="detail-divider">|</text>
+            <text class="detail-item">{{item.subject}}</text>
+            <text class="detail-divider">|</text>
+            <text class="detail-item">{{item.grade}}年级</text>
+          </view>
+        </view>
+        <view class="resource-regions">
+          <view class="region-tag" wx:if="item.regions.guangdong" style="background-color: #E0F2FE;">
+            广东适用
+          </view>
+          <view class="region-tag" wx:if="item.regions.hongkong" style="background-color: #D9F99D;">
+            香港适用
+          </view>
+        </view>
+      </view>
+      <view class="resource-body">
+        <view class="resource-description">{{item.description}}</view>
+        <view class="resource-meta">
+          <view class="meta-item">
+            <text class="meta-icon">📅</text>
+            <text class="meta
