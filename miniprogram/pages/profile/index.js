@@ -25,6 +25,24 @@ Page({
     this.checkLoginStatus();
   },
 
+  onShow: function () {
+    const loginStatusUpdated = wx.getStorageSync('loginStatusUpdated') || false;
+    if (loginStatusUpdated) {
+      this.checkLoginStatus();
+      wx.removeStorageSync('loginStatusUpdated');
+    }
+
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+      const tabBar = this.getTabBar();
+      if (tabBar.updateTabBar) {
+        tabBar.updateTabBar();
+      }
+      if (tabBar.updateSelected) {
+        tabBar.updateSelected();
+      }
+    }
+  },
+
   // 检查登录状态
   checkLoginStatus: function () {
     // 这里应该从本地存储或服务器检查登录状态
@@ -127,20 +145,34 @@ Page({
       return;
     }
 
-    // 模拟登录请求
+    wx.showActionSheet({
+      itemList: ['学生', '教师'],
+      success: (actionRes) => {
+        const userType = actionRes.tapIndex === 0 ? 'student' : 'teacher';
+        this.performLogin(username, password, userType);
+      },
+      fail: () => {
+        wx.showToast({
+          title: '请选择用户类型',
+          icon: 'none'
+        });
+      }
+    });
+  },
+
+  // 执行登录
+  performLogin: function (username, password, userType) {
+    const app = getApp();
+
     setTimeout(() => {
-      // 登录成功
       const userInfo = {
         id: '10001',
         nickname: username,
-        avatar: '👤',
-        userType: 'student'
+        avatar: '👤'
       };
 
-      // 调用app的登录成功方法
-      app.loginSuccess(userInfo, 'student');
+      app.loginSuccess(userInfo, userType);
 
-      // 存储用户统计信息
       wx.setStorageSync('userStats', {
         downloads: 5,
         views: 23,
@@ -162,6 +194,17 @@ Page({
         title: '登录成功',
         icon: 'success'
       });
+
+      // 立即更新底部导航栏
+      if (typeof this.getTabBar === 'function') {
+        const tabBar = this.getTabBar();
+        if (tabBar && tabBar.updateTabBar) {
+          tabBar.updateTabBar();
+        }
+        if (tabBar && tabBar.updateSelected) {
+          tabBar.updateSelected();
+        }
+      }
     }, 1000);
   },
 
@@ -169,71 +212,41 @@ Page({
   wechatLogin: function (e) {
     const app = getApp();
 
-    // 首先调用wx.login获取code
-    wx.login({
-      timeout: 5000,
-      success: loginRes => {
-        const code = loginRes.code;
-
-        // 然后请求用户授权获取头像和昵称
-        wx.getSetting({
-          success: settingRes => {
-            if (!settingRes.authSetting['scope.userInfo']) {
-              // 未授权，引导用户授权
-              wx.authorize({
-                scope: 'scope.userInfo',
-                success: () => {
-                  // 授权成功，获取用户信息
-                  this.getUserInfo((user, userType) => {
-                    this.completeLogin(code, user, userType);
-                  });
-                },
-                fail: () => {
-                  // 授权失败，显示提示
-                  wx.showToast({
-                    title: '需要授权才能登录',
-                    icon: 'none'
-                  });
-                }
-              });
-            } else {
-              // 已授权，直接获取用户信息
-              this.getUserInfo((user, userType) => {
-                this.completeLogin(code, user, userType);
-              });
-            }
-          }
-        });
-      },
-      fail: err => {
-        console.error('微信登录失败', err);
-        wx.showToast({
-          title: '登录失败',
-          icon: 'none'
-        });
-      }
-    });
-  },
-
-  // 获取用户信息
-  getUserInfo: function (callback) {
-    // 选择用户类型
     wx.showActionSheet({
       itemList: ['学生', '教师'],
       success: (actionRes) => {
         const userType = actionRes.tapIndex === 0 ? 'student' : 'teacher';
 
-        // 获取用户信息
-        wx.getUserInfo({
-          withCredentials: true,
-          success: (userRes) => {
-            const user = userRes.userInfo;
-            callback(user, userType);
+        wx.login({
+          timeout: 5000,
+          success: loginRes => {
+            const code = loginRes.code;
+
+            wx.getSetting({
+              success: settingRes => {
+                if (!settingRes.authSetting['scope.userInfo']) {
+                  wx.authorize({
+                    scope: 'scope.userInfo',
+                    success: () => {
+                      this.getUserInfo(code, userType);
+                    },
+                    fail: () => {
+                      wx.showToast({
+                        title: '需要授权才能登录',
+                        icon: 'none'
+                      });
+                    }
+                  });
+                } else {
+                  this.getUserInfo(code, userType);
+                }
+              }
+            });
           },
           fail: err => {
-            console.error('获取用户信息失败', err);
+            console.error('微信登录失败', err);
             wx.showToast({
-              title: '获取用户信息失败',
+              title: '登录失败',
               icon: 'none'
             });
           }
@@ -248,25 +261,37 @@ Page({
     });
   },
 
+  // 获取用户信息
+  getUserInfo: function (code, userType) {
+    wx.getUserInfo({
+      withCredentials: true,
+      success: (userRes) => {
+        const user = userRes.userInfo;
+        this.completeLogin(code, user, userType);
+      },
+      fail: err => {
+        console.error('获取用户信息失败', err);
+        wx.showToast({
+          title: '获取用户信息失败',
+          icon: 'none'
+        });
+      }
+    });
+  },
+
   // 完成登录流程
   completeLogin: function (code, user, userType) {
     const app = getApp();
 
-    // 这里应该调用后端API进行登录验证
-    // 模拟登录成功
     setTimeout(() => {
-      // 创建用户信息对象，使用与WXML匹配的字段名
       const userInfo = {
         id: '10002',
         nickname: user.nickName,
-        avatar: user.avatarUrl,
-        userType: userType
+        avatar: user.avatarUrl
       };
 
-      // 调用app的登录成功方法
       app.loginSuccess(userInfo, userType);
 
-      // 存储用户统计信息
       wx.setStorageSync('userStats', {
         downloads: 5,
         views: 23,
@@ -287,6 +312,17 @@ Page({
         title: '登录成功',
         icon: 'success'
       });
+
+      // 立即更新底部导航栏
+      if (typeof this.getTabBar === 'function') {
+        const tabBar = this.getTabBar();
+        if (tabBar && tabBar.updateTabBar) {
+          tabBar.updateTabBar();
+        }
+        if (tabBar && tabBar.updateSelected) {
+          tabBar.updateSelected();
+        }
+      }
     }, 1000);
   },
 
@@ -351,6 +387,17 @@ Page({
             }
           });
 
+          // 更新底部导航栏
+          if (typeof this.getTabBar === 'function') {
+            const tabBar = this.getTabBar();
+            if (tabBar && tabBar.updateTabBar) {
+              tabBar.updateTabBar();
+            }
+            if (tabBar && tabBar.updateSelected) {
+              tabBar.updateSelected();
+            }
+          }
+
           wx.showToast({
             title: '已退出登录',
             icon: 'success'
@@ -382,5 +429,10 @@ Page({
       title: '功能开发中',
       icon: 'none'
     });
+  },
+
+  // tabBar 更新回调
+  onTabBarUpdate: function () {
+    this.checkLoginStatus();
   }
 });

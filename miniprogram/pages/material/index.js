@@ -27,6 +27,18 @@ Page({
     this.initAudioContext();
   },
 
+  onShow: function () {
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+      const tabBar = this.getTabBar();
+      if (tabBar.updateTabBar) {
+        tabBar.updateTabBar();
+      }
+      if (tabBar.updateSelected) {
+        tabBar.updateSelected();
+      }
+    }
+  },
+
   initData: function () {
     var materialData = [
       // PDF资料 - 小学低年级
@@ -1123,5 +1135,10 @@ Page({
     this.setData({
       currentPage: page
     });
+  },
+
+  // tabBar 更新回调
+  onTabBarUpdate: function () {
+    console.log('辅导资料页面 tabBar 更新');
   }
 });

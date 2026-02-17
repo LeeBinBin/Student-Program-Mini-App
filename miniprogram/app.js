@@ -14,7 +14,9 @@ App({
     // 用户类型：student 或 teacher
     userType: null,
     // 登录状态
-    isLoggedIn: false
+    isLoggedIn: false,
+    // 是否显示教师中心 tab
+    showTeacherTab: false
   },
   
   onLaunch: function () {
@@ -48,27 +50,16 @@ App({
   updateTabBar: function () {
     const userType = this.globalData.userType;
     
-    // 获取当前tabBar
-    if (typeof wx.getTabBar === 'function' && wx.getTabBar()) {
-      const tabBar = wx.getTabBar();
-      if (tabBar) {
-        // 获取tabBar的列表
-        const list = tabBar.list;
-        
-        // 找到教师中心tab
-        const teacherTabIndex = list.findIndex(item => item.pagePath === 'pages/teacher/index');
-        
-        if (teacherTabIndex !== -1) {
-          // 根据用户类型决定是否显示教师中心
-          list[teacherTabIndex].visible = userType === 'teacher';
-          
-          // 更新tabBar
-          tabBar.setData({
-            list: list
-          });
-        }
+    // 使用自定义 tabBar 时，通过 globalData 控制显示
+    this.globalData.showTeacherTab = userType === 'teacher';
+    
+    // 通知所有页面更新
+    const pages = getCurrentPages();
+    pages.forEach(page => {
+      if (page.onTabBarUpdate) {
+        page.onTabBarUpdate();
       }
-    }
+    });
   },
   
   // 登录成功后调用

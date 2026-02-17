@@ -15,24 +15,35 @@ Page({
 
   // 微信快捷登录
   wechatLogin() {
-    wx.login({
-      success: (res) => {
-        if (res.code) {
-          // 这里可以将code发送到服务器进行验证
-          console.log('登录凭证', res.code);
-          
-          // 模拟登录成功
-          this.loginSuccess({
-            nickname: '微信用户',
-            avatarUrl: 'https://wx.qlogo.cn/mmopen/vi_32/SYiaiba5faera757d3aW75Qx9jR90R9z9jR90R9z9jR90R9z9jR90/0'
-          });
-        } else {
-          console.log('登录失败', res.errMsg);
-          wx.showToast({
-            title: '登录失败',
-            icon: 'none'
-          });
-        }
+    wx.showActionSheet({
+      itemList: ['学生', '教师'],
+      success: (actionRes) => {
+        const userType = actionRes.tapIndex === 0 ? 'student' : 'teacher';
+
+        wx.login({
+          success: (res) => {
+            if (res.code) {
+              console.log('登录凭证', res.code);
+
+              this.loginSuccess({
+                nickname: '微信用户',
+                avatarUrl: 'https://wx.qlogo.cn/mmopen/vi_32/SYiaiba5faera757d3aW75Qx9jR90R9z9jR90R9z9jR90R9z9jR90/0'
+              }, userType);
+            } else {
+              console.log('登录失败', res.errMsg);
+              wx.showToast({
+                title: '登录失败',
+                icon: 'none'
+              });
+            }
+          }
+        });
+      },
+      fail: () => {
+        wx.showToast({
+          title: '请选择用户类型',
+          icon: 'none'
+        });
       }
     });
   },
@@ -117,10 +128,22 @@ Page({
       return;
     }
 
-    // 模拟登录成功
-    this.loginSuccess({
-      nickname: username,
-      avatarUrl: 'https://wx.qlogo.cn/mmopen/vi_32/SYiaiba5faera757d3aW75Qx9jR90R9z9jR90R9z9jR90R9z9jR90/0'
+    wx.showActionSheet({
+      itemList: ['学生', '教师'],
+      success: (actionRes) => {
+        const userType = actionRes.tapIndex === 0 ? 'student' : 'teacher';
+
+        this.loginSuccess({
+          nickname: username,
+          avatarUrl: 'https://wx.qlogo.cn/mmopen/vi_32/SYiaiba5faera757d3aW75Qx9jR90R9z9jR90R9z9jR90R9z9jR90/0'
+        }, userType);
+      },
+      fail: () => {
+        wx.showToast({
+          title: '请选择用户类型',
+          icon: 'none'
+        });
+      }
     });
   },
 
@@ -155,28 +178,30 @@ Page({
   },
 
   // 登录成功处理
-  loginSuccess(userInfo) {
-    // 保存用户信息到本地存储
+  loginSuccess(userInfo, userType) {
+    const app = getApp();
+    
+    userInfo.userType = userType;
+    
+    app.loginSuccess(userInfo, userType);
+    
     wx.setStorageSync('userInfo', userInfo);
     
-    // 更新全局状态
-    const app = getApp();
-    app.globalData.userInfo = userInfo;
-    app.globalData.isLoggedIn = true;
-    
-    // 显示登录成功提示
     wx.showToast({
       title: '登录成功',
       icon: 'success'
     });
     
-    // 关闭登录表单
     this.hideLoginForm();
     
-    // 跳转回首页
-    wx.switchTab({
-      url: '/pages/index/index'
-    });
+    // 设置登录状态更新标志，让 tab 页面更新
+    wx.setStorageSync('loginStatusUpdated', true);
+    
+    setTimeout(() => {
+      wx.switchTab({
+        url: '/pages/index/index'
+      });
+    }, 500);
   },
 
   // 跳转到用户协议
