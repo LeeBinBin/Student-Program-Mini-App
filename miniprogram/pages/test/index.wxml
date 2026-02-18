@@ -4,7 +4,7 @@
   <view class="page-subtitle">知识点掌握情况诊断</view>
 
   <!-- 测试选择 -->
-  <view class="test-selection" wx:if="!showResult && !showTest">
+  <view class="test-selection" wx:if="!showResult && (!showTest || questions.length == 0)">
     <view class="selection-container">
       <view class="selection-title">选择测试科目和年级</view>
       <view class="selection-grid">
@@ -12,7 +12,7 @@
           <view class="selection-label">年级</view>
           <view class="selection-picker">
             <picker bindchange="bindGradeChange" value="{{gradeIndex}}" range="{{grades}}">
-              <view class="picker-text">{{grades[gradeIndex]}}</view>
+              <view class="picker-text {{gradeIndex == -1 ? 'placeholder' : ''}}">{{gradeIndex == -1 ? '请选择年级' : grades[gradeIndex]}}</view>
             </picker>
           </view>
         </view>
@@ -20,7 +20,7 @@
           <view class="selection-label">学科</view>
           <view class="selection-picker">
             <picker bindchange="bindSubjectChange" value="{{subjectIndex}}" range="{{subjects}}">
-              <view class="picker-text">{{subjects[subjectIndex]}}</view>
+              <view class="picker-text {{subjectIndex == -1 ? 'placeholder' : ''}}">{{subjectIndex == -1 ? '请选择科目' : subjects[subjectIndex]}}</view>
             </picker>
           </view>
         </view>
@@ -30,18 +30,18 @@
   </view>
 
   <!-- 测试进度 -->
-  <view class="progress-container" wx:if="showTest && !showResult">
+  <view class="progress-container" wx:if="showTest && !showResult && questions.length > 0 && gradeIndex != -1 && subjectIndex != -1">
     <view class="progress-info">
       <view class="progress-text">当前进度</view>
-      <view class="progress-num">{{currentQuestion + 1}}/{{questions.length}}</view>
+      <view class="progress-num">{{currentQuestion + 1}}/{{questions.length > 0 ? questions.length : 0}}</view>
     </view>
     <view class="progress-bar">
-      <view class="progress-fill" style="width: {{(currentQuestion + 1) / questions.length * 100}}%"></view>
+      <view class="progress-fill" style="width: {{questions.length > 0 ? (currentQuestion + 1) / questions.length * 100 : 0}}%"></view>
     </view>
   </view>
 
   <!-- 题目区域 -->
-  <view class="question-container" wx:if="showTest && !showResult">
+  <view class="question-container" wx:if="showTest && !showResult && questions.length > 0 && gradeIndex != -1 && subjectIndex != -1">
     <view class="question-item">
       <view class="question-header">
         <view class="question-index">第{{currentQuestion + 1}}题</view>
@@ -58,19 +58,19 @@
   </view>
 
   <!-- 题目导航 -->
-  <view class="question-nav" wx:if="showTest && !showResult">
+  <view class="question-nav" wx:if="showTest && !showResult && questions.length > 0 && gradeIndex != -1 && subjectIndex != -1">
     <view wx:for="{{questions}}" wx:key="index" class="nav-item {{selectedOptions[index] != null ? 'answered' : ''}} {{currentQuestion == index ? 'current' : ''}}" bindtap="jumpToQuestion" data-index="{{index}}">{{index + 1}}</view>
   </view>
 
   <!-- 操作按钮 -->
-  <view class="action-buttons" wx:if="showTest && !showResult">
+  <view class="action-buttons" wx:if="showTest && !showResult && questions.length > 0 && gradeIndex != -1 && subjectIndex != -1">
     <view class="btn prev-btn" bindtap="prevQuestion" wx:if="currentQuestion > 0">上一题</view>
     <view class="btn next-btn" bindtap="nextQuestion" wx:if="currentQuestion < questions.length - 1">下一题</view>
     <view class="btn submit-btn" bindtap="submitTest" wx:if="currentQuestion == questions.length - 1">提交测试</view>
   </view>
 
   <!-- 结果展示 -->
-  <view class="result-container" wx:if="showResult">
+  <view class="result-container" wx:if="showResult && score !== undefined && gradeIndex != -1 && subjectIndex != -1">
     <view class="result-header">
       <view class="result-title">测试结果</view>
     </view>

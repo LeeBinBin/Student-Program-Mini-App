@@ -7,6 +7,9 @@
 .container {
   min-height: 100vh;
   background-color: #F8F9FA;
+  max-width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 /* 页面标题 */
@@ -27,20 +30,22 @@
 /* 分类导航 */
 .filter-container {
   background-color: #FFFFFF;
-  width: 700rpx;
-  margin: 0 64rpx 48rpx;
-  padding: 48rpx;
-  border-radius: 32rpx;
-  box-shadow: 0 8rpx 12rpx rgba(0,0,0,0.1);
+  width: auto;
+  max-width: calc(100% - 64rpx);
+  margin: 0 32rpx 32rpx;
+  padding: 24rpx;
+  border-radius: 20rpx;
+  box-shadow: 0 6rpx 10rpx rgba(0,0,0,0.08);
+  box-sizing: border-box;
 }
 
 /* 学科标签 */
 .filter-tabs {
   display: flex;
   overflow-x: auto;
-  gap: 16rpx;
-  padding-bottom: 32rpx;
-  margin-bottom: 48rpx;
+  gap: 12rpx;
+  padding-bottom: 24rpx;
+  margin-bottom: 24rpx;
   border-bottom: 1px solid #E5E7EB;
 }
 
@@ -92,55 +97,63 @@
 
 /* 筛选条件 */
 .filter-options {
-  width: 700rpx;
+  width: 100%;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 20rpx;
 }
 
 .filter-item {
-  width: 700rpx;
+  width: 100%;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 18rpx;
+  gap: 12rpx;
+  box-sizing: border-box;
 }
 
 .filter-label {
-  font-size: 28rpx;
+  font-size: 26rpx;
   color: #333333;
   font-weight: 500;
 }
 
 .filter-picker {
   border: 1px solid #E5E7EB;
-  border-radius: 16rpx;
-  padding: 20rpx 24rpx;
+  border-radius: 12rpx;
+  padding: 16rpx 20rpx;
   background-color: #FFFFFF;
   transition: all 0.3s ease;
+  font-size: 26rpx;
+  box-sizing: border-box;
 }
 
 .filter-picker:focus-within {
   border-color: #1E40AF;
-  box-shadow: 0 0 0 6rpx rgba(30, 64, 175, 0.1);
+  box-shadow: 0 0 0 4rpx rgba(30, 64, 175, 0.1);
 }
 
 .picker-text {
-  font-size: 28rpx;
+  font-size: 26rpx;
   color: #333333;
 }
 
 .filter-btn {
   background-color: #1E40AF;
   color: #FFFFFF;
-  font-size: 28rpx;
+  font-size: 26rpx;
   font-weight: 500;
   text-align: center;
-  padding: 20rpx 40rpx;
-  border-radius: 16rpx;
+  padding: 16rpx 32rpx;
+  border-radius: 12rpx;
   cursor: pointer;
   transition: all 0.3s ease;
-  width: 600rpx;
-  margin-top: 20rpx;
+  width: 100%;
+  max-width: 400rpx;
+  margin-top: 8rpx;
+  box-sizing: border-box;
 }
 
 .filter-btn:hover {
@@ -151,36 +164,41 @@
 .material-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 30rpx;
-  margin: 0 48rpx 48rpx;
+  gap: 24rpx;
+  margin: 0 32rpx 32rpx;
+  max-width: calc(100% - 64rpx);
+  box-sizing: border-box;
 }
 
 @media (min-width: 768px) {
   .material-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 24rpx;
   }
 }
 
 @media (min-width: 1024px) {
   .material-grid {
     grid-template-columns: repeat(3, 1fr);
+    gap: 24rpx;
   }
 }
 
 .material-card {
   background-color: #FFFFFF;
-  border-radius: 32rpx;
-  box-shadow: 0 8rpx 12rpx rgba(0,0,0,0.1);
+  border-radius: 20rpx;
+  box-shadow: 0 6rpx 10rpx rgba(0,0,0,0.08);
   overflow: hidden;
   transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
   height: 100%;
+  box-sizing: border-box;
 }
 
 .material-card:hover {
-  transform: translateY(-10rpx);
-  box-shadow: 0 20rpx 30rpx -6rpx rgba(0, 0, 0, 0.1), 0 8rpx 12rpx -4rpx rgba(0, 0, 0, 0.05);
+  transform: translateY(-6rpx);
+  box-shadow: 0 12rpx 20rpx -6rpx rgba(0, 0, 0, 0.1), 0 6rpx 10rpx -4rpx rgba(0, 0, 0, 0.05);
 }
 
 .card-icon.pdf {
@@ -204,27 +222,30 @@
 }
 
 .card-body {
-  padding: 32rpx;
+  padding: 24rpx;
   flex: 1;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
 .card-title {
-  font-size: 32rpx;
+  font-size: 28rpx;
   font-weight: bold;
   color: #333333;
-  margin-bottom: 16rpx;
+  margin-bottom: 12rpx;
   line-height: 1.3;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .card-type {
   display: inline-block;
-  padding: 8rpx 16rpx;
-  border-radius: 8rpx;
-  font-size: 24rpx;
+  padding: 6rpx 12rpx;
+  border-radius: 6rpx;
+  font-size: 22rpx;
   font-weight: 500;
-  margin-bottom: 24rpx;
+  margin-bottom: 16rpx;
   align-self: flex-start;
 }
 
@@ -249,11 +270,17 @@
 }
 
 .card-desc {
-  font-size: 28rpx;
+  font-size: 24rpx;
   color: #666666;
   line-height: 1.5;
-  margin-bottom: 32rpx;
+  margin-bottom: 20rpx;
   flex: 1;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .card-stats {
@@ -469,59 +496,59 @@
   
   .material-grid {
     grid-template-columns: 1fr;
-    margin: 0 48rpx 32rpx;
-    gap: 24rpx;
+    margin: 0 24rpx 24rpx;
+    gap: 20rpx;
   }
   
   .filter-container {
-    margin: 0 48rpx 32rpx;
-    padding: 32rpx;
+    margin: 0 24rpx 24rpx;
+    padding: 20rpx;
   }
   
   .page-header {
-    padding: 32rpx;
-  }
-  
-  .page-title {
-    font-size: 56rpx;
-  }
-  
-  .audio-player {
-    bottom: 32rpx;
-    right: 32rpx;
-    left: 32rpx;
     padding: 24rpx;
   }
   
+  .page-title {
+    font-size: 48rpx;
+  }
+  
+  .audio-player {
+    bottom: 24rpx;
+    right: 24rpx;
+    left: 24rpx;
+    padding: 20rpx;
+  }
+  
   .card-header {
-    height: 240rpx;
+    height: 200rpx;
   }
   
   .card-body {
-    padding: 32rpx;
+    padding: 20rpx;
   }
   
   .tab-item {
-    padding: 12rpx 24rpx;
+    padding: 10rpx 20rpx;
     font-size: 24rpx;
   }
   
   .filter-tabs {
-    gap: 12rpx;
-    padding-bottom: 24rpx;
-    margin-bottom: 32rpx;
+    gap: 10rpx;
+    padding-bottom: 20rpx;
+    margin-bottom: 20rpx;
   }
   
   .filter-options {
-    gap: 24rpx;
+    gap: 16rpx;
   }
   
   .filter-picker {
-    padding: 16rpx 20rpx;
+    padding: 14rpx 16rpx;
   }
   
   .filter-btn {
-    padding: 16rpx 32rpx;
+    padding: 14rpx 24rpx;
   }
 }
 
@@ -538,5 +565,30 @@
 @media (min-width: 1024px) {
   .filter-options {
     grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .material-grid {
+    margin: 0 20rpx 20rpx;
+    gap: 16rpx;
+  }
+  
+  .filter-container {
+    margin: 0 20rpx 20rpx;
+    padding: 16rpx;
+  }
+  
+  .card-title {
+    font-size: 26rpx;
+  }
+  
+  .card-desc {
+    font-size: 22rpx;
+  }
+  
+  .tab-item {
+    padding: 8rpx 16rpx;
+    font-size: 22rpx;
   }
 }

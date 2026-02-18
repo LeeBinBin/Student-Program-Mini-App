@@ -73,13 +73,28 @@ Component({
         const currentPage = pages[pages.length - 1];
         if (currentPage) {
           const route = currentPage.route;
-          const isInList = list.some(item => item.pagePath === `/${route}`);
           
-          // 如果当前页面不在 tabBar 列表中（例如教师中心被隐藏时），跳转到首页
-          if (!isInList && route !== 'pages/index/index') {
-            wx.switchTab({
-              url: '/pages/index/index'
-            });
+          // 定义所有 tabBar 页面路径
+          const tabPages = [
+            'pages/index/index',
+            'pages/knowledge/index',
+            'pages/material/index',
+            'pages/teacher/index',
+            'pages/profile/index'
+          ];
+          
+          // 只有当前页面是 tabBar 页面时，才检查是否在列表中
+          const isTabPage = tabPages.includes(route);
+          
+          if (isTabPage) {
+            const isInList = list.some(item => item.pagePath === `/${route}`);
+            
+            // 如果当前页面不在 tabBar 列表中（例如教师中心被隐藏时），跳转到首页
+            if (!isInList && route !== 'pages/index/index') {
+              wx.switchTab({
+                url: '/pages/index/index'
+              });
+            }
           }
         }
       }
