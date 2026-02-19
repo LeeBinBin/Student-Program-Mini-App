@@ -3,11 +3,17 @@ page {
   background-color: #F8F9FA;
   min-height: 100vh;
   font-family: PingFang SC;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 .container {
   min-height: 100vh;
   padding-bottom: 40rpx;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 /* 顶部导航 */
@@ -15,11 +21,12 @@ page {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 40rpx;
+  padding: 40rpx 32rpx;
   background-color: #FFFFFF;
   box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.08);
-  position: sticky;
-  top: 0;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
   z-index: 100;
 }
 
@@ -69,11 +76,14 @@ page {
 .teacher-profile {
   display: flex;
   align-items: center;
-  padding: 48rpx 40rpx;
+  padding: 48rpx 32rpx;
   background-color: #FFFFFF;
-  margin: 24rpx 24rpx 0;
-  border-radius: 32rpx;
+  margin: 24rpx 0 0;
+  border-radius: 0;
   box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.08);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .profile-avatar {
@@ -132,11 +142,15 @@ page {
 
 /* 功能模块 */
 .function-modules {
-  margin: 32rpx 24rpx 0;
+  margin: 32rpx 0 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .module-section {
   margin-bottom: 40rpx;
+  width: 100%;
 }
 
 .section-title {
@@ -144,13 +158,18 @@ page {
   font-weight: bold;
   color: #333333;
   margin-bottom: 24rpx;
-  padding: 0 16rpx;
+  padding: 0 32rpx;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .module-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 24rpx;
+  width: 100%;
+  padding: 0 32rpx;
+  box-sizing: border-box;
 }
 
 .module-item {
@@ -241,11 +260,14 @@ page {
 
 /* 最近活动 */
 .recent-activities {
-  margin: 32rpx 24rpx 0;
+  margin: 32rpx 0 0;
   background-color: #FFFFFF;
-  border-radius: 24rpx;
+  border-radius: 0;
   padding: 32rpx;
   box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.08);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .activity-list {
@@ -403,7 +425,7 @@ page {
 /* 响应式设计 */
 @media (max-width: 375px) {
   .top-nav {
-    padding: 32rpx;
+    padding: 32rpx 24rpx;
   }
   
   .nav-title {
@@ -411,9 +433,9 @@ page {
   }
   
   .teacher-profile {
-    padding: 32rpx;
-    flex-direction: column;
-    text-align: center;
+    padding: 32rpx 24rpx;
+    margin: 24rpx 0 0;
+    width: 100%;
   }
   
   .profile-avatar {
@@ -426,12 +448,22 @@ page {
     gap: 40rpx;
   }
   
+  .function-modules {
+    margin: 32rpx 0 0;
+    width: 100%;
+  }
+  
+  .section-title {
+    padding: 0 24rpx;
+  }
+  
   .module-grid {
     gap: 20rpx;
+    padding: 0 24rpx;
   }
   
   .module-item {
-    padding: 32rpx;
+    padding: 32rpx 20rpx;
   }
   
   .module-icon {
@@ -444,6 +476,52 @@ page {
   
   .module-desc {
     font-size: 22rpx;
+  }
+  
+  .recent-activities {
+    margin: 32rpx 0 0;
+    width: 100%;
+    padding: 32rpx 24rpx;
+  }
+}
+
+@media (max-width: 320px) {
+  .teacher-profile {
+    padding: 24rpx 16rpx;
+  }
+  
+  .profile-avatar {
+    width: 140rpx;
+    height: 140rpx;
+  }
+  
+  .section-title {
+    padding: 0 16rpx;
+  }
+  
+  .module-grid {
+    grid-template-columns: 1fr;
+    padding: 0 16rpx;
+  }
+  
+  .module-item {
+    padding: 28rpx 16rpx;
+  }
+  
+  .module-icon {
+    font-size: 48rpx;
+  }
+  
+  .module-title {
+    font-size: 24rpx;
+  }
+  
+  .module-desc {
+    font-size: 20rpx;
+  }
+  
+  .recent-activities {
+    padding: 32rpx 16rpx;
   }
 }
 

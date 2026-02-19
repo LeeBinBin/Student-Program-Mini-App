@@ -11,8 +11,8 @@
     <view wx:else class="btn-user" bindtap="navigateToProfile">
       <view class="user-info">
         <view class="user-avatar">
-          <image wx:if="{{userInfo.avatar && userInfo.avatar !== '👤'}}" src="{{userInfo.avatar}}" mode="aspectFill"></image>
-          <view wx:else>{{userInfo.avatar || '👤'}}</view>
+          <image wx:if="{{userInfo.avatar && userInfo.avatar.indexOf('http') === 0}}" src="{{userInfo.avatar}}" mode="aspectFill"></image>
+          <view wx:else>{{userInfo.avatar || '🎓'}}</view>
         </view>
         <view class="user-name">{{userInfo.nickname || '用户'}}</view>
       </view>

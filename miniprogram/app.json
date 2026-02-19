@@ -5,6 +5,9 @@
     "pages/material/index",
     "pages/test/index",
     "pages/teacher/index",
+    "pages/teacher/students/index",
+    "pages/teacher/students/detail",
+    "pages/teacher/students/add",
     "pages/profile/index",
     "pages/history/index",
     "pages/favorites/index"

@@ -1,0 +1,127 @@
+<view class="container">
+  <!-- 顶部导航 -->
+  <view class="top-nav">
+    <view class="nav-back" bindtap="navigateBack">
+      <text class="back-icon">←</text>
+    </view>
+    <view class="nav-title">学生详情</view>
+    <view class="nav-actions">
+      <view class="action-item" bindtap="editStudent">
+        <text class="action-icon">✏️</text>
+      </view>
+      <view class="action-item" bindtap="deleteStudent">
+        <text class="action-icon">🗑️</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 学生基本信息 -->
+  <view class="student-card">
+    <view class="student-header">
+      <view class="student-avatar">
+        <image wx:if="{{student.avatar}}" src="{{student.avatar}}" mode="aspectFill"></image>
+        <view wx:else class="avatar-placeholder">{{student.name.charAt(0)}}</view>
+      </view>
+      <view class="student-basic-info">
+        <view class="student-name">{{student.name}}</view>
+        <view class="student-id">学号：{{student.id}}</view>
+        <view class="student-tags">
+          <view class="tag cross-border" wx:if="{{student.type === 'cross-border'}}">跨境学生</view>
+          <view class="tag local" wx:else>本地学生</view>
+          <view class="tag active" wx:if="{{student.status === 'active'}}">在读</view>
+          <view class="tag inactive" wx:else>休学</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="info-section">
+      <view class="info-item">
+        <view class="info-label">学校</view>
+        <view class="info-value">{{student.school}}</view>
+      </view>
+      <view class="info-item">
+        <view class="info-label">年级</view>
+        <view class="info-value">{{student.grade}}</view>
+      </view>
+      <view class="info-item">
+        <view class="info-label">联系电话</view>
+        <view class="info-value">{{student.phone}}</view>
+      </view>
+      <view class="info-item">
+        <view class="info-label">学习科目</view>
+        <view class="info-value">{{student.subjectsText}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 跨境学生信息 -->
+  <view wx:if="{{student.type === 'cross-border'}}" class="cross-border-card">
+    <view class="card-title">
+      <text class="title-icon">🌉</text>
+      <text>跨境教育信息</text>
+    </view>
+    <view class="info-section">
+      <view class="info-item">
+        <view class="info-label">内地学校</view>
+        <view class="info-value">{{student.crossBorderInfo.mainlandSchool}}</view>
+      </view>
+      <view class="info-item">
+        <view class="info-label">适应水平</view>
+        <view class="info-value adaptation-{{student.crossBorderInfo.adaptationLevel === '优秀' ? 'excellent' : student.crossBorderInfo.adaptationLevel === '良好' ? 'good' : 'average'}}">
+          {{student.crossBorderInfo.adaptationLevel}}
+        </view>
+      </view>
+      <view class="info-item">
+        <view class="info-label">需要关注</view>
+        <view class="info-value">
+          <text wx:if="{{student.crossBorderInfo.needsAttention}}" class="attention-yes">是</text>
+          <text wx:else class="attention-no">否</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 学习记录 -->
+  <view class="learning-record-card">
+    <view class="card-title">
+      <text class="title-icon">📊</text>
+      <text>学习记录</text>
+    </view>
+    <view class="record-list">
+      <view wx:for="{{learningRecords}}" wx:key="id" class="record-item">
+        <view class="record-icon">{{item.icon}}</view>
+        <view class="record-content">
+          <view class="record-title">{{item.title}}</view>
+          <view class="record-time">{{item.time}}</view>
+        </view>
+        <view class="record-score" wx:if="{{item.score}}">{{item.score}}分</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 适配建议 -->
+  <view wx:if="{{student.type === 'cross-border'}}" class="suggestion-card">
+    <view class="card-title">
+      <text class="title-icon">💡</text>
+      <text>适配建议</text>
+    </view>
+    <view class="suggestion-list">
+      <view wx:for="{{suggestions}}" wx:key="index" class="suggestion-item">
+        <view class="suggestion-number">{{index + 1}}</view>
+        <view class="suggestion-content">{{item}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部操作按钮 -->
+  <view class="bottom-actions">
+    <view class="action-btn secondary" bindtap="contactStudent">
+      <text class="btn-icon">📞</text>
+      <text>联系学生</text>
+    </view>
+    <view class="action-btn primary" bindtap="viewProgress">
+      <text class="btn-icon">📈</text>
+      <text>学习进度</text>
+    </view>
+  </view>
+</view>
