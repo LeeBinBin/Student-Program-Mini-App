@@ -1,0 +1,143 @@
+<view class="container">
+  <view class="top-nav">
+    <view class="nav-back" bindtap="navigateBack">
+      <text class="back-icon">←</text>
+    </view>
+    <view class="nav-title">添加学生</view>
+    <view class="nav-placeholder"></view>
+  </view>
+
+  <view class="form-container">
+    <view class="form-section">
+      <view class="section-title">基本信息</view>
+      
+      <view class="form-item">
+        <view class="form-label">姓名 <text class="required">*</text></view>
+        <input class="form-input" placeholder="请输入学生姓名" value="{{formData.name}}" bindinput="onInput" data-field="name" confirm-type="done" adjust-position="{{true}}" />
+      </view>
+
+      <view class="form-item">
+        <view class="form-label">学号 <text class="required">*</text></view>
+        <view class="form-input readonly-input">{{formData.id}}</view>
+      </view>
+
+      <view class="form-item">
+        <view class="form-label">联系电话 <text class="required">*</text></view>
+        <input class="form-input" type="number" placeholder="请输入联系电话" value="{{formData.phone}}" bindinput="onInput" data-field="phone" confirm-type="done" adjust-position="{{true}}" />
+      </view>
+
+      <view class="form-item">
+        <view class="form-label">学校 <text class="required">*</text></view>
+        <input class="form-input" placeholder="请输入学校名称" value="{{formData.school}}" bindinput="onInput" data-field="school" confirm-type="done" adjust-position="{{true}}" />
+      </view>
+
+      <view class="form-item">
+        <view class="form-label">年级 <text class="required">*</text></view>
+        <picker mode="selector" range="{{gradeOptions}}" bindchange="onGradeChange">
+          <view class="picker-input">
+            {{formData.grade || '请选择年级'}}
+            <text class="picker-arrow">▼</text>
+          </view>
+        </picker>
+      </view>
+
+      <view class="form-item">
+        <view class="form-label">学生类型 <text class="required">*</text></view>
+        <view class="type-selector">
+          <view class="type-option {{formData.type === 'local' ? 'active' : ''}}" bindtap="onTypeChange" data-type="local">
+            <text class="type-icon">🏫</text>
+            <text class="type-text">本地学生</text>
+          </view>
+          <view class="type-option {{formData.type === 'cross-border' ? 'active' : ''}}" bindtap="onTypeChange" data-type="cross-border">
+            <text class="type-icon">🌉</text>
+            <text class="type-text">跨境学生</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="form-section">
+      <view class="section-title">学习科目</view>
+      
+      <view class="subjects-selector">
+        <view class="subject-item {{formData.subjectSelected.math ? 'selected' : ''}}" bindtap="toggleSubject" data-subject="math">
+          <text class="subject-icon">📐</text>
+          <text class="subject-text">数学</text>
+        </view>
+        <view class="subject-item {{formData.subjectSelected.chinese ? 'selected' : ''}}" bindtap="toggleSubject" data-subject="chinese">
+          <text class="subject-icon">📖</text>
+          <text class="subject-text">语文</text>
+        </view>
+        <view class="subject-item {{formData.subjectSelected.english ? 'selected' : ''}}" bindtap="toggleSubject" data-subject="english">
+          <text class="subject-icon">🔤</text>
+          <text class="subject-text">英语</text>
+        </view>
+        <view class="subject-item {{formData.subjectSelected.science ? 'selected' : ''}}" bindtap="toggleSubject" data-subject="science">
+          <text class="subject-icon">🔬</text>
+          <text class="subject-text">科学</text>
+        </view>
+        <view class="subject-item {{formData.subjectSelected.physics ? 'selected' : ''}}" bindtap="toggleSubject" data-subject="physics">
+          <text class="subject-icon">⚡</text>
+          <text class="subject-text">物理</text>
+        </view>
+        <view class="subject-item {{formData.subjectSelected.chemistry ? 'selected' : ''}}" bindtap="toggleSubject" data-subject="chemistry">
+          <text class="subject-icon">🧪</text>
+          <text class="subject-text">化学</text>
+        </view>
+        <view class="subject-item {{formData.subjectSelected.biology ? 'selected' : ''}}" bindtap="toggleSubject" data-subject="biology">
+          <text class="subject-icon">🧬</text>
+          <text class="subject-text">生物</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="form-section" wx:if="{{formData.type === 'cross-border'}}">
+      <view class="section-title">跨境信息</view>
+      
+      <view class="form-item">
+        <view class="form-label">内地学校 <text class="required">*</text></view>
+        <input class="form-input" placeholder="请输入内地学校名称" value="{{formData.crossBorderInfo.mainlandSchool}}" bindinput="onCrossBorderInput" data-field="mainlandSchool" confirm-type="done" adjust-position="{{true}}" />
+      </view>
+
+      <view class="form-item">
+        <view class="form-label">适应水平 <text class="required">*</text></view>
+        <picker mode="selector" range="{{adaptationOptions}}" bindchange="onAdaptationChange">
+          <view class="picker-input">
+            {{formData.crossBorderInfo.adaptationLevel || '请选择适应水平'}}
+            <text class="picker-arrow">▼</text>
+          </view>
+        </picker>
+      </view>
+
+      <view class="form-item">
+        <view class="form-label">需要关注</view>
+        <view class="switch-container">
+          <switch checked="{{formData.crossBorderInfo.needsAttention}}" bindchange="onNeedsAttentionChange" color="#3B82F6" />
+        </view>
+      </view>
+    </view>
+
+    <view class="form-section">
+      <view class="section-title">其他信息</view>
+      
+      <view class="form-item">
+        <view class="form-label">学生状态</view>
+        <view class="status-selector">
+          <view class="status-option {{formData.status === 'active' ? 'active' : ''}}" bindtap="onStatusChange" data-status="active">
+            <text class="status-icon">📚</text>
+            <text class="status-text">在读</text>
+          </view>
+          <view class="status-option {{formData.status === 'inactive' ? 'active' : ''}}" bindtap="onStatusChange" data-status="inactive">
+            <text class="status-icon">📝</text>
+            <text class="status-text">休学</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="bottom-actions">
+    <view class="action-btn cancel" bindtap="navigateBack">取消</view>
+    <view class="action-btn confirm" bindtap="submitForm">保存</view>
+  </view>
+</view>

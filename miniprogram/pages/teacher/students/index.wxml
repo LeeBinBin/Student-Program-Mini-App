@@ -19,15 +19,15 @@
       <input class="search-input" placeholder="搜索学生姓名、ID或学校" bindinput="onSearch" value="{{searchKeyword}}" />
     </view>
     <view class="filter-section">
-      <view class="filter-item" bindtap="showFilter('type')">
+      <view class="filter-item" bindtap="showFilter" data-type="type">
         <text>{{selectedType || '学生类型'}}</text>
         <text class="filter-arrow">▼</text>
       </view>
-      <view class="filter-item" bindtap="showFilter('school')">
+      <view class="filter-item" bindtap="showFilter" data-type="school">
         <text>{{selectedSchool || '学校'}}</text>
         <text class="filter-arrow">▼</text>
       </view>
-      <view class="filter-item" bindtap="showFilter('grade')">
+      <view class="filter-item" bindtap="showFilter" data-type="grade">
         <text>{{selectedGrade || '年级'}}</text>
         <text class="filter-arrow">▼</text>
       </view>
@@ -48,7 +48,15 @@
           <text class="detail-divider">|</text>
           <text class="detail-item">{{item.school}}</text>
           <text class="detail-divider">|</text>
-          <text class="detail-item">{{item.grade}}年级</text>
+          <text class="detail-item">{{item.grade}}</text>
+        </view>
+        <view class="student-phone" bindtap="contactStudent" data-phone="{{item.phone}}">
+          <text class="phone-icon">📞</text>
+          <text class="phone-number">{{item.phone}}</text>
+        </view>
+        <view class="student-subjects">
+          <text class="subjects-label">科目：</text>
+          <text class="subjects-value">{{item.subjectsText}}</text>
         </view>
         <view class="student-tags">
           <view class="tag" style="background-color: {{item.type === 'cross-border' ? '#E0F2FE' : '#E0F2FE'}}">

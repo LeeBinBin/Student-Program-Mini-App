@@ -1,7 +1,7 @@
 // index.js
 Page({
   data: {
-    studentsCount: 45,
+    studentsCount: 15,
     coursesCount: 12,
     materialsCount: 36,
     notificationCount: 3,
@@ -75,6 +75,8 @@ Page({
     const userType = app.globalData.userType;
     const isLoggedIn = app.globalData.isLoggedIn;
 
+    console.log('教师中心权限检查:', { isLoggedIn, userType });
+
     if (!isLoggedIn) {
       wx.showModal({
         title: '提示',
@@ -92,11 +94,11 @@ Page({
     if (userType !== 'teacher') {
       wx.showModal({
         title: '权限不足',
-        content: '教师中心仅对教师用户开放',
+        content: '教师中心仅对教师用户开放，请以教师身份登录',
         showCancel: false,
         success: () => {
           wx.switchTab({
-            url: '/pages/index/index'
+            url: '/pages/profile/index'
           });
         }
       });

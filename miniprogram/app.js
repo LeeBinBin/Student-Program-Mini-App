@@ -16,7 +16,9 @@ App({
     // 登录状态
     isLoggedIn: false,
     // 是否显示教师中心 tab
-    showTeacherTab: false
+    showTeacherTab: false,
+    // 学号计数器
+    studentIdCounter: 15
   },
   
   onLaunch: function () {
@@ -78,6 +80,19 @@ App({
     
     // 通知其他页面登录状态已更新
     wx.setStorageSync('loginStatusUpdated', true);
+    
+    // 强制更新自定义tabbar
+    setTimeout(() => {
+      const pages = getCurrentPages();
+      pages.forEach(page => {
+        if (typeof page.getTabBar === 'function') {
+          const tabBar = page.getTabBar();
+          if (tabBar && tabBar.updateTabBar) {
+            tabBar.updateTabBar();
+          }
+        }
+      });
+    }, 100);
   },
   
   // 退出登录

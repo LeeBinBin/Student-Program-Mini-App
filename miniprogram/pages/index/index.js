@@ -29,7 +29,7 @@ Page({
   },
 
   navigateToMaterial: function () {
-    wx.navigateTo({
+    wx.switchTab({
       url: '/pages/material/index'
     })
   },
@@ -43,6 +43,36 @@ Page({
 
   // 导航到教师备课素材页面
   navigateToTeacher: function () {
+    const app = getApp();
+    
+    if (!app.globalData.isLoggedIn) {
+      wx.showModal({
+        title: '提示',
+        content: '请先登录',
+        showCancel: false,
+        success: () => {
+          wx.switchTab({
+            url: '/pages/profile/index'
+          });
+        }
+      });
+      return;
+    }
+
+    if (app.globalData.userType !== 'teacher') {
+      wx.showModal({
+        title: '权限提示',
+        content: '教师备课素材仅对教师用户开放，请以教师身份登录',
+        showCancel: false,
+        success: () => {
+          wx.switchTab({
+            url: '/pages/profile/index'
+          });
+        }
+      });
+      return;
+    }
+
     wx.switchTab({
       url: '/pages/teacher/index'
     })
