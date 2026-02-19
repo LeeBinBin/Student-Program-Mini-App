@@ -7,9 +7,10 @@
 .container {
   min-height: 100vh;
   background-color: #F8F9FA;
-  max-width: 100%;
+  width: 100%;
   overflow-x: hidden;
   box-sizing: border-box;
+  padding: 0 32rpx 150rpx;
 }
 
 /* 页面标题 */
@@ -30,9 +31,8 @@
 /* 分类导航 */
 .filter-container {
   background-color: #FFFFFF;
-  width: auto;
-  max-width: calc(100% - 64rpx);
-  margin: 0 32rpx 32rpx;
+  width: 100%;
+  margin: 0 0 32rpx;
   padding: 24rpx;
   border-radius: 20rpx;
   box-shadow: 0 6rpx 10rpx rgba(0,0,0,0.08);
@@ -121,18 +121,20 @@
 }
 
 .filter-picker {
-  border: 1px solid #E5E7EB;
+  border: 2rpx solid #1E40AF;
   border-radius: 12rpx;
   padding: 16rpx 20rpx;
-  background-color: #FFFFFF;
+  background: linear-gradient(135deg, #F0F7FF 0%, #FFFFFF 100%);
   transition: all 0.3s ease;
   font-size: 26rpx;
   box-sizing: border-box;
+  box-shadow: 0 4rpx 12rpx rgba(30, 64, 175, 0.15);
 }
 
 .filter-picker:focus-within {
-  border-color: #1E40AF;
-  box-shadow: 0 0 0 4rpx rgba(30, 64, 175, 0.1);
+  border-color: #3B82F6;
+  box-shadow: 0 0 0 4rpx rgba(59, 130, 246, 0.15), 0 6rpx 16rpx rgba(30, 64, 175, 0.2);
+  background: linear-gradient(135deg, #E0F2FE 0%, #F0F7FF 100%);
 }
 
 .picker-text {
@@ -165,8 +167,8 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 24rpx;
-  margin: 0 32rpx 32rpx;
-  max-width: calc(100% - 64rpx);
+  margin: 0 0 32rpx;
+  width: 100%;
   box-sizing: border-box;
 }
 
@@ -348,6 +350,15 @@
   background-color: #059669;
 }
 
+.favorite-btn {
+  background-color: #F472B6;
+  color: #FFFFFF;
+}
+
+.favorite-btn:hover {
+  background-color: #DB2777;
+}
+
 /* 空状态 */
 .empty-state {
   display: flex;
@@ -404,6 +415,41 @@
 .pagination-item:hover:not(.active) {
   background-color: #F3F4F6;
   border-color: #D1D5DB;
+}
+
+/* 跳转输入框容器 */
+.pagination-jump-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16rpx;
+  margin: 24rpx 0 48rpx;
+}
+
+.pagination-input {
+  width: 200rpx;
+  height: 70rpx;
+  padding: 0 24rpx;
+  border: 1px solid #E5E7EB;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  text-align: center;
+  background-color: #FFFFFF;
+}
+
+.pagination-jump-btn {
+  padding: 16rpx 32rpx;
+  background-color: #1E40AF;
+  color: #FFFFFF;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.pagination-jump-btn:hover {
+  background-color: #1E3A8A;
 }
 
 /* 音频播放控件 */
@@ -490,18 +536,22 @@
 
 /* 响应式设计 */
 @media (max-width: 768px) {
+  .container {
+    padding: 0 24rpx 150rpx;
+  }
+  
   .filter-options {
     grid-template-columns: 1fr;
   }
   
   .material-grid {
     grid-template-columns: 1fr;
-    margin: 0 24rpx 24rpx;
+    margin: 0 0 24rpx;
     gap: 20rpx;
   }
   
   .filter-container {
-    margin: 0 24rpx 24rpx;
+    margin: 0 0 24rpx;
     padding: 20rpx;
   }
   
@@ -569,13 +619,17 @@
 }
 
 @media (max-width: 480px) {
+  .container {
+    padding: 0 20rpx 150rpx;
+  }
+  
   .material-grid {
-    margin: 0 20rpx 20rpx;
+    margin: 0 0 20rpx;
     gap: 16rpx;
   }
   
   .filter-container {
-    margin: 0 20rpx 20rpx;
+    margin: 0 0 20rpx;
     padding: 16rpx;
   }
   

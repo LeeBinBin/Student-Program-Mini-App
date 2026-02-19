@@ -68,7 +68,7 @@
             <image class="icon-image" src="/images/icons/material.svg"></image>
           </view>
         </view>
-        <view class="grid-title">双语辅导资料</view>
+        <view class="grid-title">三语辅导资料</view>
         <view class="grid-desc">提供中、英、粤三语对照的学习资料和解析</view>
       </view>
       <view class="grid-item" bindtap="navigateToTest">
@@ -215,7 +215,7 @@
           <view class="star active"></view>
           <view class="star"></view>
         </view>
-        <view class="testimonial-content">"双语辅导资料帮助我更好地辅导孩子学习，解决了跨境教育衔接的问题。"</view>
+        <view class="testimonial-content">"三语辅导资料帮助我更好地辅导孩子学习，解决了跨境教育衔接的问题。"</view>
       </view>
     </view>
   </view>

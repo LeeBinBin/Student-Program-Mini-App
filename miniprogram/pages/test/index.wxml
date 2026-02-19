@@ -29,8 +29,77 @@
     </view>
   </view>
 
+  <!-- 功能介绍 -->
+  <view class="feature-section" wx:if="{{!showTest && !showResult}}">
+    <view class="feature-title">功能特点</view>
+    <view class="feature-grid">
+      <view class="feature-item">
+        <view class="feature-icon">📊</view>
+        <view class="feature-name">智能诊断</view>
+        <view class="feature-desc">精准分析知识点掌握情况</view>
+      </view>
+      <view class="feature-item">
+        <view class="feature-icon">🎯</view>
+        <view class="feature-name">个性化推荐</view>
+        <view class="feature-desc">根据薄弱点提供学习建议</view>
+      </view>
+      <view class="feature-item">
+        <view class="feature-icon">📈</view>
+        <view class="feature-name">学习追踪</view>
+        <view class="feature-desc">记录学习历史，追踪进步</view>
+      </view>
+      <view class="feature-item">
+        <view class="feature-icon">💡</view>
+        <view class="feature-name">即时反馈</view>
+        <view class="feature-desc">实时查看测试结果和分析</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 使用说明 -->
+  <view class="guide-section" wx:if="{{!showTest && !showResult}}">
+    <view class="guide-title">使用说明</view>
+    <view class="guide-list">
+      <view class="guide-item">
+        <view class="guide-number">1</view>
+        <view class="guide-content">
+          <view class="guide-text">选择您要测试的年级和科目</view>
+        </view>
+      </view>
+      <view class="guide-item">
+        <view class="guide-number">2</view>
+        <view class="guide-content">
+          <view class="guide-text">点击"开始测试"进入测试页面</view>
+        </view>
+      </view>
+      <view class="guide-item">
+        <view class="guide-number">3</view>
+        <view class="guide-content">
+          <view class="guide-text">认真作答，完成后提交测试</view>
+        </view>
+      </view>
+      <view class="guide-item">
+        <view class="guide-number">4</view>
+        <view class="guide-content">
+          <view class="guide-text">查看测试结果和薄弱点分析</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 提示信息 -->
+  <view class="tip-section" wx:if="{{!showTest && !showResult}}">
+    <view class="tip-card">
+      <view class="tip-icon">💡</view>
+      <view class="tip-content">
+        <view class="tip-title">温馨提示</view>
+        <view class="tip-text">测试结果将自动保存到学习历史，您可以随时查看。建议定期进行测试，以便更好地了解自己的学习进度。</view>
+      </view>
+    </view>
+  </view>
+
   <!-- 测试进度 -->
-  <view class="progress-container" wx:if="showTest && !showResult && questions.length > 0 && gradeIndex != -1 && subjectIndex != -1">
+  <view class="progress-container" wx:if="{{showTest && !showResult && questions && questions.length > 0 && gradeIndex >= 0 && subjectIndex >= 0}}">
     <view class="progress-info">
       <view class="progress-text">当前进度</view>
       <view class="progress-num">{{currentQuestion + 1}}/{{questions.length > 0 ? questions.length : 0}}</view>
@@ -41,7 +110,7 @@
   </view>
 
   <!-- 题目区域 -->
-  <view class="question-container" wx:if="showTest && !showResult && questions.length > 0 && gradeIndex != -1 && subjectIndex != -1">
+  <view class="question-container" wx:if="{{showTest && !showResult && questions && questions.length > 0 && gradeIndex >= 0 && subjectIndex >= 0}}">
     <view class="question-item">
       <view class="question-header">
         <view class="question-index">第{{currentQuestion + 1}}题</view>
@@ -58,19 +127,19 @@
   </view>
 
   <!-- 题目导航 -->
-  <view class="question-nav" wx:if="showTest && !showResult && questions.length > 0 && gradeIndex != -1 && subjectIndex != -1">
+  <view class="question-nav" wx:if="{{showTest && !showResult && questions && questions.length > 0 && gradeIndex >= 0 && subjectIndex >= 0}}">
     <view wx:for="{{questions}}" wx:key="index" class="nav-item {{selectedOptions[index] != null ? 'answered' : ''}} {{currentQuestion == index ? 'current' : ''}}" bindtap="jumpToQuestion" data-index="{{index}}">{{index + 1}}</view>
   </view>
 
   <!-- 操作按钮 -->
-  <view class="action-buttons" wx:if="showTest && !showResult && questions.length > 0 && gradeIndex != -1 && subjectIndex != -1">
+  <view class="action-buttons" wx:if="{{showTest && !showResult && questions && questions.length > 0 && gradeIndex >= 0 && subjectIndex >= 0}}">
     <view class="btn prev-btn" bindtap="prevQuestion" wx:if="currentQuestion > 0">上一题</view>
     <view class="btn next-btn" bindtap="nextQuestion" wx:if="currentQuestion < questions.length - 1">下一题</view>
     <view class="btn submit-btn" bindtap="submitTest" wx:if="currentQuestion == questions.length - 1">提交测试</view>
   </view>
 
   <!-- 结果展示 -->
-  <view class="result-container" wx:if="showResult && score !== undefined && gradeIndex != -1 && subjectIndex != -1">
+  <view class="result-container" wx:if="{{showResult && score !== undefined && gradeIndex >= 0 && subjectIndex >= 0}}">
     <view class="result-header">
       <view class="result-title">测试结果</view>
     </view>

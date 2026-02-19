@@ -5,7 +5,9 @@
     "pages/material/index",
     "pages/test/index",
     "pages/teacher/index",
-    "pages/profile/index"
+    "pages/profile/index",
+    "pages/history/index",
+    "pages/favorites/index"
   ],
   "window": {
     "backgroundColor": "#FFFFFF",

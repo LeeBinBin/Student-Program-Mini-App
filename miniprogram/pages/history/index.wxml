@@ -1,0 +1,60 @@
+<view class="container">
+  <view class="page-header">
+    <view class="page-title">学习历史</view>
+  </view>
+
+  <view class="filter-container">
+    <view class="filter-tabs">
+      <view class="tab-item {{currentType === 'all' ? 'active' : ''}}" bindtap="switchType" data-type="all">全部</view>
+      <view class="tab-item {{currentType === 'material' ? 'active' : ''}}" bindtap="switchType" data-type="material">辅导资料</view>
+      <view class="tab-item {{currentType === 'test' ? 'active' : ''}}" bindtap="switchType" data-type="test">学业诊断</view>
+      <view class="tab-item {{currentType === 'knowledge' ? 'active' : ''}}" bindtap="switchType" data-type="knowledge">知识点对标</view>
+    </view>
+  </view>
+
+  <view class="history-list" wx:if="{{historyList.length > 0}}">
+    <view class="history-item" wx:for="{{historyList}}" wx:key="id" bindtap="viewDetail" data-item="{{item}}">
+      <view class="history-icon">
+        <text wx:if="{{item.type === 'material'}}">📄</text>
+        <text wx:elif="{{item.type === 'test'}}">📝</text>
+        <text wx:else>📚</text>
+      </view>
+      <view class="history-content">
+        <view class="history-title">{{item.title}}</view>
+        <view class="history-info">
+          <text class="history-type">{{item.typeName}}</text>
+          <text class="history-time">{{item.time}}</text>
+        </view>
+        <view class="test-detail" wx:if="{{item.type === 'test'}}">
+          <view class="test-info-row">
+            <text class="test-label">年级：</text>
+            <text class="test-value">{{item.grade}}</text>
+          </view>
+          <view class="test-info-row">
+            <text class="test-label">科目：</text>
+            <text class="test-value">{{item.subject}}</text>
+          </view>
+          <view class="test-info-row">
+            <text class="test-label">得分：</text>
+            <text class="test-value score">{{item.score}}分</text>
+          </view>
+          <view class="test-info-row">
+            <text class="test-label">掌握率：</text>
+            <text class="test-value">{{item.masteryRate}}%</text>
+          </view>
+        </view>
+      </view>
+      <view class="history-arrow">></view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:else>
+    <text class="empty-icon">📝</text>
+    <view class="empty-text">暂无学习记录</view>
+    <view class="empty-tip">开始学习后，这里会显示您的学习历史</view>
+  </view>
+
+  <view class="clear-btn" wx:if="{{historyList.length > 0}}" bindtap="clearHistory">
+    清空历史记录
+  </view>
+</view>

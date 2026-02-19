@@ -6,11 +6,12 @@ Page({
     selectedOptions: [],
     showResult: false,
     showTest: false,
-    score: 0,
+    score: undefined,
     totalScore: 100,
     masteryRate: 0,
     feedback: "",
-    grades: ["一年级", "二年级", "三年级", "四年级", "五年级", "六年级"],
+    grades: ["一年级", "二年级", "三年级", "四年级", "五年级", "六年级", "七年级", "八年级", "九年级"],
+    allSubjects: ["数学", "语文", "英语", "物理", "化学", "生物"],
     subjects: ["数学", "语文", "英语"],
     gradeIndex: -1,
     subjectIndex: -1,
@@ -21,15 +22,49 @@ Page({
     this.initQuestions();
   },
 
+  onShow: function () {
+    this.initQuestions();
+  },
+
   bindGradeChange: function (e) {
+    var gradeIndex = parseInt(e.detail.value);
+    var grade = this.data.grades[gradeIndex];
+    var subjects = [];
+    
+    if (gradeIndex <= 5) {
+      subjects = ["数学", "语文", "英语"];
+    } else {
+      subjects = ["数学", "语文", "英语", "物理", "化学", "生物"];
+    }
+    
     this.setData({
-      gradeIndex: e.detail.value
+      gradeIndex: gradeIndex,
+      subjects: subjects,
+      subjectIndex: -1,
+      showTest: false,
+      showResult: false,
+      questions: [],
+      selectedOptions: [],
+      currentQuestion: 0,
+      score: undefined,
+      masteryRate: 0,
+      feedback: "",
+      masteryItems: []
     });
   },
 
   bindSubjectChange: function (e) {
     this.setData({
-      subjectIndex: e.detail.value
+      subjectIndex: parseInt(e.detail.value),
+      showTest: false,
+      showResult: false,
+      questions: [],
+      selectedOptions: [],
+      currentQuestion: 0,
+      score: undefined,
+      masteryRate: 0,
+      feedback: "",
+      masteryItems: []
     });
   },
 
@@ -6651,6 +6686,3876 @@ Page({
         knowledge_point: "词语的结构",
         grade: "四年级",
         subject: "语文"
+      },
+      {
+        id: "451",
+        question: "下列哪个是物理现象？",
+        options: ["水结冰", "铁生锈", "木材燃烧", "食物腐烂"],
+        answer: "0",
+        knowledge_point: "物理现象",
+        grade: "七年级",
+        subject: "物理"
+      },
+      {
+        id: "452",
+        question: "声音的传播需要什么？",
+        options: ["真空", "介质", "光线", "电力"],
+        answer: "1",
+        knowledge_point: "声音的传播",
+        grade: "七年级",
+        subject: "物理"
+      },
+      {
+        id: "453",
+        question: "光在真空中的传播速度是多少？",
+        options: ["3×10^8 m/s", "3×10^6 m/s", "3×10^5 m/s", "3×10^4 m/s"],
+        answer: "0",
+        knowledge_point: "光的传播速度",
+        grade: "七年级",
+        subject: "物理"
+      },
+      {
+        id: "454",
+        question: "下列哪个是力的单位？",
+        options: ["焦耳", "牛顿", "瓦特", "帕斯卡"],
+        answer: "1",
+        knowledge_point: "力的单位",
+        grade: "七年级",
+        subject: "物理"
+      },
+      {
+        id: "455",
+        question: "质量为1kg的物体受到的重力大约是多少？",
+        options: ["1N", "10N", "100N", "1000N"],
+        answer: "1",
+        knowledge_point: "重力",
+        grade: "七年级",
+        subject: "物理"
+      },
+      {
+        id: "456",
+        question: "下列哪个是化学变化？",
+        options: ["冰融化", "纸张燃烧", "汽油挥发", "矿石粉碎"],
+        answer: "1",
+        knowledge_point: "化学变化",
+        grade: "七年级",
+        subject: "化学"
+      },
+      {
+        id: "457",
+        question: "空气的主要成分是什么？",
+        options: ["氧气", "氮气", "二氧化碳", "氢气"],
+        answer: "1",
+        knowledge_point: "空气的成分",
+        grade: "七年级",
+        subject: "化学"
+      },
+      {
+        id: "458",
+        question: "水的化学式是什么？",
+        options: ["H2O", "CO2", "O2", "H2"],
+        answer: "0",
+        knowledge_point: "化学式",
+        grade: "七年级",
+        subject: "化学"
+      },
+      {
+        id: "459",
+        question: "下列哪个是纯净物？",
+        options: ["空气", "海水", "蒸馏水", "矿泉水"],
+        answer: "2",
+        knowledge_point: "纯净物与混合物",
+        grade: "七年级",
+        subject: "化学"
+      },
+      {
+        id: "460",
+        question: "植物进行光合作用的场所是？",
+        options: ["线粒体", "叶绿体", "细胞核", "液泡"],
+        answer: "1",
+        knowledge_point: "光合作用",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "461",
+        question: "人体最大的器官是？",
+        options: ["心脏", "肝脏", "皮肤", "肺"],
+        answer: "2",
+        knowledge_point: "人体器官",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "462",
+        question: "下列哪个是单细胞生物？",
+        options: ["草履虫", "金鱼", "蚂蚁", "麻雀"],
+        answer: "0",
+        knowledge_point: "单细胞生物",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "463",
+        question: "植物细胞特有的结构是？",
+        options: ["细胞核", "细胞膜", "叶绿体", "线粒体"],
+        answer: "2",
+        knowledge_point: "植物细胞",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "464",
+        question: "下列哪个是哺乳动物？",
+        options: ["鲨鱼", "鳄鱼", "海豚", "青蛙"],
+        answer: "2",
+        knowledge_point: "哺乳动物",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "465",
+        question: "密度公式是什么？",
+        options: ["ρ = m/V", "ρ = V/m", "ρ = m×V", "ρ = m+V"],
+        answer: "0",
+        knowledge_point: "密度",
+        grade: "八年级",
+        subject: "物理"
+      },
+      {
+        id: "466",
+        question: "1标准大气压等于多少帕斯卡？",
+        options: ["1.013×10^5 Pa", "1.013×10^4 Pa", "1.013×10^6 Pa", "1.013×10^3 Pa"],
+        answer: "0",
+        knowledge_point: "大气压强",
+        grade: "八年级",
+        subject: "物理"
+      },
+      {
+        id: "467",
+        question: "下列哪个是导体？",
+        options: ["橡胶", "塑料", "铜", "玻璃"],
+        answer: "2",
+        knowledge_point: "导体与绝缘体",
+        grade: "八年级",
+        subject: "物理"
+      },
+      {
+        id: "468",
+        question: "电流的单位是什么？",
+        options: ["伏特", "安培", "欧姆", "瓦特"],
+        answer: "1",
+        knowledge_point: "电流单位",
+        grade: "八年级",
+        subject: "物理"
+      },
+      {
+        id: "469",
+        question: "欧姆定律的公式是？",
+        options: ["I = U/R", "U = I/R", "R = I/U", "I = U×R"],
+        answer: "0",
+        knowledge_point: "欧姆定律",
+        grade: "八年级",
+        subject: "物理"
+      },
+      {
+        id: "470",
+        question: "下列哪个反应属于化合反应？",
+        options: ["CaCO3 → CaO + CO2", "2H2 + O2 → 2H2O", "CH4 + 2O2 → CO2 + 2H2O", "Zn + H2SO4 → ZnSO4 + H2"],
+        answer: "1",
+        knowledge_point: "化学反应类型",
+        grade: "八年级",
+        subject: "化学"
+      },
+      {
+        id: "471",
+        question: "下列哪个是酸？",
+        options: ["NaOH", "HCl", "NaCl", "CaO"],
+        answer: "1",
+        knowledge_point: "酸碱盐",
+        grade: "八年级",
+        subject: "化学"
+      },
+      {
+        id: "472",
+        question: "pH值小于7的溶液呈什么性？",
+        options: ["中性", "酸性", "碱性", "无法确定"],
+        answer: "1",
+        knowledge_point: "酸碱性",
+        grade: "八年级",
+        subject: "化学"
+      },
+      {
+        id: "473",
+        question: "下列哪个变化是物理变化？",
+        options: ["铁生锈", "木材燃烧", "冰融化", "食物腐败"],
+        answer: "2",
+        knowledge_point: "物理变化与化学变化",
+        grade: "八年级",
+        subject: "化学"
+      },
+      {
+        id: "474",
+        question: "元素周期表是按什么排列的？",
+        options: ["原子质量", "原子序数", "电子数", "质子数"],
+        answer: "1",
+        knowledge_point: "元素周期表",
+        grade: "八年级",
+        subject: "化学"
+      },
+      {
+        id: "475",
+        question: "人体消化系统中，吸收营养物质的主要场所是？",
+        options: ["胃", "小肠", "大肠", "食道"],
+        answer: "1",
+        knowledge_point: "消化系统",
+        grade: "八年级",
+        subject: "生物"
+      },
+      {
+        id: "476",
+        question: "DNA主要存在于细胞的哪个结构中？",
+        options: ["细胞质", "细胞核", "线粒体", "叶绿体"],
+        answer: "1",
+        knowledge_point: "细胞结构",
+        grade: "八年级",
+        subject: "生物"
+      },
+      {
+        id: "477",
+        question: "下列哪个是遗传物质？",
+        options: ["蛋白质", "DNA", "糖类", "脂肪"],
+        answer: "1",
+        knowledge_point: "遗传物质",
+        grade: "八年级",
+        subject: "生物"
+      },
+      {
+        id: "478",
+        question: "生态系统中的能量流动特点是？",
+        options: ["循环流动", "单向流动", "双向流动", "静止不动"],
+        answer: "1",
+        knowledge_point: "生态系统",
+        grade: "八年级",
+        subject: "生物"
+      },
+      {
+        id: "479",
+        question: "下列哪个是生物群落？",
+        options: ["池塘中的所有鱼", "池塘中的所有生物", "池塘中的所有植物", "池塘中的所有动物"],
+        answer: "1",
+        knowledge_point: "生物群落",
+        grade: "八年级",
+        subject: "生物"
+      },
+      {
+        id: "480",
+        question: "功的计算公式是？",
+        options: ["W = F/s", "W = F×s", "W = F+s", "W = F-s"],
+        answer: "1",
+        knowledge_point: "功的计算",
+        grade: "九年级",
+        subject: "物理"
+      },
+      {
+        id: "481",
+        question: "功率的单位是什么？",
+        options: ["焦耳", "瓦特", "牛顿", "帕斯卡"],
+        answer: "1",
+        knowledge_point: "功率单位",
+        grade: "九年级",
+        subject: "物理"
+      },
+      {
+        id: "482",
+        question: "下列哪个是机械能？",
+        options: ["内能", "电能", "动能", "化学能"],
+        answer: "2",
+        knowledge_point: "机械能",
+        grade: "九年级",
+        subject: "物理"
+      },
+      {
+        id: "483",
+        question: "能量守恒定律的内容是？",
+        options: ["能量可以创造", "能量可以消灭", "能量既不能创造也不能消灭", "能量只能增加"],
+        answer: "2",
+        knowledge_point: "能量守恒定律",
+        grade: "九年级",
+        subject: "物理"
+      },
+      {
+        id: "484",
+        question: "下列哪个是可再生能源？",
+        options: ["煤炭", "石油", "太阳能", "天然气"],
+        answer: "2",
+        knowledge_point: "能源",
+        grade: "九年级",
+        subject: "物理"
+      },
+      {
+        id: "485",
+        question: "下列哪个反应属于置换反应？",
+        options: ["2H2 + O2 → 2H2O", "Zn + H2SO4 → ZnSO4 + H2", "CaCO3 → CaO + CO2", "NaOH + HCl → NaCl + H2O"],
+        answer: "1",
+        knowledge_point: "化学反应类型",
+        grade: "九年级",
+        subject: "化学"
+      },
+      {
+        id: "486",
+        question: "下列哪个是盐？",
+        options: ["HCl", "NaOH", "NaCl", "H2O"],
+        answer: "2",
+        knowledge_point: "酸碱盐",
+        grade: "九年级",
+        subject: "化学"
+      },
+      {
+        id: "487",
+        question: "中和反应的产物是什么？",
+        options: ["盐和水", "盐和气体", "盐和沉淀", "气体和水"],
+        answer: "0",
+        knowledge_point: "中和反应",
+        grade: "九年级",
+        subject: "化学"
+      },
+      {
+        id: "488",
+        question: "下列哪个是氧化还原反应？",
+        options: ["酸碱中和", "复分解反应", "燃烧反应", "沉淀反应"],
+        answer: "2",
+        knowledge_point: "氧化还原反应",
+        grade: "九年级",
+        subject: "化学"
+      },
+      {
+        id: "489",
+        question: "有机物的特征是？",
+        options: ["只含碳元素", "含碳元素的化合物", "不含碳元素", "只含氢元素"],
+        answer: "1",
+        knowledge_point: "有机物",
+        grade: "九年级",
+        subject: "化学"
+      },
+      {
+        id: "490",
+        question: "人体呼吸系统中，气体交换的主要场所是？",
+        options: ["鼻腔", "气管", "肺泡", "支气管"],
+        answer: "2",
+        knowledge_point: "呼吸系统",
+        grade: "九年级",
+        subject: "生物"
+      },
+      {
+        id: "491",
+        question: "下列哪个是内分泌腺？",
+        options: ["汗腺", "唾液腺", "甲状腺", "胃腺"],
+        answer: "2",
+        knowledge_point: "内分泌系统",
+        grade: "九年级",
+        subject: "生物"
+      },
+      {
+        id: "492",
+        question: "人体免疫系统中，产生抗体的细胞是？",
+        options: ["T细胞", "B细胞", "红细胞", "白细胞"],
+        answer: "1",
+        knowledge_point: "免疫系统",
+        grade: "九年级",
+        subject: "生物"
+      },
+      {
+        id: "493",
+        question: "下列哪个是遗传病？",
+        options: ["感冒", "糖尿病", "色盲", "骨折"],
+        answer: "2",
+        knowledge_point: "遗传病",
+        grade: "九年级",
+        subject: "生物"
+      },
+      {
+        id: "494",
+        question: "生物进化的主要证据是？",
+        options: ["化石", "现生生物", "胚胎发育", "同源器官"],
+        answer: "0",
+        knowledge_point: "生物进化",
+        grade: "九年级",
+        subject: "生物"
+      },
+      {
+        id: "495",
+        question: "有理数中，绝对值最小的数是？",
+        options: ["-1", "0", "1", "2"],
+        answer: "1",
+        knowledge_point: "有理数",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "496",
+        question: "下列哪个是一元一次方程？",
+        options: ["x + y = 5", "x² + 2x = 3", "3x - 5 = 7", "1/x = 2"],
+        answer: "2",
+        knowledge_point: "一元一次方程",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "497",
+        question: "下列哪个是同类项？",
+        options: ["2x和3y", "2x和3x²", "2x和3x", "2x和3xy"],
+        answer: "2",
+        knowledge_point: "同类项",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "498",
+        question: "(-2)³等于？",
+        options: ["-6", "-8", "6", "8"],
+        answer: "1",
+        knowledge_point: "有理数的乘方",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "499",
+        question: "下列哪个是整式？",
+        options: ["1/x", "√x", "x² + 2x + 1", "x + 1/x"],
+        answer: "2",
+        knowledge_point: "整式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "500",
+        question: "下列哪个是代数式？",
+        options: ["a + b = c", "a + b", "a = 5", "5"],
+        answer: "1",
+        knowledge_point: "代数式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "501",
+        question: "不等式2x > 6的解集是？",
+        options: ["x < 3", "x > 3", "x ≤ 3", "x ≥ 3"],
+        answer: "1",
+        knowledge_point: "不等式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "502",
+        question: "下列哪个是科学计数法表示的数？",
+        options: ["123", "1.23×10²", "1.23×10³", "12.3×10¹"],
+        answer: "1",
+        knowledge_point: "科学计数法",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "503",
+        question: "下列哪个词语是褒义词？",
+        options: ["狡猾", "勇敢", "懒惰", "愚蠢"],
+        answer: "1",
+        knowledge_point: "词语的感情色彩",
+        grade: "七年级",
+        subject: "语文"
+      },
+      {
+        id: "504",
+        question: "下列哪个句子使用了比喻修辞？",
+        options: ["他像鸟一样飞快地跑", "他跑得很快", "他跑得像鸟一样", "他飞快地跑"],
+        answer: "0",
+        knowledge_point: "修辞手法",
+        grade: "七年级",
+        subject: "语文"
+      },
+      {
+        id: "505",
+        question: "下列哪个成语使用正确？",
+        options: ["他废寝忘食地学习", "他废寝忘食地玩耍", "他废寝忘食地睡觉", "他废寝忘食地吃饭"],
+        answer: "0",
+        knowledge_point: "成语运用",
+        grade: "七年级",
+        subject: "语文"
+      },
+      {
+        id: "506",
+        question: "下列哪个是说明文？",
+        options: ["《春》", "《苏州园林》", "《背影》", "《孔乙己》"],
+        answer: "1",
+        knowledge_point: "文体知识",
+        grade: "七年级",
+        subject: "语文"
+      },
+      {
+        id: "507",
+        question: "下列哪个句子没有语病？",
+        options: ["通过学习，使我进步很大", "通过学习，我进步很大", "通过学习，进步很大", "通过学习，我很大进步"],
+        answer: "1",
+        knowledge_point: "病句修改",
+        grade: "七年级",
+        subject: "语文"
+      },
+      {
+        id: "508",
+        question: "下列哪个是议论文？",
+        options: ["《春》", "《苏州园林》", "《敬业与乐业》", "《背影》"],
+        answer: "2",
+        knowledge_point: "文体知识",
+        grade: "七年级",
+        subject: "语文"
+      },
+      {
+        id: "509",
+        question: "What is the past tense of 'go'?",
+        options: ["goed", "went", "going", "goes"],
+        answer: "1",
+        knowledge_point: "动词过去式",
+        grade: "七年级",
+        subject: "英语"
+      },
+      {
+        id: "510",
+        question: "Which word is a fruit?",
+        options: ["carrot", "apple", "potato", "onion"],
+        answer: "1",
+        knowledge_point: "词汇分类",
+        grade: "七年级",
+        subject: "英语"
+      },
+      {
+        id: "511",
+        question: "Choose the correct sentence:",
+        options: ["He go to school", "He goes to school", "He going to school", "He gone to school"],
+        answer: "1",
+        knowledge_point: "一般现在时",
+        grade: "七年级",
+        subject: "英语"
+      },
+      {
+        id: "512",
+        question: "What is the plural of 'child'?",
+        options: ["childs", "children", "childes", "child"],
+        answer: "1",
+        knowledge_point: "名词复数",
+        grade: "七年级",
+        subject: "英语"
+      },
+      {
+        id: "513",
+        question: "Which word means '非常'?",
+        options: ["very", "many", "much", "some"],
+        answer: "0",
+        knowledge_point: "副词",
+        grade: "七年级",
+        subject: "英语"
+      },
+      {
+        id: "514",
+        question: "函数y = 2x + 1中，当x = 3时，y的值是？",
+        options: ["5", "6", "7", "8"],
+        answer: "2",
+        knowledge_point: "函数",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "515",
+        question: "下列哪个是二次函数？",
+        options: ["y = x + 1", "y = x² + 2x", "y = 1/x", "y = √x"],
+        answer: "1",
+        knowledge_point: "二次函数",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "516",
+        question: "下列哪个是勾股数？",
+        options: ["1, 2, 3", "3, 4, 5", "2, 3, 4", "4, 5, 6"],
+        answer: "1",
+        knowledge_point: "勾股定理",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "517",
+        question: "下列哪个是轴对称图形？",
+        options: ["平行四边形", "等腰梯形", "直角梯形", "不等边三角形"],
+        answer: "1",
+        knowledge_point: "轴对称图形",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "518",
+        question: "不等式组{x > 2, x < 5}的解集是？",
+        options: ["x < 2", "x > 5", "2 < x < 5", "x < 5"],
+        answer: "2",
+        knowledge_point: "不等式组",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "519",
+        question: "下列哪个是因式分解？",
+        options: ["x² + 2x + 1", "(x + 1)²", "x² + 2x", "x(x + 2)"],
+        answer: "3",
+        knowledge_point: "因式分解",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "520",
+        question: "下列哪个是分式？",
+        options: ["x/2", "1/x", "x + 1", "x²"],
+        answer: "1",
+        knowledge_point: "分式",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "521",
+        question: "下列哪个句子使用了排比修辞？",
+        options: ["他像鸟一样飞快地跑", "他跑得很快，他跳得很高，他游得很远", "他跑得很快", "他像鸟一样跑"],
+        answer: "1",
+        knowledge_point: "修辞手法",
+        grade: "八年级",
+        subject: "语文"
+      },
+      {
+        id: "522",
+        question: "下列哪个是说明方法？",
+        options: ["比喻", "拟人", "举例子", "夸张"],
+        answer: "2",
+        knowledge_point: "说明方法",
+        grade: "八年级",
+        subject: "语文"
+      },
+      {
+        id: "523",
+        question: "下列哪个是议论文的论点？",
+        options: ["他跑得很快", "学习要勤奋", "他喜欢吃苹果", "今天天气很好"],
+        answer: "1",
+        knowledge_point: "议论文",
+        grade: "八年级",
+        subject: "语文"
+      },
+      {
+        id: "524",
+        question: "下列哪个是记叙文？",
+        options: ["《苏州园林》", "《敬业与乐业》", "《背影》", "《大自然的语言》"],
+        answer: "2",
+        knowledge_point: "文体知识",
+        grade: "八年级",
+        subject: "语文"
+      },
+      {
+        id: "525",
+        question: "下列哪个句子使用了拟人修辞？",
+        options: ["他像鸟一样飞快地跑", "小鸟在枝头唱歌", "他跑得很快", "鸟在枝头叫"],
+        answer: "1",
+        knowledge_point: "修辞手法",
+        grade: "八年级",
+        subject: "语文"
+      },
+      {
+        id: "526",
+        question: "What is the past participle of 'write'?",
+        options: ["wrote", "written", "writing", "writes"],
+        answer: "1",
+        knowledge_point: "动词过去分词",
+        grade: "八年级",
+        subject: "英语"
+      },
+      {
+        id: "527",
+        question: "Which sentence is in present continuous tense?",
+        options: ["He goes to school", "He is going to school", "He went to school", "He has gone to school"],
+        answer: "1",
+        knowledge_point: "现在进行时",
+        grade: "八年级",
+        subject: "英语"
+      },
+      {
+        id: "528",
+        question: "Choose the correct preposition:",
+        options: ["I am good in English", "I am good at English", "I am good on English", "I am good with English"],
+        answer: "1",
+        knowledge_point: "介词",
+        grade: "八年级",
+        subject: "英语"
+      },
+      {
+        id: "529",
+        question: "What is the comparative form of 'good'?",
+        options: ["gooder", "better", "more good", "best"],
+        answer: "1",
+        knowledge_point: "形容词比较级",
+        grade: "八年级",
+        subject: "英语"
+      },
+      {
+        id: "530",
+        question: "Which word means '虽然'?",
+        options: ["because", "although", "but", "so"],
+        answer: "1",
+        knowledge_point: "连词",
+        grade: "八年级",
+        subject: "英语"
+      },
+      {
+        id: "531",
+        question: "一元二次方程x² - 5x + 6 = 0的解是？",
+        options: ["x = 2或3", "x = -2或-3", "x = 1或6", "x = -1或-6"],
+        answer: "0",
+        knowledge_point: "一元二次方程",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "532",
+        question: "下列哪个是二次函数的顶点式？",
+        options: ["y = ax² + bx + c", "y = a(x - h)² + k", "y = a(x - x₁)(x - x₂)", "y = ax²"],
+        answer: "1",
+        knowledge_point: "二次函数",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "533",
+        question: "sin30°等于？",
+        options: ["1/2", "√2/2", "√3/2", "1"],
+        answer: "0",
+        knowledge_point: "三角函数",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "534",
+        question: "下列哪个是圆的切线性质？",
+        options: ["切线垂直于半径", "切线平行于半径", "切线等于半径", "切线是直径"],
+        answer: "0",
+        knowledge_point: "圆的切线",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "535",
+        question: "下列哪个是相似三角形的判定条件？",
+        options: ["两边相等", "三边成比例", "两角相等", "一角相等"],
+        answer: "2",
+        knowledge_point: "相似三角形",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "536",
+        question: "概率的基本性质是？",
+        options: ["概率可以大于1", "概率可以小于0", "0 ≤ P ≤ 1", "概率总是等于1"],
+        answer: "2",
+        knowledge_point: "概率",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "537",
+        question: "下列哪个句子使用了反问修辞？",
+        options: ["他跑得很快", "他难道跑得不快吗？", "他像鸟一样跑", "鸟在枝头叫"],
+        answer: "1",
+        knowledge_point: "修辞手法",
+        grade: "九年级",
+        subject: "语文"
+      },
+      {
+        id: "538",
+        question: "下列哪个是古文中的通假字？",
+        options: ["甚矣，汝之不惠", "惠通慧", "惠是智慧", "惠是恩惠"],
+        answer: "1",
+        knowledge_point: "通假字",
+        grade: "九年级",
+        subject: "语文"
+      },
+      {
+        id: "539",
+        question: "下列哪个是议论文的论证方法？",
+        options: ["比喻", "举例论证", "拟人", "夸张"],
+        answer: "1",
+        knowledge_point: "议论文",
+        grade: "九年级",
+        subject: "语文"
+      },
+      {
+        id: "540",
+        question: "下列哪个是古文中的词类活用？",
+        options: ["名词作动词", "形容词作名词", "动词作名词", "以上都是"],
+        answer: "3",
+        knowledge_point: "词类活用",
+        grade: "九年级",
+        subject: "语文"
+      },
+      {
+        id: "541",
+        question: "下列哪个是古文中的特殊句式？",
+        options: ["判断句", "被动句", "倒装句", "以上都是"],
+        answer: "3",
+        knowledge_point: "特殊句式",
+        grade: "九年级",
+        subject: "语文"
+      },
+      {
+        id: "542",
+        question: "What is the superlative form of 'good'?",
+        options: ["gooder", "better", "best", "more good"],
+        answer: "2",
+        knowledge_point: "形容词最高级",
+        grade: "九年级",
+        subject: "英语"
+      },
+      {
+        id: "543",
+        question: "Which sentence is in present perfect tense?",
+        options: ["He goes to school", "He is going to school", "He has gone to school", "He went to school"],
+        answer: "2",
+        knowledge_point: "现在完成时",
+        grade: "九年级",
+        subject: "英语"
+      },
+      {
+        id: "544",
+        question: "Choose the correct relative pronoun:",
+        options: ["The man which helped me", "The man who helped me", "The man what helped me", "The man where helped me"],
+        answer: "1",
+        knowledge_point: "定语从句",
+        grade: "九年级",
+        subject: "英语"
+      },
+      {
+        id: "545",
+        question: "What is the passive voice of 'They built the house'?",
+        options: ["The house is built by them", "The house was built by them", "The house will be built by them", "The house has been built by them"],
+        answer: "1",
+        knowledge_point: "被动语态",
+        grade: "九年级",
+        subject: "英语"
+      },
+      {
+        id: "546",
+        question: "Which word means '然而'?",
+        options: ["because", "although", "however", "so"],
+        answer: "2",
+        knowledge_point: "连词",
+        grade: "九年级",
+        subject: "英语"
+      },
+      {
+        id: "547",
+        question: "下列哪个是相反数？",
+        options: ["3和-3", "5和-5", "2和2", "4和-4"],
+        answer: "0",
+        knowledge_point: "相反数",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "548",
+        question: "下列哪个是单项式？",
+        options: ["a + b", "2a", "a²", "a/b"],
+        answer: "0",
+        knowledge_point: "单项式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "549",
+        question: "下列哪个是多项式？",
+        options: ["2a", "a + b", "a²", "5"],
+        answer: "1",
+        knowledge_point: "多项式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "550",
+        question: "方程3x - 6 = 0的解是？",
+        options: ["x = 0", "x = 2", "x = -2", "x = 3"],
+        answer: "1",
+        knowledge_point: "一元一次方程",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "551",
+        question: "下列哪个是正数？",
+        options: ["-5", "0", "3", "-2"],
+        answer: "2",
+        knowledge_point: "有理数",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "552",
+        question: "不等式-2x < 4的解集是？",
+        options: ["x > -2", "x < -2", "x > 2", "x < 2"],
+        answer: "0",
+        knowledge_point: "不等式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "553",
+        question: "下列哪个是代数式的值？",
+        options: ["当a=2时，a+1=3", "当a=2时，a+1=2", "当a=2时，a+1=4", "当a=2时，a+1=5"],
+        answer: "0",
+        knowledge_point: "代数式求值",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "554",
+        question: "下列哪个是整式的加减？",
+        options: ["(a+b)+(c+d)", "(a+b)(c+d)", "a+b+c+d", "a+b-c-d"],
+        answer: "0",
+        knowledge_point: "整式的加减",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "555",
+        question: "下列哪个是同类项？",
+        options: ["3x²和2x", "3x和2y", "3x和2x³", "3x²和2x³"],
+        answer: "0",
+        knowledge_point: "同类项",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "556",
+        question: "下列哪个是负数？",
+        options: ["5", "0", "1", "-3"],
+        answer: "3",
+        knowledge_point: "有理数",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "557",
+        question: "方程2x + 4 = 0的解是？",
+        options: ["x = -2", "x = 2", "x = 0", "x = 4"],
+        answer: "0",
+        knowledge_point: "一元一次方程",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "558",
+        question: "下列哪个是科学计数法？",
+        options: ["12300", "1.23×10⁴", "1.23×10⁵", "1.23×10⁶"],
+        answer: "1",
+        knowledge_point: "科学计数法",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "559",
+        question: "不等式3x ≥ 6的解集是？",
+        options: ["x ≥ 2", "x ≤ 2", "x > 2", "x < 2"],
+        answer: "0",
+        knowledge_point: "不等式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "560",
+        question: "下列哪个是单项式的系数？",
+        options: ["3x中的3", "3x中的x", "3x中的3x", "3x中的"],
+        answer: "0",
+        knowledge_point: "单项式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "561",
+        question: "下列哪个是多项式的次数？",
+        options: ["x²+2x+1的次数是2", "x²+2x+1的次数是3", "x²+2x+1的次数是1", "x²+2x+1的次数是0"],
+        answer: "0",
+        knowledge_point: "多项式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "562",
+        question: "方程4x - 8 = 0的解是？",
+        options: ["x = -2", "x = 2", "x = 0", "x = 4"],
+        answer: "1",
+        knowledge_point: "一元一次方程",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "563",
+        question: "下列哪个是整式的乘法？",
+        options: ["2a×3b", "2a+3b", "2a-3b", "2a/3b"],
+        answer: "0",
+        knowledge_point: "整式的乘法",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "564",
+        question: "不等式-3x ≤ 9的解集是？",
+        options: ["x ≥ -3", "x ≤ -3", "x > -3", "x < -3"],
+        answer: "0",
+        knowledge_point: "不等式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "565",
+        question: "下列哪个是代数式的次数？",
+        options: ["2a³的次数是2", "2a³的次数是3", "2a³的次数是1", "2a³的次数是0"],
+        answer: "1",
+        knowledge_point: "代数式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "566",
+        question: "方程5x + 10 = 0的解是？",
+        options: ["x = -2", "x = 2", "x = 0", "x = 5"],
+        answer: "0",
+        knowledge_point: "一元一次方程",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "567",
+        question: "下列哪个是整式的除法？",
+        options: ["(6a²b)/(2ab)", "(6a²b)+(2ab)", "(6a²b)-(2ab)", "(6a²b)*(2ab)"],
+        answer: "0",
+        knowledge_point: "整式的除法",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "568",
+        question: "不等式x/2 > 3的解集是？",
+        options: ["x > 6", "x < 6", "x ≥ 6", "x ≤ 6"],
+        answer: "0",
+        knowledge_point: "不等式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "569",
+        question: "下列哪个是多项式的项？",
+        options: ["x²+2x+1有3项", "x²+2x+1有4项", "x²+2x+1有2项", "x²+2x+1有1项"],
+        answer: "0",
+        knowledge_point: "多项式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "570",
+        question: "方程6x - 12 = 0的解是？",
+        options: ["x = -2", "x = 2", "x = 0", "x = 6"],
+        answer: "1",
+        knowledge_point: "一元一次方程",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "571",
+        question: "下列哪个是代数式的系数？",
+        options: ["-3x中的-3", "-3x中的x", "-3x中的-3x", "-3x中的"],
+        answer: "0",
+        knowledge_point: "代数式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "572",
+        question: "不等式2x + 4 ≥ 8的解集是？",
+        options: ["x ≥ 2", "x ≤ 2", "x > 2", "x < 2"],
+        answer: "0",
+        knowledge_point: "不等式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "573",
+        question: "下列哪个是多项式的常数项？",
+        options: ["x²+2x+1中的1", "x²+2x+1中的x²", "x²+2x+1中的2x", "x²+2x+1中的x"],
+        answer: "0",
+        knowledge_point: "多项式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "574",
+        question: "方程7x + 14 = 0的解是？",
+        options: ["x = -2", "x = 2", "x = 0", "x = 7"],
+        answer: "0",
+        knowledge_point: "一元一次方程",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "575",
+        question: "下列哪个是整式的加减混合运算？",
+        options: ["(a+b)-(c-d)", "(a+b)+(c-d)", "(a+b)*(c-d)", "(a+b)/(c-d)"],
+        answer: "1",
+        knowledge_point: "整式的加减",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "576",
+        question: "不等式3x - 6 < 3的解集是？",
+        options: ["x < 3", "x > 3", "x ≤ 3", "x ≥ 3"],
+        answer: "0",
+        knowledge_point: "不等式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "577",
+        question: "下列哪个是多项式的最高次项？",
+        options: ["x²+2x+1中的x²", "x²+2x+1中的2x", "x²+2x+1中的1", "x²+2x+1中的x"],
+        answer: "0",
+        knowledge_point: "多项式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "578",
+        question: "方程8x - 16 = 0的解是？",
+        options: ["x = -2", "x = 2", "x = 0", "x = 8"],
+        answer: "1",
+        knowledge_point: "一元一次方程",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "579",
+        question: "下列哪个是代数式的字母？",
+        options: ["3x中的3", "3x中的x", "3x中的3x", "3x中的"],
+        answer: "1",
+        knowledge_point: "代数式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "580",
+        question: "不等式4x + 8 ≥ 12的解集是？",
+        options: ["x ≥ 1", "x ≤ 1", "x > 1", "x < 1"],
+        answer: "0",
+        knowledge_point: "不等式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "581",
+        question: "下列哪个是多项式的升幂排列？",
+        options: ["x²+2x+1", "2x+x²+1", "1+2x+x²", "1+x²+2x"],
+        answer: "2",
+        knowledge_point: "多项式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "582",
+        question: "方程9x + 18 = 0的解是？",
+        options: ["x = -2", "x = 2", "x = 0", "x = 9"],
+        answer: "0",
+        knowledge_point: "一元一次方程",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "583",
+        question: "下列哪个是代数式的指数？",
+        options: ["x²中的2", "x²中的x", "x²中的x²", "x²中的"],
+        answer: "0",
+        knowledge_point: "代数式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "584",
+        question: "不等式5x - 10 > 5的解集是？",
+        options: ["x > 3", "x < 3", "x ≥ 3", "x ≤ 3"],
+        answer: "0",
+        knowledge_point: "不等式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "585",
+        question: "下列哪个是多项式的降幂排列？",
+        options: ["x²+2x+1", "2x+x²+1", "1+2x+x²", "1+x²+2x"],
+        answer: "0",
+        knowledge_point: "多项式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "586",
+        question: "方程10x - 20 = 0的解是？",
+        options: ["x = -2", "x = 2", "x = 0", "x = 10"],
+        answer: "1",
+        knowledge_point: "一元一次方程",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "587",
+        question: "下列哪个是代数式的底数？",
+        options: ["a²中的a", "a²中的2", "a²中的a²", "a²中的"],
+        answer: "0",
+        knowledge_point: "代数式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "588",
+        question: "不等式6x + 12 ≤ 18的解集是？",
+        options: ["x ≤ 1", "x ≥ 1", "x > 1", "x < 1"],
+        answer: "0",
+        knowledge_point: "不等式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "589",
+        question: "下列哪个是单项式的次数？",
+        options: ["2a³b的次数是3", "2a³b的次数是4", "2a³b的次数是2", "2a³b的次数是1"],
+        answer: "1",
+        knowledge_point: "单项式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "590",
+        question: "方程11x + 22 = 0的解是？",
+        options: ["x = -2", "x = 2", "x = 0", "x = 11"],
+        answer: "0",
+        knowledge_point: "一元一次方程",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "591",
+        question: "下列哪个是单项式的字母部分？",
+        options: ["3x²中的3", "3x²中的x²", "3x²中的x", "3x²中的3x²"],
+        answer: "2",
+        knowledge_point: "单项式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "592",
+        question: "不等式7x - 14 ≥ 7的解集是？",
+        options: ["x ≥ 3", "x ≤ 3", "x > 3", "x < 3"],
+        answer: "0",
+        knowledge_point: "不等式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "593",
+        question: "下列哪个是多项式的同类项？",
+        options: ["3x²和2x", "3x²和2x³", "3x²和2y", "3x²和2"],
+        answer: "0",
+        knowledge_point: "同类项",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "594",
+        question: "方程12x - 24 = 0的解是？",
+        options: ["x = -2", "x = 2", "x = 0", "x = 12"],
+        answer: "1",
+        knowledge_point: "一元一次方程",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "595",
+        question: "下列哪个是多项式的常数项？",
+        options: ["2x³+3x²-1中的-1", "2x³+3x²-1中的2x³", "2x³+3x²-1中的3x²", "2x³+3x²-1中的2x³"],
+        answer: "0",
+        knowledge_point: "多项式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "596",
+        question: "不等式8x + 16 ≤ 24的解集是？",
+        options: ["x ≤ 1", "x ≥ 1", "x > 1", "x < 1"],
+        answer: "0",
+        knowledge_point: "不等式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "597",
+        question: "下列哪个是多项式的升幂排列？",
+        options: ["2x³+3x²-1", "3x²+2x³-1", "-1+3x²+2x³", "2x³-1+3x²"],
+        answer: "2",
+        knowledge_point: "多项式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "598",
+        question: "方程13x + 26 = 0的解是？",
+        options: ["x = -2", "x = 2", "x = 0", "x = 13"],
+        answer: "0",
+        knowledge_point: "一元一次方程",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "599",
+        question: "下列哪个是多项式的降幂排列？",
+        options: ["2x³+3x²-1", "3x²+2x³-1", "-1+3x²+2x³", "2x³-1+3x²"],
+        answer: "0",
+        knowledge_point: "多项式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "600",
+        question: "方程14x - 28 = 0的解是？",
+        options: ["x = -2", "x = 2", "x = 0", "x = 14"],
+        answer: "1",
+        knowledge_point: "一元一次方程",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "601",
+        question: "下列哪个是多项式的项数？",
+        options: ["x²+2x+1有3项", "x²+2x+1有2项", "x²+2x+1有4项", "x²+2x+1有1项"],
+        answer: "0",
+        knowledge_point: "多项式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "602",
+        question: "不等式9x - 18 ≥ 9的解集是？",
+        options: ["x ≥ 3", "x ≤ 3", "x > 3", "x < 3"],
+        answer: "0",
+        knowledge_point: "不等式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "603",
+        question: "下列哪个是多项式的系数？",
+        options: ["-2x³中的-2", "-2x³中的x³", "-2x³中的-2x³", "-2x³中的"],
+        answer: "0",
+        knowledge_point: "多项式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "604",
+        question: "方程15x + 30 = 0的解是？",
+        options: ["x = -2", "x = 2", "x = 0", "x = 15"],
+        answer: "0",
+        knowledge_point: "一元一次方程",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "605",
+        question: "下列哪个是多项式的次数？",
+        options: ["-2x³+3x²-1的次数是3", "-2x³+3x²-1的次数是2", "-2x³+3x²-1的次数是1", "-2x³+3x²-1的次数是0"],
+        answer: "0",
+        knowledge_point: "多项式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "606",
+        question: "不等式10x + 20 ≤ 30的解集是？",
+        options: ["x ≤ 1", "x ≥ 1", "x > 1", "x < 1"],
+        answer: "0",
+        knowledge_point: "不等式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "607",
+        question: "方程16x - 32 = 0的解是？",
+        options: ["x = -2", "x = 2", "x = 0", "x = 16"],
+        answer: "1",
+        knowledge_point: "一元一次方程",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "608",
+        question: "下列哪个是多项式的最高次项？",
+        options: ["-2x³+3x²-1中的-2x³", "-2x³+3x²-1中的3x²", "-2x³+3x²-1中的-1", "-2x³+3x²-1中的"],
+        answer: "0",
+        knowledge_point: "多项式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "609",
+        question: "不等式11x - 22 > 11的解集是？",
+        options: ["x > 3", "x < 3", "x ≥ 3", "x ≤ 3"],
+        answer: "0",
+        knowledge_point: "不等式",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "610",
+        question: "方程17x + 34 = 0的解是？",
+        options: ["x = -2", "x = 2", "x = 0", "x = 17"],
+        answer: "0",
+        knowledge_point: "一元一次方程",
+        grade: "七年级",
+        subject: "数学"
+      },
+      {
+        id: "611",
+        question: "下列哪个词语是贬义词？",
+        options: ["勇敢", "聪明", "狡猾", "勤奋"],
+        answer: "2",
+        knowledge_point: "词语的感情色彩",
+        grade: "七年级",
+        subject: "语文"
+      },
+      {
+        id: "612",
+        question: "下列哪个句子使用了拟人修辞？",
+        options: ["小鸟在枝头唱歌", "鸟在枝头叫", "他跑得很快", "鸟在枝头飞"],
+        answer: "0",
+        knowledge_point: "修辞手法",
+        grade: "七年级",
+        subject: "语文"
+      },
+      {
+        id: "613",
+        question: "下列哪个成语使用正确？",
+        options: ["他废寝忘食地学习", "他废寝忘食地睡觉", "他废寝忘食地玩耍", "他废寝忘食地吃饭"],
+        answer: "0",
+        knowledge_point: "成语运用",
+        grade: "七年级",
+        subject: "语文"
+      },
+      {
+        id: "614",
+        question: "下列哪个是说明文？",
+        options: ["《春》", "《苏州园林》", "《敬业与乐业》", "《背影》"],
+        answer: "1",
+        knowledge_point: "文体知识",
+        grade: "七年级",
+        subject: "语文"
+      },
+      {
+        id: "615",
+        question: "下列哪个句子没有语病？",
+        options: ["通过学习，使我进步很大", "通过学习，我进步很大", "通过学习，进步很大", "通过学习，我很大进步"],
+        answer: "1",
+        knowledge_point: "病句修改",
+        grade: "七年级",
+        subject: "语文"
+      },
+      {
+        id: "616",
+        question: "下列哪个是议论文？",
+        options: ["《春》", "《苏州园林》", "《敬业与乐业》", "《背影》"],
+        answer: "2",
+        knowledge_point: "文体知识",
+        grade: "七年级",
+        subject: "语文"
+      },
+      {
+        id: "617",
+        question: "下列哪个句子使用了夸张修辞？",
+        options: ["他跑得很快", "他跑得飞快", "他像鸟一样跑", "他飞快地跑"],
+        answer: "1",
+        knowledge_point: "修辞手法",
+        grade: "七年级",
+        subject: "语文"
+      },
+      {
+        id: "618",
+        question: "下列哪个是记叙文？",
+        options: ["《春》", "《苏州园林》", "《敬业与乐业》", "《背影》"],
+        answer: "2",
+        knowledge_point: "文体知识",
+        grade: "七年级",
+        subject: "语文"
+      },
+      {
+        id: "619",
+        question: "下列哪个是说明方法？",
+        options: ["比喻", "拟人", "举例子", "夸张"],
+        answer: "2",
+        knowledge_point: "说明方法",
+        grade: "七年级",
+        subject: "语文"
+      },
+      {
+        id: "620",
+        question: "下列哪个是议论文的论点？",
+        options: ["他跑得很快", "学习要勤奋", "他喜欢吃苹果", "今天天气很好"],
+        answer: "1",
+        knowledge_point: "议论文",
+        grade: "七年级",
+        subject: "语文"
+      },
+      {
+        id: "621",
+        question: "下列哪个是古文中的通假字？",
+        options: ["甚矣，汝之不惠", "惠通慧", "惠是智慧", "惠是恩惠"],
+        answer: "1",
+        knowledge_point: "通假字",
+        grade: "七年级",
+        subject: "语文"
+      },
+      {
+        id: "622",
+        question: "下列哪个是古文中的词类活用？",
+        options: ["名词作动词", "形容词作名词", "动词作名词", "以上都是"],
+        answer: "3",
+        knowledge_point: "词类活用",
+        grade: "七年级",
+        subject: "语文"
+      },
+      {
+        id: "623",
+        question: "What is the past tense of 'eat'?",
+        options: ["eated", "ate", "eaten", "eats"],
+        answer: "1",
+        knowledge_point: "动词过去式",
+        grade: "七年级",
+        subject: "英语"
+      },
+      {
+        id: "624",
+        question: "Which word is a vegetable?",
+        options: ["apple", "banana", "carrot", "orange"],
+        answer: "2",
+        knowledge_point: "词汇分类",
+        grade: "七年级",
+        subject: "英语"
+      },
+      {
+        id: "625",
+        question: "Choose the correct sentence:",
+        options: ["She go to school", "She goes to school", "She going to school", "She gone to school"],
+        answer: "1",
+        knowledge_point: "一般现在时",
+        grade: "七年级",
+        subject: "英语"
+      },
+      {
+        id: "626",
+        question: "What is the plural of 'man'?",
+        options: ["mans", "men", "manes", "man"],
+        answer: "1",
+        knowledge_point: "名词复数",
+        grade: "七年级",
+        subject: "英语"
+      },
+      {
+        id: "627",
+        question: "Which word means '非常'?",
+        options: ["very", "many", "much", "some"],
+        answer: "0",
+        knowledge_point: "副词",
+        grade: "七年级",
+        subject: "英语"
+      },
+      {
+        id: "628",
+        question: "What is the comparative form of 'bad'?",
+        options: ["badder", "worse", "more bad", "badest"],
+        answer: "1",
+        knowledge_point: "形容词比较级",
+        grade: "七年级",
+        subject: "英语"
+      },
+      {
+        id: "629",
+        question: "Choose the correct preposition:",
+        options: ["I am good in English", "I am good at English", "I am good on English", "I am good with English"],
+        answer: "1",
+        knowledge_point: "介词",
+        grade: "七年级",
+        subject: "英语"
+      },
+      {
+        id: "630",
+        question: "Which word means '但是'?",
+        options: ["because", "although", "but", "so"],
+        answer: "2",
+        knowledge_point: "连词",
+        grade: "七年级",
+        subject: "英语"
+      },
+      {
+        id: "631",
+        question: "What is the past participle of 'see'?",
+        options: ["seed", "saw", "seen", "seeing"],
+        answer: "2",
+        knowledge_point: "动词过去分词",
+        grade: "七年级",
+        subject: "英语"
+      },
+      {
+        id: "632",
+        question: "Which sentence is in present continuous tense?",
+        options: ["She goes to school", "She is going to school", "She went to school", "She has gone to school"],
+        answer: "1",
+        knowledge_point: "现在进行时",
+        grade: "七年级",
+        subject: "英语"
+      },
+      {
+        id: "633",
+        question: "Choose the correct article:",
+        options: ["I saw a apple", "I saw an apple", "I saw apple", "I saw the apple"],
+        answer: "0",
+        knowledge_point: "冠词",
+        grade: "七年级",
+        subject: "英语"
+      },
+      {
+        id: "634",
+        question: "What is the superlative form of 'big'?",
+        options: ["bigger", "biggest", "more big", "bigest"],
+        answer: "1",
+        knowledge_point: "形容词最高级",
+        grade: "七年级",
+        subject: "英语"
+      },
+      {
+        id: "635",
+        question: "Which word means '因为'?",
+        options: ["because", "although", "but", "so"],
+        answer: "0",
+        knowledge_point: "连词",
+        grade: "七年级",
+        subject: "英语"
+      },
+      {
+        id: "636",
+        question: "What is the present perfect tense of 'go'?",
+        options: ["He have gone", "He has gone", "He is gone", "He gone"],
+        answer: "1",
+        knowledge_point: "现在完成时",
+        grade: "七年级",
+        subject: "英语"
+      },
+      {
+        id: "637",
+        question: "Which word means '也'?",
+        options: ["too", "also", "either", "neither"],
+        answer: "0",
+        knowledge_point: "副词",
+        grade: "七年级",
+        subject: "英语"
+      },
+      {
+        id: "638",
+        question: "声音的传播速度是多少？",
+        options: ["340 m/s", "3400 m/s", "34 m/s", "34000 m/s"],
+        answer: "0",
+        knowledge_point: "声音的传播",
+        grade: "七年级",
+        subject: "物理"
+      },
+      {
+        id: "639",
+        question: "光的反射定律是什么？",
+        options: ["入射角等于反射角", "入射角大于反射角", "入射角小于反射角", "入射角等于折射角"],
+        answer: "0",
+        knowledge_point: "光的反射",
+        grade: "七年级",
+        subject: "物理"
+      },
+      {
+        id: "640",
+        question: "下列哪个是凸透镜？",
+        options: ["中间厚边缘薄", "中间薄边缘厚", "厚度均匀", "以上都不是"],
+        answer: "0",
+        knowledge_point: "透镜",
+        grade: "七年级",
+        subject: "物理"
+      },
+      {
+        id: "641",
+        question: "摩擦力的方向与运动方向的关系是？",
+        options: ["相同", "相反", "垂直", "成45度角"],
+        answer: "1",
+        knowledge_point: "摩擦力",
+        grade: "七年级",
+        subject: "物理"
+      },
+      {
+        id: "642",
+        question: "下列哪个是省力杠杆？",
+        options: ["动力臂大于阻力臂", "动力臂小于阻力臂", "动力臂等于阻力臂", "动力臂是阻力臂的2倍"],
+        answer: "0",
+        knowledge_point: "杠杆",
+        grade: "七年级",
+        subject: "物理"
+      },
+      {
+        id: "643",
+        question: "下列哪个是做功的必要因素？",
+        options: ["力和距离", "力和时间", "力和速度", "力和质量"],
+        answer: "0",
+        knowledge_point: "功",
+        grade: "七年级",
+        subject: "物理"
+      },
+      {
+        id: "644",
+        question: "功率的物理意义是？",
+        options: ["做功的多少", "做功的快慢", "力的大小", "距离的长短"],
+        answer: "1",
+        knowledge_point: "功率",
+        grade: "七年级",
+        subject: "物理"
+      },
+      {
+        id: "645",
+        question: "下列哪个是动能？",
+        options: ["静止的物体", "在低处的物体", "运动的物体", "质量大的物体"],
+        answer: "2",
+        knowledge_point: "动能",
+        grade: "七年级",
+        subject: "物理"
+      },
+      {
+        id: "646",
+        question: "下列哪个是势能？",
+        options: ["运动的物体", "在低处的物体", "在地面上的物体", "在高处的物体"],
+        answer: "3",
+        knowledge_point: "势能",
+        grade: "七年级",
+        subject: "物理"
+      },
+      {
+        id: "647",
+        question: "机械能守恒定律的内容是？",
+        options: ["动能可以创造", "势能可以消灭", "动能和势能可以相互转化", "机械能总是增加"],
+        answer: "2",
+        knowledge_point: "机械能守恒",
+        grade: "七年级",
+        subject: "物理"
+      },
+      {
+        id: "648",
+        question: "下列哪个是扩散现象？",
+        options: ["铁块生锈", "香水扩散", "冰块融化", "水沸腾"],
+        answer: "1",
+        knowledge_point: "扩散现象",
+        grade: "七年级",
+        subject: "物理"
+      },
+      {
+        id: "649",
+        question: "下列哪个是晶体？",
+        options: ["玻璃", "食盐", "沥青", "橡胶"],
+        answer: "1",
+        knowledge_point: "晶体与非晶体",
+        grade: "七年级",
+        subject: "物理"
+      },
+      {
+        id: "650",
+        question: "下列哪个是非晶体？",
+        options: ["食盐", "冰", "钻石", "石英"],
+        answer: "3",
+        knowledge_point: "晶体与非晶体",
+        grade: "七年级",
+        subject: "物理"
+      },
+      {
+        id: "651",
+        question: "汽化的两种方式是？",
+        options: ["蒸发和沸腾", "熔化和凝固", "升华和凝华", "液化和汽化"],
+        answer: "0",
+        knowledge_point: "物态变化",
+        grade: "七年级",
+        subject: "物理"
+      },
+      {
+        id: "652",
+        question: "下列哪个是液化现象？",
+        options: ["冰块融化", "露珠形成", "樟脑丸变小", "湿衣服变干"],
+        answer: "1",
+        knowledge_point: "物态变化",
+        grade: "七年级",
+        subject: "物理"
+      },
+      {
+        id: "653",
+        question: "下列哪个是升华现象？",
+        options: ["冰块融化", "樟脑丸变小", "霜的形成", "露珠形成"],
+        answer: "1",
+        knowledge_point: "物态变化",
+        grade: "七年级",
+        subject: "物理"
+      },
+      {
+        id: "654",
+        question: "下列哪个是凝华现象？",
+        options: ["冰块融化", "霜的形成", "露珠形成", "樟脑丸变小"],
+        answer: "1",
+        knowledge_point: "物态变化",
+        grade: "七年级",
+        subject: "物理"
+      },
+      {
+        id: "655",
+        question: "下列哪个是混合物？",
+        options: ["蒸馏水", "纯净的氧气", "冰水混合物", "氯化钠"],
+        answer: "2",
+        knowledge_point: "纯净物与混合物",
+        grade: "七年级",
+        subject: "化学"
+      },
+      {
+        id: "656",
+        question: "下列哪个是化合物？",
+        options: ["氧气", "氮气", "水", "空气"],
+        answer: "2",
+        knowledge_point: "纯净物与混合物",
+        grade: "七年级",
+        subject: "化学"
+      },
+      {
+        id: "657",
+        question: "下列哪个是单质？",
+        options: ["水", "空气", "氧气", "氯化钠"],
+        answer: "2",
+        knowledge_point: "纯净物与混合物",
+        grade: "七年级",
+        subject: "化学"
+      },
+      {
+        id: "658",
+        question: "下列哪个是氧化物？",
+        options: ["HCl", "H2O", "CO2", "NaCl"],
+        answer: "1",
+        knowledge_point: "氧化物",
+        grade: "七年级",
+        subject: "化学"
+      },
+      {
+        id: "659",
+        question: "下列哪个是酸？",
+        options: ["NaOH", "CaO", "NaCl", "H2O"],
+        answer: "0",
+        knowledge_point: "酸碱盐",
+        grade: "七年级",
+        subject: "化学"
+      },
+      {
+        id: "660",
+        question: "下列哪个是碱？",
+        options: ["HCl", "NaOH", "NaCl", "CO2"],
+        answer: "1",
+        knowledge_point: "酸碱盐",
+        grade: "七年级",
+        subject: "化学"
+      },
+      {
+        id: "661",
+        question: "下列哪个是盐？",
+        options: ["HCl", "NaOH", "NaCl", "H2O"],
+        answer: "2",
+        knowledge_point: "酸碱盐",
+        grade: "七年级",
+        subject: "化学"
+      },
+      {
+        id: "662",
+        question: "中和反应的产物是？",
+        options: ["盐和水", "盐和气体", "盐和沉淀", "气体和水"],
+        answer: "0",
+        knowledge_point: "中和反应",
+        grade: "七年级",
+        subject: "化学"
+      },
+      {
+        id: "663",
+        question: "下列哪个是置换反应？",
+        options: ["2H2 + O2 → 2H2O", "Zn + H2SO4 → ZnSO4 + H2", "CaCO3 → CaO + CO2", "NaOH + HCl → NaCl + H2O"],
+        answer: "1",
+        knowledge_point: "化学反应类型",
+        grade: "七年级",
+        subject: "化学"
+      },
+      {
+        id: "664",
+        question: "下列哪个是化合反应？",
+        options: ["CaCO3 → CaO + CO2", "2H2 + O2 → 2H2O", "Zn + H2SO4 → ZnSO4 + H2", "NaOH + HCl → NaCl + H2O"],
+        answer: "1",
+        knowledge_point: "化学反应类型",
+        grade: "七年级",
+        subject: "化学"
+      },
+      {
+        id: "665",
+        question: "下列哪个是分解反应？",
+        options: ["CaCO3 → CaO + CO2", "2H2 + O2 → 2H2O", "Zn + H2SO4 → ZnSO4 + H2", "NaOH + HCl → NaCl + H2O"],
+        answer: "0",
+        knowledge_point: "化学反应类型",
+        grade: "七年级",
+        subject: "化学"
+      },
+      {
+        id: "666",
+        question: "下列哪个是复分解反应？",
+        options: ["CaCO3 → CaO + CO2", "2H2 + O2 → 2H2O", "Zn + H2SO4 → ZnSO4 + H2", "NaOH + HCl → NaCl + H2O"],
+        answer: "3",
+        knowledge_point: "化学反应类型",
+        grade: "七年级",
+        subject: "化学"
+      },
+      {
+        id: "667",
+        question: "下列哪个是氧化反应？",
+        options: ["铁生锈", "木材燃烧", "冰融化", "食物腐烂"],
+        answer: "1",
+        knowledge_point: "化学反应类型",
+        grade: "七年级",
+        subject: "化学"
+      },
+      {
+        id: "668",
+        question: "下列哪个是还原反应？",
+        options: ["铁生锈", "木材燃烧", "冰融化", "食物腐烂"],
+        answer: "1",
+        knowledge_point: "化学反应类型",
+        grade: "七年级",
+        subject: "化学"
+      },
+      {
+        id: "669",
+        question: "下列哪个是燃烧反应？",
+        options: ["铁生锈", "木材燃烧", "冰融化", "食物腐烂"],
+        answer: "1",
+        knowledge_point: "化学反应类型",
+        grade: "七年级",
+        subject: "化学"
+      },
+      {
+        id: "670",
+        question: "植物细胞的基本结构包括？",
+        options: ["细胞壁、细胞膜、细胞质", "细胞核、细胞膜、细胞质", "细胞壁、细胞核、细胞质", "细胞壁、细胞膜、细胞核"],
+        answer: "0",
+        knowledge_point: "植物细胞",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "671",
+        question: "动物细胞与植物细胞的主要区别是？",
+        options: ["动物细胞有细胞壁", "植物细胞有细胞壁", "动物细胞有叶绿体", "植物细胞有中心体"],
+        answer: "1",
+        knowledge_point: "细胞结构",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "672",
+        question: "下列哪个是单细胞生物？",
+        options: ["金鱼", "蚂蚁", "麻雀", "草履虫"],
+        answer: "3",
+        knowledge_point: "单细胞生物",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "673",
+        question: "下列哪个是多细胞生物？",
+        options: ["草履虫", "金鱼", "蚂蚁", "麻雀"],
+        answer: "1",
+        knowledge_point: "单细胞生物",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "674",
+        question: "下列哪个是原核生物？",
+        options: ["草履虫", "金鱼", "蚂蚁", "细菌"],
+        answer: "3",
+        knowledge_point: "细胞结构",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "675",
+        question: "下列哪个是真核生物？",
+        options: ["细菌", "金鱼", "蚂蚁", "麻雀"],
+        answer: "0",
+        knowledge_point: "细胞结构",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "676",
+        question: "下列哪个是病毒？",
+        options: ["草履虫", "细菌", "艾滋病病毒", "金鱼"],
+        answer: "2",
+        knowledge_point: "病毒",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "677",
+        question: "下列哪个是细菌？",
+        options: ["草履虫", "艾滋病病毒", "大肠杆菌", "金鱼"],
+        answer: "2",
+        knowledge_point: "细菌",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "678",
+        question: "下列哪个是真菌？",
+        options: ["草履虫", "艾滋病病毒", "大肠杆菌", "酵母菌"],
+        answer: "3",
+        knowledge_point: "真菌",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "679",
+        question: "生态系统的组成包括？",
+        options: ["生产者、消费者", "生产者、消费者、分解者", "消费者、分解者", "生产者、分解者"],
+        answer: "1",
+        knowledge_point: "生态系统",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "680",
+        question: "下列哪个是生产者？",
+        options: ["狼", "羊", "草", "鹰"],
+        answer: "2",
+        knowledge_point: "生态系统",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "681",
+        question: "下列哪个是消费者？",
+        options: ["草", "羊", "狼", "鹰"],
+        answer: "2",
+        knowledge_point: "生态系统",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "682",
+        question: "下列哪个是分解者？",
+        options: ["草", "羊", "狼", "细菌"],
+        answer: "3",
+        knowledge_point: "生态系统",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "683",
+        question: "食物链的正确写法是？",
+        options: ["草→羊→狼", "草←羊←狼", "草←羊→狼", "草→羊←狼"],
+        answer: "0",
+        knowledge_point: "食物链",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "684",
+        question: "下列哪个是食物网？",
+        options: ["草→羊", "草←羊→狼←鹰", "草→羊→狼", "草→羊→狼→鹰"],
+        answer: "3",
+        knowledge_point: "食物链",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "685",
+        question: "生态系统中的能量流动特点是？",
+        options: ["循环流动", "单向流动", "双向流动", "静止不动"],
+        answer: "1",
+        knowledge_point: "生态系统",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "686",
+        question: "下列哪个是生物圈？",
+        options: ["一个池塘", "池塘中的所有鱼", "地球上的所有生物", "池塘中的所有生物"],
+        answer: "2",
+        knowledge_point: "生物圈",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "687",
+        question: "下列哪个是生物多样性？",
+        options: ["一个池塘", "池塘中的所有生物", "地球上的所有生物", "池塘中的所有鱼"],
+        answer: "2",
+        knowledge_point: "生物圈",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "688",
+        question: "保护生物多样性的措施是？",
+        options: ["大量捕猎", "建立自然保护区", "砍伐森林", "排放污水"],
+        answer: "1",
+        knowledge_point: "生物多样性",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "689",
+        question: "下列哪个是原生动物？",
+        options: ["蚯蚓", "草履虫", "变形虫", "以上都是"],
+        answer: "3",
+        knowledge_point: "动物分类",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "690",
+        question: "下列哪个是腔肠动物？",
+        options: ["蚯蚓", "草履虫", "变形虫", "以上都是"],
+        answer: "0",
+        knowledge_point: "动物分类",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "691",
+        question: "下列哪个是扁形动物？",
+        options: ["蚯蚓", "涡虫", "草履虫", "以上都是"],
+        answer: "1",
+        knowledge_point: "动物分类",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "692",
+        question: "下列哪个是线形动物？",
+        options: ["蚯蚓", "草履虫", "涡虫", "以上都是"],
+        answer: "1",
+        knowledge_point: "动物分类",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "693",
+        question: "下列哪个是软体动物？",
+        options: ["蚯蚓", "蜗牛", "涡虫", "草履虫"],
+        answer: "1",
+        knowledge_point: "动物分类",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "694",
+        question: "下列哪个是节肢动物？",
+        options: ["蚯蚓", "蜗牛", "蚂蚁", "草履虫"],
+        answer: "2",
+        knowledge_point: "动物分类",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "695",
+        question: "下列哪个是昆虫？",
+        options: ["蚯蚓", "蚂蚁", "蜗牛", "草履虫"],
+        answer: "1",
+        knowledge_point: "动物分类",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "696",
+        question: "下列哪个是两栖动物？",
+        options: ["蚯蚓", "青蛙", "蚂蚁", "蜗牛"],
+        answer: "1",
+        knowledge_point: "动物分类",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "697",
+        question: "下列哪个是爬行动物？",
+        options: ["蚯蚓", "青蛙", "蚂蚁", "蜗牛"],
+        answer: "2",
+        knowledge_point: "动物分类",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "698",
+        question: "下列哪个是鸟类？",
+        options: ["蚯蚓", "青蛙", "麻雀", "蚂蚁"],
+        answer: "2",
+        knowledge_point: "动物分类",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "699",
+        question: "下列哪个是哺乳动物？",
+        options: ["蚯蚓", "青蛙", "蚂蚁", "海豚"],
+        answer: "3",
+        knowledge_point: "动物分类",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "700",
+        question: "下列哪个是鱼类？",
+        options: ["蚯蚓", "金鱼", "蚂蚁", "麻雀"],
+        answer: "1",
+        knowledge_point: "动物分类",
+        grade: "七年级",
+        subject: "生物"
+      },
+      {
+        id: "701",
+        question: "下列哪个是轴对称图形？",
+        options: ["平行四边形", "等腰梯形", "直角梯形", "不等边三角形"],
+        answer: "1",
+        knowledge_point: "轴对称图形",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "702",
+        question: "下列哪个是中心对称图形？",
+        options: ["等边三角形", "正方形", "等腰梯形", "直角三角形"],
+        answer: "1",
+        knowledge_point: "中心对称图形",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "703",
+        question: "下列哪个是平移变换？",
+        options: ["图形绕某点旋转", "图形沿直线移动", "图形关于直线对称", "图形放大"],
+        answer: "1",
+        knowledge_point: "图形的平移",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "704",
+        question: "下列哪个是旋转变换？",
+        options: ["图形沿直线移动", "图形绕某点旋转", "图形关于直线对称", "图形放大"],
+        answer: "1",
+        knowledge_point: "图形的旋转",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "705",
+        question: "下列哪个是轴对称变换？",
+        options: ["图形沿直线移动", "图形绕某点旋转", "图形关于直线对称", "图形放大"],
+        answer: "2",
+        knowledge_point: "图形的对称",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "706",
+        question: "下列哪个是相似变换？",
+        options: ["图形沿直线移动", "图形绕某点旋转", "图形关于直线对称", "图形放大或缩小"],
+        answer: "3",
+        knowledge_point: "图形的相似",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "707",
+        question: "下列哪个是全等变换？",
+        options: ["图形放大或缩小", "图形沿直线移动", "图形绕某点旋转", "以上都是"],
+        answer: "3",
+        knowledge_point: "图形的全等",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "708",
+        question: "下列哪个是比例的性质？",
+        options: ["a:b = c:d", "ad = bc", "a/b = c/d", "以上都是"],
+        answer: "3",
+        knowledge_point: "比例的性质",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "709",
+        question: "下列哪个是相似三角形的性质？",
+        options: ["对应角相等", "对应边成比例", "面积比等于相似比的平方", "以上都是"],
+        answer: "3",
+        knowledge_point: "相似三角形",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "710",
+        question: "下列哪个是勾股定理的逆定理？",
+        options: ["a² + b² = c²", "如果a² + b² = c²，那么三角形是直角三角形", "如果三角形是直角三角形，那么a² + b² = c²", "以上都不是"],
+        answer: "1",
+        knowledge_point: "勾股定理",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "711",
+        question: "下列哪个是锐角三角形？",
+        options: ["三个角都是锐角", "三个角都是钝角", "三个角都是直角", "以上都不是"],
+        answer: "0",
+        knowledge_point: "三角形的分类",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "712",
+        question: "下列哪个是钝角三角形？",
+        options: ["三个角都是锐角", "有一个角是钝角", "有一个角是直角", "以上都不是"],
+        answer: "1",
+        knowledge_point: "三角形的分类",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "713",
+        question: "下列哪个是直角三角形？",
+        options: ["三个角都是锐角", "有一个角是钝角", "有一个角是直角", "以上都不是"],
+        answer: "2",
+        knowledge_point: "三角形的分类",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "714",
+        question: "下列哪个是等腰三角形？",
+        options: ["三条边都相等", "两条边相等", "三条边都不相等", "以上都不是"],
+        answer: "1",
+        knowledge_point: "三角形的分类",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "715",
+        question: "下列哪个是等边三角形？",
+        options: ["三条边都相等", "两条边相等", "三条边都不相等", "以上都不是"],
+        answer: "0",
+        knowledge_point: "三角形的分类",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "716",
+        question: "下列哪个是直角梯形？",
+        options: ["四个角都是直角", "有一个角是直角", "两个角是直角", "以上都不是"],
+        answer: "2",
+        knowledge_point: "梯形的分类",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "717",
+        question: "下列哪个是等腰梯形？",
+        options: ["四条边都相等", "两条腰相等", "两条底相等", "以上都不是"],
+        answer: "1",
+        knowledge_point: "梯形的分类",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "718",
+        question: "下列哪个是平行四边形的性质？",
+        options: ["对边平行且相等", "对角线相等", "四个角都是直角", "以上都是"],
+        answer: "0",
+        knowledge_point: "平行四边形",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "719",
+        question: "下列哪个是矩形的性质？",
+        options: ["对边平行且相等", "对角线相等且平分", "四个角都是直角", "以上都是"],
+        answer: "3",
+        knowledge_point: "矩形",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "720",
+        question: "下列哪个是菱形的性质？",
+        options: ["四条边都相等", "对角线垂直平分", "对角线平分一组对角", "以上都是"],
+        answer: "3",
+        knowledge_point: "菱形",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "721",
+        question: "下列哪个是正方形的性质？",
+        options: ["四条边都相等", "四个角都是直角", "对角线垂直平分且相等", "以上都是"],
+        answer: "3",
+        knowledge_point: "正方形",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "722",
+        question: "下列哪个是圆的性质？",
+        options: ["圆上所有点到圆心的距离相等", "圆的直径等于半径的2倍", "圆的周长等于2πr", "以上都是"],
+        answer: "3",
+        knowledge_point: "圆",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "723",
+        question: "下列哪个是圆的切线性质？",
+        options: ["切线垂直于半径", "切线平行于半径", "切线等于半径", "切线是直径"],
+        answer: "0",
+        knowledge_point: "圆的切线",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "724",
+        question: "下列哪个是圆的弦的性质？",
+        options: ["弦垂直于半径", "弦平行于半径", "弦等于半径", "弦的两个端点在圆上"],
+        answer: "3",
+        knowledge_point: "圆的弦",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "725",
+        question: "下列哪个是圆的弧的性质？",
+        options: ["弧垂直于半径", "弧平行于半径", "弧等于半径", "弧是圆的一部分"],
+        answer: "3",
+        knowledge_point: "圆的弧",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "726",
+        question: "下列哪个是圆的扇形？",
+        options: ["圆的一部分", "圆心角和弧围成的图形", "圆的直径", "圆的半径"],
+        answer: "1",
+        knowledge_point: "圆的扇形",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "727",
+        question: "下列哪个是圆的面积公式？",
+        options: ["S = 2πr", "S = πr²", "S = πd", "S = 2πd"],
+        answer: "1",
+        knowledge_point: "圆的面积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "728",
+        question: "下列哪个是圆的周长公式？",
+        options: ["C = πr²", "C = 2πr", "C = πd", "C = 2πd"],
+        answer: "1",
+        knowledge_point: "圆的周长",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "729",
+        question: "下列哪个是圆的面积计算？",
+        options: ["r = 3时，S = 9π", "r = 3时，S = 18π", "r = 3时，S = 6π", "r = 3时，S = 3π"],
+        answer: "0",
+        knowledge_point: "圆的面积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "730",
+        question: "下列哪个是圆的周长计算？",
+        options: ["r = 3时，C = 6π", "r = 3时，C = 9π", "r = 3时，C = 3π", "r = 3时，C = 12π"],
+        answer: "0",
+        knowledge_point: "圆的周长",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "731",
+        question: "下列哪个是圆的直径？",
+        options: ["直径等于半径", "直径等于半径的2倍", "直径等于半径的3倍", "直径等于半径的4倍"],
+        answer: "1",
+        knowledge_point: "圆的直径",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "732",
+        question: "下列哪个是圆的半径？",
+        options: ["半径等于直径", "半径等于直径的一半", "半径等于直径的2倍", "半径等于直径的3倍"],
+        answer: "1",
+        knowledge_point: "圆的半径",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "733",
+        question: "下列哪个是圆的圆心？",
+        options: ["圆上的一点", "圆内的一点", "圆外的一点", "圆的中心点"],
+        answer: "3",
+        knowledge_point: "圆的圆心",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "734",
+        question: "下列哪个是圆的弦？",
+        options: ["连接圆心和圆上一点的线段", "连接圆上两点的线段", "圆的直径", "圆的半径"],
+        answer: "1",
+        knowledge_point: "圆的弦",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "735",
+        question: "下列哪个是圆的直径？",
+        options: ["连接圆心和圆上一点的线段", "连接圆上两点的线段", "通过圆心的弦", "圆的半径"],
+        answer: "2",
+        knowledge_point: "圆的直径",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "736",
+        question: "下列哪个是圆的弧？",
+        options: ["圆上两点之间的线段", "圆上两点之间的曲线", "圆的直径", "圆的半径"],
+        answer: "1",
+        knowledge_point: "圆的弧",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "737",
+        question: "下列哪个是圆的扇形？",
+        options: ["圆的一部分", "圆心角和弧围成的图形", "圆的直径", "圆的半径"],
+        answer: "1",
+        knowledge_point: "圆的扇形",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "738",
+        question: "下列哪个是圆的圆心角？",
+        options: ["顶点在圆上的角", "顶点在圆心的角", "顶点在圆外的角", "顶点在圆内的角"],
+        answer: "1",
+        knowledge_point: "圆的圆心角",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "739",
+        question: "下列哪个是圆的圆周角？",
+        options: ["顶点在圆心的角", "顶点在圆上的角", "顶点在圆外的角", "顶点在圆内的角"],
+        answer: "1",
+        knowledge_point: "圆的圆周角",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "740",
+        question: "下列哪个是圆的切线？",
+        options: ["与圆相交的直线", "与圆相切的直线", "与圆相离的直线", "通过圆心的直线"],
+        answer: "1",
+        knowledge_point: "圆的切线",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "741",
+        question: "下列哪个是圆的割线？",
+        options: ["与圆相切的直线", "与圆相交的直线", "与圆相离的直线", "通过圆心的直线"],
+        answer: "1",
+        knowledge_point: "圆的割线",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "742",
+        question: "下列哪个是圆的弦切角？",
+        options: ["顶点在圆心的角", "顶点在圆上的角", "顶点在圆外的角", "顶点在圆内的角"],
+        answer: "1",
+        knowledge_point: "圆的弦切角",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "743",
+        question: "下列哪个是圆的弦心距？",
+        options: ["圆心到弦的距离", "圆心到切线的距离", "圆心到割线的距离", "圆心到直径的距离"],
+        answer: "0",
+        knowledge_point: "圆的弦心距",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "744",
+        question: "下列哪个是圆的切线长？",
+        options: ["切点到圆心的距离", "切点到切点的距离", "切点到割线的距离", "切点到直径的距离"],
+        answer: "1",
+        knowledge_point: "圆的切线长",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "745",
+        question: "下列哪个是圆的相交弦定理？",
+        options: ["两弦相交，交点分弦的两段乘积相等", "两弦平行，交点分弦的两段乘积相等", "两弦垂直，交点分弦的两段乘积相等", "两弦相等，交点分弦的两段乘积相等"],
+        answer: "0",
+        knowledge_point: "圆的相交弦定理",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "746",
+        question: "下列哪个是圆的切割线定理？",
+        options: ["从圆外一点引切线和割线，切线长的平方等于割线长与其圆外部分的乘积", "从圆外一点引切线和割线，切线长等于割线长", "从圆外一点引切线和割线，切线长的平方等于割线长的平方", "从圆外一点引切线和割线，切线长等于割线长的圆外部分"],
+        answer: "0",
+        knowledge_point: "圆的切割线定理",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "747",
+        question: "下列哪个是圆的切线长定理？",
+        options: ["从圆外一点引两条切线，切线长相等", "从圆外一点引两条切线，切线长不等", "从圆外一点引两条切线，切线长等于半径", "从圆外一点引两条切线，切线长等于直径"],
+        answer: "0",
+        knowledge_point: "圆的切线长定理",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "748",
+        question: "下列哪个是圆的弦切角定理？",
+        options: ["弦切角等于它所夹的弧所对的圆周角", "弦切角等于它所夹的弧所对的圆心角", "弦切角等于它所夹的弧所对的弦切角", "弦切角等于它所夹的弧所对的割线角"],
+        answer: "0",
+        knowledge_point: "圆的弦切角定理",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "749",
+        question: "下列哪个是圆的圆周角定理？",
+        options: ["圆周角等于圆心角的一半", "圆周角等于圆心角", "圆周角等于圆心角的2倍", "圆周角等于圆心角的3倍"],
+        answer: "0",
+        knowledge_point: "圆的圆周角定理",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "750",
+        question: "下列哪个是圆的圆心角定理？",
+        options: ["圆心角等于圆周角的一半", "圆心角等于圆周角", "圆心角等于圆周角的2倍", "圆心角等于圆周角的3倍"],
+        answer: "2",
+        knowledge_point: "圆的圆心角定理",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "751",
+        question: "下列哪个是圆的垂径定理？",
+        options: ["垂直于弦的直径平分弦", "垂直于弦的直径平分弦所对的两条弧", "垂直于弦的直径平分弦和弦所对的两条弧", "以上都不是"],
+        answer: "2",
+        knowledge_point: "圆的垂径定理",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "752",
+        question: "下列哪个是圆的弧长公式？",
+        options: ["l = 2πr", "l = πr²", "l = nπr/180", "l = nπr/360"],
+        answer: "2",
+        knowledge_point: "圆的弧长",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "753",
+        question: "下列哪个是圆的扇形面积公式？",
+        options: ["S = 2πr", "S = πr²", "S = nπr²/360", "S = nπr²/180"],
+        answer: "2",
+        knowledge_point: "圆的扇形面积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "754",
+        question: "下列哪个是圆的弓形面积公式？",
+        options: ["S = S扇形 - S三角形", "S = S扇形 + S三角形", "S = S扇形 × S三角形", "S = S扇形 ÷ S三角形"],
+        answer: "0",
+        knowledge_point: "圆的弓形面积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "755",
+        question: "下列哪个是圆的环面积公式？",
+        options: ["S = π(R² - r²)", "S = π(R + r)", "S = π(R - r)", "S = πRr"],
+        answer: "0",
+        knowledge_point: "圆的环面积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "756",
+        question: "下列哪个是圆的圆柱体积公式？",
+        options: ["V = πr²h", "V = 2πrh", "V = πrh", "V = 2πr²h"],
+        answer: "0",
+        knowledge_point: "圆柱体积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "757",
+        question: "下列哪个是圆的圆柱表面积公式？",
+        options: ["S = 2πr² + 2πrh", "S = πr² + 2πrh", "S = 2πr² + πrh", "S = πr² + πrh"],
+        answer: "0",
+        knowledge_point: "圆柱表面积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "758",
+        question: "下列哪个是圆的圆锥体积公式？",
+        options: ["V = πr²h", "V = 1/3πr²h", "V = 2/3πr²h", "V = 3πr²h"],
+        answer: "1",
+        knowledge_point: "圆锥体积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "759",
+        question: "下列哪个是圆的圆锥表面积公式？",
+        options: ["S = πr² + πrl", "S = 2πr² + πrl", "S = πr² + 2πrl", "S = 2πr² + 2πrl"],
+        answer: "0",
+        knowledge_point: "圆锥表面积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "760",
+        question: "下列哪个是圆的球体积公式？",
+        options: ["V = 4/3πr³", "V = 4πr³", "V = 4/3πr²", "V = 4πr²"],
+        answer: "0",
+        knowledge_point: "球体积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "761",
+        question: "下列哪个是圆的球表面积公式？",
+        options: ["S = 4πr²", "S = 2πr²", "S = 4πr", "S = 2πr"],
+        answer: "0",
+        knowledge_point: "球表面积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "762",
+        question: "下列哪个是圆的圆柱侧面积公式？",
+        options: ["S = 2πrh", "S = πrh", "S = 2πr²", "S = πr²"],
+        answer: "0",
+        knowledge_point: "圆柱侧面积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "763",
+        question: "下列哪个是圆的圆锥侧面积公式？",
+        options: ["S = πrl", "S = 2πrl", "S = πr²", "S = 2πr²"],
+        answer: "0",
+        knowledge_point: "圆锥侧面积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "764",
+        question: "下列哪个是圆的圆柱全面积公式？",
+        options: ["S = 2πr² + 2πrh", "S = πr² + 2πrh", "S = 2πr² + πrh", "S = πr² + πrh"],
+        answer: "0",
+        knowledge_point: "圆柱全面积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "765",
+        question: "下列哪个是圆的圆锥全面积公式？",
+        options: ["S = πr² + πrl", "S = 2πr² + πrl", "S = πr² + 2πrl", "S = 2πr² + 2πrl"],
+        answer: "0",
+        knowledge_point: "圆锥全面积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "766",
+        question: "下列哪个是圆的圆柱高？",
+        options: ["圆柱的底面半径", "圆柱的底面直径", "圆柱的两个底面之间的距离", "圆柱的母线长"],
+        answer: "2",
+        knowledge_point: "圆柱高",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "767",
+        question: "下列哪个是圆的圆锥高？",
+        options: ["圆锥的底面半径", "圆锥的底面直径", "圆锥的顶点到底面的距离", "圆锥的母线长"],
+        answer: "2",
+        knowledge_point: "圆锥高",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "768",
+        question: "下列哪个是圆的圆柱母线？",
+        options: ["圆柱的底面半径", "圆柱的底面直径", "圆柱的两个底面之间的距离", "圆柱的侧面展开图的矩形的长"],
+        answer: "3",
+        knowledge_point: "圆柱母线",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "769",
+        question: "下列哪个是圆的圆锥母线？",
+        options: ["圆锥的底面半径", "圆锥的底面直径", "圆锥的顶点到底面的距离", "圆锥的顶点到底面圆周上任意一点的距离"],
+        answer: "3",
+        knowledge_point: "圆锥母线",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "770",
+        question: "下列哪个是圆的圆柱底面？",
+        options: ["圆柱的两个圆面", "圆柱的一个圆面", "圆柱的侧面", "圆柱的展开图"],
+        answer: "0",
+        knowledge_point: "圆柱底面",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "771",
+        question: "下列哪个是圆的圆锥底面？",
+        options: ["圆锥的两个圆面", "圆锥的一个圆面", "圆锥的侧面", "圆锥的展开图"],
+        answer: "1",
+        knowledge_point: "圆锥底面",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "772",
+        question: "下列哪个是圆的圆柱侧面？",
+        options: ["圆柱的两个圆面", "圆柱的一个圆面", "圆柱的曲面", "圆柱的展开图"],
+        answer: "2",
+        knowledge_point: "圆柱侧面",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "773",
+        question: "下列哪个是圆的圆锥侧面？",
+        options: ["圆锥的两个圆面", "圆锥的一个圆面", "圆锥的曲面", "圆锥的展开图"],
+        answer: "2",
+        knowledge_point: "圆锥侧面",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "774",
+        question: "下列哪个是圆的圆柱展开图？",
+        options: ["两个圆和一个矩形", "一个圆和一个矩形", "两个圆和一个三角形", "一个圆和一个三角形"],
+        answer: "0",
+        knowledge_point: "圆柱展开图",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "775",
+        question: "下列哪个是圆的圆锥展开图？",
+        options: ["一个圆和一个扇形", "两个圆和一个扇形", "一个圆和一个矩形", "两个圆和一个矩形"],
+        answer: "0",
+        knowledge_point: "圆锥展开图",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "776",
+        question: "下列哪个是圆的圆柱轴截面？",
+        options: ["矩形", "圆形", "三角形", "梯形"],
+        answer: "0",
+        knowledge_point: "圆柱轴截面",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "777",
+        question: "下列哪个是圆的圆锥轴截面？",
+        options: ["矩形", "圆形", "等腰三角形", "梯形"],
+        answer: "2",
+        knowledge_point: "圆锥轴截面",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "778",
+        question: "下列哪个是圆的圆柱截面？",
+        options: ["圆形或矩形", "圆形或三角形", "圆形或梯形", "圆形或椭圆形"],
+        answer: "0",
+        knowledge_point: "圆柱截面",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "779",
+        question: "下列哪个是圆的圆锥截面？",
+        options: ["圆形或等腰三角形", "圆形或矩形", "圆形或梯形", "圆形或椭圆形"],
+        answer: "0",
+        knowledge_point: "圆锥截面",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "780",
+        question: "下列哪个是圆的圆柱体积计算？",
+        options: ["r = 3，h = 5时，V = 45π", "r = 3，h = 5时，V = 15π", "r = 3，h = 5时，V = 30π", "r = 3，h = 5时，V = 60π"],
+        answer: "0",
+        knowledge_point: "圆柱体积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "781",
+        question: "下列哪个是圆的圆锥体积计算？",
+        options: ["r = 3，h = 5时，V = 15π", "r = 3，h = 5时，V = 45π", "r = 3，h = 5时，V = 30π", "r = 3，h = 5时，V = 60π"],
+        answer: "0",
+        knowledge_point: "圆锥体积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "782",
+        question: "下列哪个是圆的球体积计算？",
+        options: ["r = 3时，V = 36π", "r = 3时，V = 108π", "r = 3时，V = 12π", "r = 3时，V = 24π"],
+        answer: "0",
+        knowledge_point: "球体积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "783",
+        question: "下列哪个是圆的圆柱表面积计算？",
+        options: ["r = 3，h = 5时，S = 48π", "r = 3，h = 5时，S = 24π", "r = 3，h = 5时，S = 36π", "r = 3，h = 5时，S = 60π"],
+        answer: "0",
+        knowledge_point: "圆柱表面积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "784",
+        question: "下列哪个是圆的圆锥表面积计算？",
+        options: ["r = 3，l = 5时，S = 24π", "r = 3，l = 5时，S = 12π", "r = 3，l = 5时，S = 18π", "r = 3，l = 5时，S = 30π"],
+        answer: "0",
+        knowledge_point: "圆锥表面积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "785",
+        question: "下列哪个是圆的球表面积计算？",
+        options: ["r = 3时，S = 36π", "r = 3时，S = 18π", "r = 3时，S = 12π", "r = 3时，S = 24π"],
+        answer: "0",
+        knowledge_point: "球表面积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "786",
+        question: "下列哪个是圆的圆柱侧面积计算？",
+        options: ["r = 3，h = 5时，S = 30π", "r = 3，h = 5时，S = 15π", "r = 3，h = 5时，S = 45π", "r = 3，h = 5时，S = 60π"],
+        answer: "0",
+        knowledge_point: "圆柱侧面积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "787",
+        question: "下列哪个是圆的圆锥侧面积计算？",
+        options: ["r = 3，l = 5时，S = 15π", "r = 3，l = 5时，S = 30π", "r = 3，l = 5时，S = 45π", "r = 3，l = 5时，S = 60π"],
+        answer: "0",
+        knowledge_point: "圆锥侧面积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "788",
+        question: "下列哪个是圆的圆柱全面积计算？",
+        options: ["r = 3，h = 5时，S = 48π", "r = 3，h = 5时，S = 24π", "r = 3，h = 5时，S = 36π", "r = 3，h = 5时，S = 60π"],
+        answer: "0",
+        knowledge_point: "圆柱全面积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "789",
+        question: "下列哪个是圆的圆锥全面积计算？",
+        options: ["r = 3，l = 5时，S = 24π", "r = 3，l = 5时，S = 12π", "r = 3，l = 5时，S = 18π", "r = 3，l = 5时，S = 30π"],
+        answer: "0",
+        knowledge_point: "圆锥全面积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "790",
+        question: "下列哪个是圆的圆柱体积计算？",
+        options: ["r = 3，h = 5时，V = 45π", "r = 3，h = 5时，V = 15π", "r = 3，h = 5时，V = 30π", "r = 3，h = 5时，V = 60π"],
+        answer: "0",
+        knowledge_point: "圆柱体积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "791",
+        question: "下列哪个是圆的圆锥体积计算？",
+        options: ["r = 3，h = 5时，V = 15π", "r = 3，h = 5时，V = 45π", "r = 3，h = 5时，V = 30π", "r = 3，h = 5时，V = 60π"],
+        answer: "0",
+        knowledge_point: "圆锥体积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "792",
+        question: "下列哪个是圆的球体积计算？",
+        options: ["r = 3时，V = 36π", "r = 3时，V = 108π", "r = 3时，V = 12π", "r = 3时，V = 24π"],
+        answer: "0",
+        knowledge_point: "球体积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "793",
+        question: "下列哪个是圆的圆柱表面积计算？",
+        options: ["r = 3，h = 5时，S = 48π", "r = 3，h = 5时，S = 24π", "r = 3，h = 5时，S = 36π", "r = 3，h = 5时，S = 60π"],
+        answer: "0",
+        knowledge_point: "圆柱表面积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "794",
+        question: "下列哪个是圆的圆锥表面积计算？",
+        options: ["r = 3，l = 5时，S = 24π", "r = 3，l = 5时，S = 12π", "r = 3，l = 5时，S = 18π", "r = 3，l = 5时，S = 30π"],
+        answer: "0",
+        knowledge_point: "圆锥表面积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "795",
+        question: "下列哪个是圆的球表面积计算？",
+        options: ["r = 3时，S = 36π", "r = 3时，S = 18π", "r = 3时，S = 12π", "r = 3时，S = 24π"],
+        answer: "0",
+        knowledge_point: "球表面积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "796",
+        question: "下列哪个是圆的圆柱侧面积计算？",
+        options: ["r = 3，h = 5时，S = 30π", "r = 3，h = 5时，S = 15π", "r = 3，h = 5时，S = 45π", "r = 3，h = 5时，S = 60π"],
+        answer: "0",
+        knowledge_point: "圆柱侧面积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "797",
+        question: "下列哪个是圆的圆锥侧面积计算？",
+        options: ["r = 3，l = 5时，S = 15π", "r = 3，l = 5时，S = 30π", "r = 3，l = 5时，S = 45π", "r = 3，l = 5时，S = 60π"],
+        answer: "0",
+        knowledge_point: "圆锥侧面积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "798",
+        question: "下列哪个是圆的圆柱全面积计算？",
+        options: ["r = 3，h = 5时，S = 48π", "r = 3，h = 5时，S = 24π", "r = 3，h = 5时，S = 36π", "r = 3，h = 5时，S = 60π"],
+        answer: "0",
+        knowledge_point: "圆柱全面积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "799",
+        question: "下列哪个是圆的圆锥全面积计算？",
+        options: ["r = 3，l = 5时，S = 24π", "r = 3，l = 5时，S = 12π", "r = 3，l = 5时，S = 18π", "r = 3，l = 5时，S = 30π"],
+        answer: "0",
+        knowledge_point: "圆锥全面积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "800",
+        question: "下列哪个是圆的圆柱体积计算？",
+        options: ["r = 3，h = 5时，V = 45π", "r = 3，h = 5时，V = 15π", "r = 3，h = 5时，V = 30π", "r = 3，h = 5时，V = 60π"],
+        answer: "0",
+        knowledge_point: "圆柱体积",
+        grade: "八年级",
+        subject: "数学"
+      },
+      {
+        id: "801",
+        question: "一元二次方程x² - 4x + 4 = 0的解是？",
+        options: ["x = 2", "x = -2", "x = 4", "x = -4"],
+        answer: "0",
+        knowledge_point: "一元二次方程",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "802",
+        question: "一元二次方程x² - 9 = 0的解是？",
+        options: ["x = 3或-3", "x = 3", "x = -3", "x = 9"],
+        answer: "0",
+        knowledge_point: "一元二次方程",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "803",
+        question: "一元二次方程x² + 5x + 6 = 0的解是？",
+        options: ["x = -2或-3", "x = 2或3", "x = -2或3", "x = 2或-3"],
+        answer: "0",
+        knowledge_point: "一元二次方程",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "804",
+        question: "一元二次方程2x² - 8 = 0的解是？",
+        options: ["x = 2或-2", "x = 2", "x = -2", "x = 4"],
+        answer: "0",
+        knowledge_point: "一元二次方程",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "805",
+        question: "一元二次方程x² - 6x + 9 = 0的解是？",
+        options: ["x = 3", "x = -3", "x = 6", "x = -6"],
+        answer: "0",
+        knowledge_point: "一元二次方程",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "806",
+        question: "一元二次方程x² - 7x + 12 = 0的解是？",
+        options: ["x = 3或4", "x = -3或-4", "x = 3或-4", "x = -3或4"],
+        answer: "0",
+        knowledge_point: "一元二次方程",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "807",
+        question: "一元二次方程x² - 2x - 3 = 0的解是？",
+        options: ["x = -1或3", "x = 1或-3", "x = -1或-3", "x = 1或3"],
+        answer: "0",
+        knowledge_point: "一元二次方程",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "808",
+        question: "一元二次方程x² + 3x - 10 = 0的解是？",
+        options: ["x = -5或2", "x = 5或-2", "x = -5或-2", "x = 5或2"],
+        answer: "0",
+        knowledge_point: "一元二次方程",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "809",
+        question: "一元二次方程x² - 8x + 15 = 0的解是？",
+        options: ["x = 3或5", "x = -3或-5", "x = 3或-5", "x = -3或5"],
+        answer: "0",
+        knowledge_point: "一元二次方程",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "810",
+        question: "一元二次方程x² + 4x + 3 = 0的解是？",
+        options: ["x = -1或-3", "x = 1或3", "x = -1或3", "x = 1或-3"],
+        answer: "0",
+        knowledge_point: "一元二次方程",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "811",
+        question: "二次函数y = x² - 4x + 3的顶点坐标是？",
+        options: ["(2, -1)", "(-2, 1)", "(2, 1)", "(-2, -1)"],
+        answer: "0",
+        knowledge_point: "二次函数",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "812",
+        question: "二次函数y = x² + 2x + 1的顶点坐标是？",
+        options: ["(-1, 0)", "(1, 0)", "(-1, 1)", "(1, 1)"],
+        answer: "0",
+        knowledge_point: "二次函数",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "813",
+        question: "二次函数y = -x² + 4x - 3的顶点坐标是？",
+        options: ["(2, 1)", "(-2, -1)", "(2, -1)", "(-2, 1)"],
+        answer: "0",
+        knowledge_point: "二次函数",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "814",
+        question: "二次函数y = x² - 6x + 8的顶点坐标是？",
+        options: ["(3, -1)", "(-3, 1)", "(3, 1)", "(-3, -1)"],
+        answer: "0",
+        knowledge_point: "二次函数",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "815",
+        question: "二次函数y = -x² + 2x + 3的顶点坐标是？",
+        options: ["(1, 4)", "(-1, -4)", "(1, -4)", "(-1, 4)"],
+        answer: "0",
+        knowledge_point: "二次函数",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "816",
+        question: "二次函数y = x² + 4x + 5的顶点坐标是？",
+        options: ["(-2, 1)", "(2, -1)", "(-2, -1)", "(2, 1)"],
+        answer: "0",
+        knowledge_point: "二次函数",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "817",
+        question: "二次函数y = -x² - 6x - 8的顶点坐标是？",
+        options: ["(-3, 1)", "(3, -1)", "(-3, -1)", "(3, 1)"],
+        answer: "0",
+        knowledge_point: "二次函数",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "818",
+        question: "二次函数y = x² - 2x - 3的顶点坐标是？",
+        options: ["(1, -4)", "(-1, 4)", "(1, 4)", "(-1, -4)"],
+        answer: "0",
+        knowledge_point: "二次函数",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "819",
+        question: "二次函数y = -x² + 8x - 15的顶点坐标是？",
+        options: ["(4, 1)", "(-4, -1)", "(4, -1)", "(-4, 1)"],
+        answer: "0",
+        knowledge_point: "二次函数",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "820",
+        question: "二次函数y = x² + 6x + 9的顶点坐标是？",
+        options: ["(-3, 0)", "(3, 0)", "(-3, 9)", "(3, 9)"],
+        answer: "0",
+        knowledge_point: "二次函数",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "821",
+        question: "sin45°等于？",
+        options: ["√2/2", "√3/2", "1/2", "1"],
+        answer: "0",
+        knowledge_point: "三角函数",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "822",
+        question: "cos60°等于？",
+        options: ["1/2", "√2/2", "√3/2", "1"],
+        answer: "0",
+        knowledge_point: "三角函数",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "823",
+        question: "tan30°等于？",
+        options: ["√3/3", "√3", "1", "1/√3"],
+        answer: "0",
+        knowledge_point: "三角函数",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "824",
+        question: "sin60°等于？",
+        options: ["√3/2", "√2/2", "1/2", "1"],
+        answer: "0",
+        knowledge_point: "三角函数",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "825",
+        question: "cos45°等于？",
+        options: ["√2/2", "√3/2", "1/2", "1"],
+        answer: "0",
+        knowledge_point: "三角函数",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "826",
+        question: "tan45°等于？",
+        options: ["1", "√3", "√3/3", "1/2"],
+        answer: "0",
+        knowledge_point: "三角函数",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "827",
+        question: "sin²α + cos²α等于？",
+        options: ["1", "0", "2", "sin2α"],
+        answer: "0",
+        knowledge_point: "三角函数",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "828",
+        question: "tanα等于？",
+        options: ["sinα/cosα", "cosα/sinα", "sinα×cosα", "sinα+cosα"],
+        answer: "0",
+        knowledge_point: "三角函数",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "829",
+        question: "下列哪个是圆的切线性质？",
+        options: ["切线垂直于半径", "切线平行于半径", "切线等于半径", "切线是直径"],
+        answer: "0",
+        knowledge_point: "圆的切线",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "830",
+        question: "下列哪个是相似三角形的判定条件？",
+        options: ["两边相等", "三边成比例", "两角相等", "一角相等"],
+        answer: "2",
+        knowledge_point: "相似三角形",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "831",
+        question: "概率的基本性质是？",
+        options: ["概率可以大于1", "概率可以小于0", "0 ≤ P ≤ 1", "概率总是等于1"],
+        answer: "2",
+        knowledge_point: "概率",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "832",
+        question: "抛硬币出现正面的概率是？",
+        options: ["1/2", "1/3", "1/4", "1"],
+        answer: "0",
+        knowledge_point: "概率",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "833",
+        question: "掷骰子出现6的概率是？",
+        options: ["1/6", "1/3", "1/2", "1"],
+        answer: "0",
+        knowledge_point: "概率",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "834",
+        question: "从1到10中随机取一个数，取到偶数的概率是？",
+        options: ["1/2", "1/3", "2/5", "3/5"],
+        answer: "0",
+        knowledge_point: "概率",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "835",
+        question: "从一副牌中随机抽一张，抽到红桃的概率是？",
+        options: ["1/4", "1/2", "1/3", "1/13"],
+        answer: "0",
+        knowledge_point: "概率",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "836",
+        question: "下列哪个是必然事件？",
+        options: ["太阳从东方升起", "明天会下雨", "掷骰子出现6", "抽到红桃"],
+        answer: "0",
+        knowledge_point: "概率",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "837",
+        question: "下列哪个是不可能事件？",
+        options: ["太阳从东方升起", "明天会下雨", "掷骰子出现7", "抽到红桃"],
+        answer: "2",
+        knowledge_point: "概率",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "838",
+        question: "下列哪个是随机事件？",
+        options: ["太阳从东方升起", "明天会下雨", "掷骰子出现6", "掷骰子出现7"],
+        answer: "2",
+        knowledge_point: "概率",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "839",
+        question: "下列哪个是互斥事件？",
+        options: ["掷骰子出现1和2", "掷骰子出现1和6", "掷骰子出现偶数和奇数", "掷骰子出现质数和合数"],
+        answer: "0",
+        knowledge_point: "概率",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "840",
+        question: "下列哪个是对立事件？",
+        options: ["掷骰子出现1和2", "掷骰子出现1和6", "掷骰子出现偶数和奇数", "掷骰子出现质数和合数"],
+        answer: "2",
+        knowledge_point: "概率",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "841",
+        question: "下列哪个是独立事件？",
+        options: ["掷骰子两次，第一次出现1，第二次出现2", "掷骰子两次，第一次出现1，第二次出现1", "掷骰子两次，第一次出现偶数，第二次出现奇数", "掷骰子两次，第一次出现质数，第二次出现合数"],
+        answer: "0",
+        knowledge_point: "概率",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "842",
+        question: "下列哪个是条件概率？",
+        options: ["已知第一次掷骰子出现1，第二次掷骰子出现2的概率", "掷骰子出现1的概率", "掷骰子出现2的概率", "掷骰子出现1或2的概率"],
+        answer: "0",
+        knowledge_point: "概率",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "843",
+        question: "下列哪个是全概率公式？",
+        options: ["P(A) = P(A|B1)P(B1) + P(A|B2)P(B2) + ...", "P(A) = P(A|B)P(B)", "P(A) = P(A∩B)", "P(A) = P(A∪B)"],
+        answer: "0",
+        knowledge_point: "概率",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "844",
+        question: "下列哪个是贝叶斯公式？",
+        options: ["P(B|A) = P(A|B)P(B)/P(A)", "P(A|B) = P(B|A)P(A)/P(B)", "P(A∩B) = P(A)P(B)", "P(A∪B) = P(A) + P(B)"],
+        answer: "0",
+        knowledge_point: "概率",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "845",
+        question: "下列哪个是期望？",
+        options: ["E(X) = ΣxP(X=x)", "E(X) = Σx²P(X=x)", "E(X) = ΣP(X=x)", "E(X) = ΣxP(X=x)²"],
+        answer: "0",
+        knowledge_point: "概率",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "846",
+        question: "下列哪个是方差？",
+        options: ["Var(X) = E(X²) - [E(X)]²", "Var(X) = E(X) - [E(X)]²", "Var(X) = E(X²) + [E(X)]²", "Var(X) = [E(X)]² - E(X²)"],
+        answer: "0",
+        knowledge_point: "概率",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "847",
+        question: "下列哪个是标准差？",
+        options: ["σ = √Var(X)", "σ = Var(X)", "σ = Var(X)²", "σ = Var(X)/2"],
+        answer: "0",
+        knowledge_point: "概率",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "848",
+        question: "下列哪个是离散型随机变量？",
+        options: ["掷骰子的结果", "人的身高", "人的体重", "人的年龄"],
+        answer: "0",
+        knowledge_point: "概率",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "849",
+        question: "下列哪个是连续型随机变量？",
+        options: ["掷骰子的结果", "人的身高", "人的体重", "以上都是"],
+        answer: "3",
+        knowledge_point: "概率",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "850",
+        question: "下列哪个是二项分布？",
+        options: ["n次独立重复试验中成功次数的分布", "n次独立重复试验中失败次数的分布", "n次独立重复试验中成功和失败次数的分布", "n次独立重复试验中成功和失败次数的比值"],
+        answer: "0",
+        knowledge_point: "概率",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "851",
+        question: "下列哪个是正态分布？",
+        options: ["钟形曲线", "U形曲线", "直线", "抛物线"],
+        answer: "0",
+        knowledge_point: "概率",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "852",
+        question: "下列哪个是标准正态分布？",
+        options: ["μ=0，σ=1的正态分布", "μ=1，σ=0的正态分布", "μ=0，σ=0的正态分布", "μ=1，σ=1的正态分布"],
+        answer: "0",
+        knowledge_point: "概率",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "853",
+        question: "下列哪个是统计中的样本？",
+        options: ["从总体中抽取的一部分", "总体中的所有个体", "样本中的所有个体", "样本中的一部分"],
+        answer: "0",
+        knowledge_point: "统计",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "854",
+        question: "下列哪个是统计中的总体？",
+        options: ["研究对象的全体", "从总体中抽取的一部分", "样本中的所有个体", "样本中的一部分"],
+        answer: "0",
+        knowledge_point: "统计",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "855",
+        question: "下列哪个是统计中的样本容量？",
+        options: ["样本中个体的数量", "总体中个体的数量", "样本中个体的总和", "总体中个体的总和"],
+        answer: "0",
+        knowledge_point: "统计",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "856",
+        question: "下列哪个是统计中的样本均值？",
+        options: ["样本中个体的平均值", "总体中个体的平均值", "样本中个体的总和", "总体中个体的总和"],
+        answer: "0",
+        knowledge_point: "统计",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "857",
+        question: "下列哪个是统计中的样本方差？",
+        options: ["样本中个体的方差", "总体中个体的方差", "样本中个体的标准差", "总体中个体的标准差"],
+        answer: "0",
+        knowledge_point: "统计",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "858",
+        question: "下列哪个是统计中的样本标准差？",
+        options: ["样本中个体的标准差", "总体中个体的标准差", "样本中个体的方差", "总体中个体的方差"],
+        answer: "0",
+        knowledge_point: "统计",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "859",
+        question: "下列哪个是统计中的样本中位数？",
+        options: ["样本中个体的中位数", "总体中个体的中位数", "样本中个体的平均值", "总体中个体的平均值"],
+        answer: "0",
+        knowledge_point: "统计",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "860",
+        question: "下列哪个是统计中的样本众数？",
+        options: ["样本中出现次数最多的数", "总体中出现次数最多的数", "样本中个体的平均值", "总体中个体的平均值"],
+        answer: "0",
+        knowledge_point: "统计",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "861",
+        question: "下列哪个是统计中的样本极差？",
+        options: ["样本中最大值与最小值的差", "总体中最大值与最小值的差", "样本中个体的平均值", "总体中个体的平均值"],
+        answer: "0",
+        knowledge_point: "统计",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "862",
+        question: "下列哪个是统计中的样本四分位数？",
+        options: ["将样本分成四等分的数", "将总体分成四等分的数", "样本中个体的平均值", "总体中个体的平均值"],
+        answer: "0",
+        knowledge_point: "统计",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "863",
+        question: "下列哪个是统计中的样本偏度？",
+        options: ["样本分布的不对称程度", "总体分布的不对称程度", "样本中个体的平均值", "总体中个体的平均值"],
+        answer: "0",
+        knowledge_point: "统计",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "864",
+        question: "下列哪个是统计中的样本峰度？",
+        options: ["样本分布的尖锐程度", "总体分布的尖锐程度", "样本中个体的平均值", "总体中个体的平均值"],
+        answer: "0",
+        knowledge_point: "统计",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "865",
+        question: "下列哪个是统计中的样本相关系数？",
+        options: ["两个变量之间的线性关系", "两个变量之间的非线性关系", "两个变量之间的平均值", "两个变量之间的方差"],
+        answer: "0",
+        knowledge_point: "统计",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "866",
+        question: "下列哪个是统计中的样本回归系数？",
+        options: ["回归直线的斜率", "回归直线的截距", "回归直线的方差", "回归直线的标准差"],
+        answer: "0",
+        knowledge_point: "统计",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "867",
+        question: "下列哪个是统计中的样本决定系数？",
+        options: ["回归方程的拟合程度", "回归方程的斜率", "回归方程的截距", "回归方程的方差"],
+        answer: "0",
+        knowledge_point: "统计",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "868",
+        question: "下列哪个是统计中的样本残差？",
+        options: ["观测值与预测值的差", "观测值与平均值的差", "预测值与平均值的差", "观测值与预测值的和"],
+        answer: "0",
+        knowledge_point: "统计",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "869",
+        question: "下列哪个是统计中的样本残差平方和？",
+        options: ["残差的平方和", "残差的和", "残差的绝对值和", "残差的立方和"],
+        answer: "0",
+        knowledge_point: "统计",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "870",
+        question: "下列哪个是统计中的样本均方误差？",
+        options: ["残差平方和的平均值", "残差平方和的总和", "残差平方和的平方根", "残差平方和的平方"],
+        answer: "0",
+        knowledge_point: "统计",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "871",
+        question: "下列哪个是统计中的样本均方根误差？",
+        options: ["均方误差的平方根", "均方误差的平方", "均方误差的绝对值", "均方误差的平均值"],
+        answer: "0",
+        knowledge_point: "统计",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "872",
+        question: "下列哪个是统计中的样本平均绝对误差？",
+        options: ["残差绝对值的平均值", "残差绝对值的总和", "残差绝对值的平方根", "残差绝对值的平方"],
+        answer: "0",
+        knowledge_point: "统计",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "873",
+        question: "下列哪个是统计中的样本平均绝对百分比误差？",
+        options: ["残差绝对值与观测值比值的平均值", "残差绝对值与观测值比值的总和", "残差绝对值与观测值比值的平方根", "残差绝对值与观测值比值的平方"],
+        answer: "0",
+        knowledge_point: "统计",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "874",
+        question: "下列哪个是统计中的样本对称平均绝对百分比误差？",
+        options: ["残差绝对值与观测值和预测值平均值比值的平均值", "残差绝对值与观测值比值的平均值", "残差绝对值与预测值比值的平均值", "残差绝对值与观测值和预测值比值的平均值"],
+        answer: "0",
+        knowledge_point: "统计",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "875",
+        question: "下列哪个是统计中的样本Theil不等系数？",
+        options: ["预测误差的相对大小", "预测误差的绝对大小", "预测误差的平方大小", "预测误差的立方大小"],
+        answer: "0",
+        knowledge_point: "统计",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "876",
+        question: "下列哪个是统计中的样本信息准则？",
+        options: ["模型选择的准则", "模型选择的斜率", "模型选择的截距", "模型选择的方差"],
+        answer: "0",
+        knowledge_point: "统计",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "877",
+        question: "下列哪个是统计中的样本贝叶斯信息准则？",
+        options: ["模型选择的准则", "模型选择的斜率", "模型选择的截距", "模型选择的方差"],
+        answer: "0",
+        knowledge_point: "统计",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "878",
+        question: "下列哪个是统计中的样本赤池信息准则？",
+        options: ["模型选择的准则", "模型选择的斜率", "模型选择的截距", "模型选择的方差"],
+        answer: "0",
+        knowledge_point: "统计",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "879",
+        question: "下列哪个是统计中的样本交叉验证？",
+        options: ["模型评估的方法", "模型选择的斜率", "模型选择的截距", "模型选择的方差"],
+        answer: "0",
+        knowledge_point: "统计",
+        grade: "九年级",
+        subject: "数学"
+      },
+      {
+        id: "880",
+        question: "下列哪个是统计中的样本自助法？",
+        options: ["重抽样的方法", "模型选择的斜率", "模型选择的截距", "模型选择的方差"],
+        answer: "0",
+        knowledge_point: "统计",
+        grade: "九年级",
+        subject: "数学"
       }
     ];
 
@@ -6679,7 +10584,7 @@ Page({
       currentQuestion: 0,
       gradeIndex: -1,
       subjectIndex: -1,
-      score: 0,
+      score: undefined,
       masteryRate: 0,
       feedback: "",
       masteryItems: []
@@ -6739,8 +10644,14 @@ Page({
     
     var masteryItems = this.calculateMastery();
     var feedback = this.generateFeedback(correctCount, totalQuestions, masteryItems);
+    
+    var selectedGrade = this.data.grades[this.data.gradeIndex];
+    var selectedSubject = this.data.subjects[this.data.subjectIndex];
+    
+    this.addToHistory(selectedGrade, selectedSubject, score, masteryRate, feedback, masteryItems);
 
     this.setData({
+      showTest: false,
       showResult: true,
       score: score,
       masteryRate: masteryRate,
@@ -6829,7 +10740,7 @@ Page({
     this.setData({
       showResult: false,
       showTest: true,
-      score: 0,
+      score: undefined,
       masteryRate: 0,
       feedback: "",
       masteryItems: []
@@ -6838,6 +10749,44 @@ Page({
 
   finishTest: function () {
     wx.navigateBack();
+  },
+
+  // 添加学习历史
+  addToHistory: function (grade, subject, score, masteryRate, feedback, masteryItems) {
+    var history = wx.getStorageSync('studyHistory') || [];
+    var id = 'test_' + grade + '_' + subject;
+    var existingIndex = -1;
+    
+    for (var i = 0; i < history.length; i++) {
+      if (history[i].id === id) {
+        existingIndex = i;
+        break;
+      }
+    }
+
+    if (existingIndex !== -1) {
+      history.splice(existingIndex, 1);
+    }
+
+    history.unshift({
+      id: id,
+      title: '学业诊断 - ' + subject + '测试',
+      type: 'test',
+      typeName: '学业诊断',
+      time: new Date().toLocaleString(),
+      grade: grade,
+      subject: subject,
+      score: score,
+      masteryRate: masteryRate,
+      feedback: feedback,
+      masteryItems: masteryItems
+    });
+
+    if (history.length > 50) {
+      history = history.slice(0, 50);
+    }
+
+    wx.setStorageSync('studyHistory', history);
   },
 
   // tabBar 更新回调

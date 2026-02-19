@@ -1,7 +1,7 @@
 <view class="container">
   <!-- 页面标题 -->
   <view class="page-header">
-    <view class="page-title">双语辅导资料</view>
+    <view class="page-title">三语辅导资料</view>
   </view>
 
   <!-- 分类导航 -->
@@ -68,6 +68,9 @@
           <view class="action-btn preview-btn" bindtap="previewMaterial" data-item="{{item}}">预览</view>
           <view class="action-btn download-btn" bindtap="downloadMaterial" data-item="{{item}}">下载</view>
           <view wx:if="item.type === '音频'" class="action-btn play-btn" bindtap="playAudio" data-item="{{item}}">播放</view>
+          <view class="action-btn favorite-btn" bindtap="toggleFavorite" data-item="{{item}}">
+            <text>{{item.isFavorite ? '已收藏' : '收藏'}}</text>
+          </view>
         </view>
       </view>
     </view>
@@ -81,11 +84,17 @@
 
   <!-- 分页 -->
   <view class="pagination" wx:if="{{materials.length > 0}}">
-    <view class="pagination-item" bindtap="prevPage" wx:if="{{currentPage > 1}}">上一页</view>
     <view class="pagination-item {{currentPage === 1 ? 'active' : ''}}" bindtap="goToPage" data-page="1">1</view>
-    <view class="pagination-item {{currentPage === 2 ? 'active' : ''}}" bindtap="goToPage" data-page="2">2</view>
-    <view class="pagination-item {{currentPage === 3 ? 'active' : ''}}" bindtap="goToPage" data-page="3">3</view>
-    <view class="pagination-item" bindtap="nextPage" wx:if="{{currentPage < 3}}">下一页</view>
+    <view class="pagination-item" wx:if="{{currentPage > 2}}">...</view>
+    <view class="pagination-item active" wx:if="{{currentPage > 1 && currentPage < totalPages}}">{{currentPage}}</view>
+    <view class="pagination-item" bindtap="nextPage" wx:if="{{currentPage < totalPages}}">下一页</view>
+    <view class="pagination-item {{currentPage === totalPages ? 'active' : ''}}" bindtap="goToPage" data-page="{{totalPages}}" wx:if="{{totalPages > 1}}">{{totalPages}}</view>
+  </view>
+  
+  <!-- 跳转输入框 -->
+  <view class="pagination-jump-container" wx:if="{{materials.length > 0}}">
+    <input class="pagination-input" type="number" placeholder="页码" bindinput="onPageInput" value="{{jumpPage}}" />
+    <view class="pagination-jump-btn" bindtap="jumpToPage">跳转</view>
   </view>
 
   <!-- 音频播放控件 -->

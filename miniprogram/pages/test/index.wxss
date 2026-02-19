@@ -85,23 +85,53 @@ page {
   font-size: 28rpx;
   color: #333333;
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.selection-label::before {
+  content: "📚";
+  font-size: 32rpx;
+}
+
+.selection-item:nth-child(2) .selection-label::before {
+  content: "📖";
 }
 
 .selection-picker {
-  border: 2rpx solid #E5E7EB;
-  border-radius: 16rpx;
+  border: 2rpx solid #1E40AF;
+  border-radius: 20rpx;
   padding: 28rpx 32rpx;
-  background-color: #FFFFFF;
+  background: linear-gradient(135deg, #F0F7FF 0%, #FFFFFF 100%);
   transition: all 0.3s ease;
   width: 100%;
   box-sizing: border-box;
   font-size: 28rpx;
+  position: relative;
+  box-shadow: 0 4rpx 12rpx rgba(30, 64, 175, 0.15);
+}
+
+.selection-picker::after {
+  content: "▼";
+  position: absolute;
+  right: 32rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20rpx;
+  color: #999999;
+  pointer-events: none;
 }
 
 .selection-picker:focus-within {
   border-color: #1E40AF;
-  box-shadow: 0 0 0 6rpx rgba(30, 64, 175, 0.1);
-  transform: translateY(-2rpx);
+  box-shadow: 0 0 0 6rpx rgba(30, 64, 175, 0.1), 0 8rpx 20rpx rgba(30, 64, 175, 0.15);
+  transform: translateY(-4rpx);
+  background: linear-gradient(135deg, #FFFFFF 0%, #F0F7FF 100%);
+}
+
+.selection-picker:focus-within::after {
+  color: #1E40AF;
 }
 
 .picker-text {
@@ -109,10 +139,14 @@ page {
   color: #333333;
   width: 100%;
   display: block;
+  padding-right: 40rpx;
+  font-weight: 500;
+  transition: all 0.3s ease;
 }
 
 .picker-text.placeholder {
   color: #999999;
+  font-weight: 400;
 }
 
 .start-btn {
@@ -139,6 +173,181 @@ page {
 .start-btn:active {
   transform: translateY(0);
   box-shadow: 0 4rpx 12rpx rgba(30, 64, 175, 0.3);
+}
+
+/* 功能介绍 */
+.feature-section {
+  margin-bottom: 48rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.feature-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 32rpx;
+  text-align: center;
+  background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.feature-item {
+  background: linear-gradient(135deg, #FFFFFF 0%, #F8F9FA 100%);
+  border-radius: 20rpx;
+  padding: 32rpx 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.06);
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 2rpx solid #E5E7EB;
+  box-sizing: border-box;
+}
+
+.feature-item:hover {
+  transform: translateY(-4rpx);
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.1);
+  border-color: #1E40AF;
+}
+
+.feature-icon {
+  font-size: 56rpx;
+  margin-bottom: 16rpx;
+}
+
+.feature-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 12rpx;
+}
+
+.feature-desc {
+  font-size: 24rpx;
+  color: #666666;
+  line-height: 1.5;
+}
+
+/* 使用说明 */
+.guide-section {
+  margin-bottom: 48rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.guide-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 32rpx;
+  text-align: center;
+  background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.guide-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.guide-item {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  background: linear-gradient(135deg, #FFFFFF 0%, #F8F9FA 100%);
+  border-radius: 20rpx;
+  padding: 28rpx 32rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.06);
+  transition: all 0.3s ease;
+  border: 2rpx solid #E5E7EB;
+  box-sizing: border-box;
+}
+
+.guide-item:hover {
+  transform: translateX(8rpx);
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.1);
+  border-color: #1E40AF;
+}
+
+.guide-number {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  font-weight: bold;
+  flex-shrink: 0;
+  box-shadow: 0 4rpx 12rpx rgba(30, 64, 175, 0.3);
+}
+
+.guide-content {
+  flex: 1;
+}
+
+.guide-text {
+  font-size: 28rpx;
+  color: #333333;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+/* 提示信息 */
+.tip-section {
+  margin-bottom: 48rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.tip-card {
+  background: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%);
+  border-radius: 20rpx;
+  padding: 32rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.06);
+  display: flex;
+  gap: 20rpx;
+  border: 2rpx solid #FED7AA;
+  box-sizing: border-box;
+  align-items: flex-start;
+}
+
+.tip-icon {
+  font-size: 48rpx;
+  flex-shrink: 0;
+}
+
+.tip-content {
+  flex: 1;
+}
+
+.tip-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #9A3412;
+  margin-bottom: 12rpx;
+}
+
+.tip-text {
+  font-size: 26rpx;
+  color: #7C2D12;
+  line-height: 1.6;
 }
 
 /* 测试进度 */
@@ -681,18 +890,79 @@ page {
     font-size: 28rpx;
   }
   
+  .selection-label::before {
+    font-size: 28rpx;
+  }
+  
   .selection-picker {
     padding: 24rpx 28rpx;
     font-size: 28rpx;
   }
   
+  .selection-picker::after {
+    right: 28rpx;
+    font-size: 18rpx;
+  }
+  
   .picker-text {
     font-size: 28rpx;
+    padding-right: 36rpx;
   }
   
   .start-btn {
     padding: 24rpx 56rpx;
     font-size: 30rpx;
+  }
+  
+  .feature-grid {
+    grid-template-columns: 1fr;
+    gap: 20rpx;
+  }
+  
+  .feature-item {
+    padding: 28rpx 20rpx;
+  }
+  
+  .feature-icon {
+    font-size: 48rpx;
+  }
+  
+  .feature-name {
+    font-size: 26rpx;
+  }
+  
+  .feature-desc {
+    font-size: 22rpx;
+  }
+  
+  .guide-item {
+    padding: 24rpx 28rpx;
+  }
+  
+  .guide-number {
+    width: 48rpx;
+    height: 48rpx;
+    font-size: 26rpx;
+  }
+  
+  .guide-text {
+    font-size: 26rpx;
+  }
+  
+  .tip-card {
+    padding: 28rpx;
+  }
+  
+  .tip-icon {
+    font-size: 40rpx;
+  }
+  
+  .tip-title {
+    font-size: 26rpx;
+  }
+  
+  .tip-text {
+    font-size: 24rpx;
   }
   
   .question-item {
@@ -789,18 +1059,81 @@ page {
     font-size: 26rpx;
   }
   
+  .selection-label::before {
+    font-size: 26rpx;
+  }
+  
   .selection-picker {
     padding: 20rpx 24rpx;
     font-size: 26rpx;
   }
   
+  .selection-picker::after {
+    right: 24rpx;
+    font-size: 16rpx;
+  }
+  
   .picker-text {
     font-size: 26rpx;
+    padding-right: 32rpx;
   }
   
   .start-btn {
     padding: 20rpx 48rpx;
     font-size: 28rpx;
+  }
+  
+  .feature-grid {
+    grid-template-columns: 1fr;
+    gap: 16rpx;
+  }
+  
+  .feature-item {
+    padding: 24rpx 16rpx;
+  }
+  
+  .feature-icon {
+    font-size: 44rpx;
+  }
+  
+  .feature-name {
+    font-size: 24rpx;
+  }
+  
+  .feature-desc {
+    font-size: 20rpx;
+  }
+  
+  .guide-item {
+    padding: 20rpx 24rpx;
+    gap: 20rpx;
+  }
+  
+  .guide-number {
+    width: 44rpx;
+    height: 44rpx;
+    font-size: 24rpx;
+  }
+  
+  .guide-text {
+    font-size: 24rpx;
+  }
+  
+  .tip-card {
+    padding: 24rpx;
+    gap: 16rpx;
+  }
+  
+  .tip-icon {
+    font-size: 36rpx;
+  }
+  
+  .tip-title {
+    font-size: 24rpx;
+  }
+  
+  .tip-text {
+    font-size: 22rpx;
   }
   
   .question-item {

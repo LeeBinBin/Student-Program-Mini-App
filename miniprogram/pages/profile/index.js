@@ -167,8 +167,8 @@ Page({
     setTimeout(() => {
       const userInfo = {
         id: '10001',
-        nickname: username,
-        avatar: '👤'
+        nickname: '粤港学习者',
+        avatar: '🎓'
       };
 
       app.loginSuccess(userInfo, userType);
@@ -286,8 +286,8 @@ Page({
     setTimeout(() => {
       const userInfo = {
         id: '10002',
-        nickname: user.nickName,
-        avatar: user.avatarUrl
+        nickname: '粤港学习者',
+        avatar: '🎓'
       };
 
       app.loginSuccess(userInfo, userType);
@@ -409,17 +409,15 @@ Page({
 
   // 导航到学习历史
   navigateToHistory: function () {
-    wx.showToast({
-      title: '功能开发中',
-      icon: 'none'
+    wx.navigateTo({
+      url: '/pages/history/index'
     });
   },
 
   // 导航到收藏夹
   navigateToFavorites: function () {
-    wx.showToast({
-      title: '功能开发中',
-      icon: 'none'
+    wx.navigateTo({
+      url: '/pages/favorites/index'
     });
   },
 
