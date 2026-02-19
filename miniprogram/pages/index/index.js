@@ -23,12 +23,11 @@ Page({
 
   // 导航到知识点对标页面
   navigateToKnowledge: function () {
-    wx.navigateTo({
+    wx.switchTab({
       url: '/pages/knowledge/index'
     })
   },
 
-  // 导航到双语辅导资料页面
   navigateToMaterial: function () {
     wx.navigateTo({
       url: '/pages/material/index'

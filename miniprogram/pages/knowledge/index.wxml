@@ -11,7 +11,7 @@
         <view class="filter-label">年级</view>
         <view class="filter-picker">
           <picker bindchange="bindGradeChange" value="{{gradeIndex}}" range="{{grades}}">
-            <view class="picker-text">{{grades[gradeIndex]}}</view>
+            <view class="picker-text">{{gradeIndex === -1 ? '请选择年级' : grades[gradeIndex]}}</view>
           </picker>
         </view>
       </view>
@@ -19,7 +19,7 @@
         <view class="filter-label">学科</view>
         <view class="filter-picker">
           <picker bindchange="bindSubjectChange" value="{{subjectIndex}}" range="{{subjects}}">
-            <view class="picker-text">{{subjects[subjectIndex]}}</view>
+            <view class="picker-text">{{subjectIndex === -1 ? '请选择学科' : subjects[subjectIndex]}}</view>
           </picker>
         </view>
       </view>

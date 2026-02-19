@@ -1,36 +1,63 @@
 <view class="container">
   <block wx:if="{{!isLoggedIn}}">
     <view class="login-container">
-      <image src="/images/icons/avatar.svg" class="login-avatar" mode="aspectFit"></image>
-      <view class="title">粤港通学</view>
-      <button class="btn-login" open-type="getUserProfile" bindtap="wechatLogin">微信快捷登录</button>
-      <view class="agreement">登录即表示同意《用户协议》和《隐私政策》</view>
+      <view class="login-bg"></view>
+      <view class="login-content">
+        <view class="logo-wrapper">
+          <image src="/images/icons/avatar.svg" class="login-avatar" mode="aspectFit"></image>
+        </view>
+        <view class="title">粤港通学</view>
+        <view class="subtitle">大湾区跨境教育 · 学业适配辅导</view>
+        <button class="btn-login" open-type="getUserProfile" bindtap="wechatLogin">
+          <text class="btn-icon">🔐</text>
+          <text>微信快捷登录</text>
+        </button>
+        <view class="agreement">登录即表示同意《用户协议》和《隐私政策》</view>
+      </view>
     </view>
   </block>
 
   <block wx:else>
     <view class="top-box">
-      <image wx:if="{{userInfo.avatar && userInfo.avatar !== '👤'}}" src="{{userInfo.avatar}}" class="avatar" mode="aspectFill"></image>
-      <view wx:else class="avatar">{{userInfo.avatar || '👤'}}</view>
-      <view class="nickname">{{userInfo.nickname || '用户'}}</view>
+      <view class="top-bg"></view>
+      <view class="top-content">
+        <view class="avatar-wrapper">
+          <image wx:if="{{userInfo.avatar && userInfo.avatar.indexOf('http') === 0}}" src="{{userInfo.avatar}}" class="avatar" mode="aspectFill"></image>
+          <view wx:else class="avatar">{{userInfo.avatar || '🎓'}}</view>
+        </view>
+        <view class="nickname">{{userInfo.nickname || '用户'}}</view>
+        <view class="user-tag">大湾区学习者</view>
+      </view>
     </view>
 
     <view class="panel">
       <view class="panel-list-item" bindtap="navigateToHistory">
-        <text>学习历史</text>
-        <text class="arrow">></text>
+        <view class="item-left">
+          <text class="item-icon">📚</text>
+          <text class="item-text">学习历史</text>
+        </view>
+        <text class="arrow">›</text>
       </view>
       <view class="panel-list-item" bindtap="navigateToFavorites">
-        <text>收藏夹</text>
-        <text class="arrow">></text>
+        <view class="item-left">
+          <text class="item-icon">⭐</text>
+          <text class="item-text">收藏夹</text>
+        </view>
+        <text class="arrow">›</text>
       </view>
       <view class="panel-list-item" bindtap="navigateToSettings">
-        <text>设置</text>
-        <text class="arrow">></text>
+        <view class="item-left">
+          <text class="item-icon">⚙️</text>
+          <text class="item-text">设置</text>
+        </view>
+        <text class="arrow">›</text>
       </view>
-      <view class="panel-list-item" bindtap="logout">
-        <text>退出登录</text>
-        <text class="arrow">></text>
+      <view class="panel-list-item logout-item" bindtap="logout">
+        <view class="item-left">
+          <text class="item-icon">🚪</text>
+          <text class="item-text">退出登录</text>
+        </view>
+        <text class="arrow">›</text>
       </view>
     </view>
   </block>

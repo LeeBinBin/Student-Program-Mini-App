@@ -1,0 +1,40 @@
+<view class="container">
+  <view class="page-header">
+    <view class="page-title">收藏夹</view>
+  </view>
+
+  <view class="filter-container">
+    <view class="filter-tabs">
+      <view class="tab-item {{currentType === 'all' ? 'active' : ''}}" bindtap="switchType" data-type="all">全部</view>
+      <view class="tab-item {{currentType === 'material' ? 'active' : ''}}" bindtap="switchType" data-type="material">辅导资料</view>
+      <view class="tab-item {{currentType === 'test' ? 'active' : ''}}" bindtap="switchType" data-type="test">学业诊断</view>
+      <view class="tab-item {{currentType === 'knowledge' ? 'active' : ''}}" bindtap="switchType" data-type="knowledge">知识点对标</view>
+    </view>
+  </view>
+
+  <view class="favorites-list" wx:if="{{favoritesList.length > 0}}">
+    <view class="favorite-item" wx:for="{{favoritesList}}" wx:key="id" bindtap="viewDetail" data-item="{{item}}">
+      <view class="favorite-icon">
+        <text wx:if="{{item.type === 'material'}}">📄</text>
+        <text wx:elif="{{item.type === 'test'}}">📝</text>
+        <text wx:else>📚</text>
+      </view>
+      <view class="favorite-content">
+        <view class="favorite-title">{{item.title}}</view>
+        <view class="favorite-info">
+          <text class="favorite-type">{{item.typeName}}</text>
+          <text class="favorite-time">{{item.time}}</text>
+        </view>
+      </view>
+      <view class="favorite-remove" catchtap="removeFavorite" data-id="{{item.id}}">
+        <text>✕</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:else>
+    <text class="empty-icon">⭐</text>
+    <view class="empty-text">暂无收藏</view>
+    <view class="empty-tip">点击收藏按钮，将喜欢的内容添加到这里</view>
+  </view>
+</view>

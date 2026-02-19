@@ -4,7 +4,7 @@ Page({
     subjects: ['全部', '数学', '语文', '英语', '物理', '化学', '生物'],
     grades: ['全部年级', '小学低年级', '小学高年级', '初中'],
     gradeIndex: 0,
-    languages: ['全部语言', '中文', '英文', '粤语', '双语'],
+    languages: ['全部语言', '中文', '英文', '粤语', '三语'],
     languageIndex: 0,
     types: ['全部类型', 'PDF', '视频', '音频', 'PPT'],
     typeIndex: 0,
