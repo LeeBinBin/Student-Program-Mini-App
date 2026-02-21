@@ -280,6 +280,19 @@ Page({
     showTypeFilter: false,
     originalCourses: [],
     showAddModal: false,
+    showEditModal: false,
+    editForm: {
+      id: '',
+      name: '',
+      subject: '',
+      grade: '',
+      type: '',
+      description: '',
+      startDate: '',
+      endDate: '',
+      studentCount: 0,
+      materialsCount: 0
+    },
     addForm: {
       name: '',
       subject: '',
@@ -305,17 +318,26 @@ Page({
 
   // 添加课程
   addCourse: function () {
-    wx.showModal({
-      title: '添加课程',
-      content: '请选择课程类型',
-      cancelText: '常规课程',
-      confirmText: '跨境适配课程',
+    wx.showActionSheet({
+      itemList: ['常规课程', '跨境适配课程', '拓展课程'],
+      itemColor: '#3B82F6',
       success: (res) => {
-        if (res.confirm) {
-          this.createCrossBorderCourse();
-        } else if (res.cancel) {
-          this.createRegularCourse();
+        if (!res.cancel) {
+          switch (res.tapIndex) {
+            case 0:
+              this.createRegularCourse();
+              break;
+            case 1:
+              this.createCrossBorderCourse();
+              break;
+            case 2:
+              this.createExtensionCourse();
+              break;
+          }
         }
+      },
+      fail: (res) => {
+        console.log(res.errMsg);
       }
     });
   },
@@ -374,6 +396,33 @@ Page({
 
     wx.showToast({
       title: '跨境适配课程创建成功',
+      icon: 'success'
+    });
+  },
+
+  // 创建拓展课程
+  createExtensionCourse: function () {
+    const newCourse = {
+      id: 'C' + (this.data.courses.length + 1).toString().padStart(3, '0'),
+      name: '新建拓展课程',
+      subject: '数学',
+      grade: '3',
+      type: '拓展课程',
+      status: 'inactive',
+      description: '新创建的拓展课程',
+      startDate: '2026-02-01',
+      endDate: '2026-10-31',
+      studentCount: 0,
+      materialsCount: 0,
+      crossBorderInfo: null
+    };
+
+    this.data.courses.unshift(newCourse);
+    this.data.originalCourses.unshift(newCourse);
+    this.setData({ courses: this.data.courses });
+
+    wx.showToast({
+      title: '拓展课程创建成功',
       icon: 'success'
     });
   },
@@ -524,24 +573,90 @@ Page({
   // 编辑课程
   editCourse: function (e) {
     const courseId = e.currentTarget.dataset.id;
-    wx.showModal({
-      title: '编辑课程',
-      content: '请选择编辑内容',
-      cancelText: '基本信息',
-      confirmText: '跨境适配信息',
-      success: (res) => {
-        if (res.confirm) {
-          wx.showToast({
-            title: '跨境适配信息编辑功能开发中',
-            icon: 'info'
-          });
-        } else if (res.cancel) {
-          wx.showToast({
-            title: '基本信息编辑功能开发中',
-            icon: 'info'
-          });
-        }
-      }
+    const course = this.data.courses.find(c => c.id === courseId);
+    
+    if (course) {
+      // 填充编辑表单
+      this.setData({
+        editForm: {
+          id: course.id,
+          name: course.name,
+          subject: course.subject,
+          grade: course.grade,
+          type: course.type,
+          description: course.description,
+          startDate: course.startDate,
+          endDate: course.endDate,
+          studentCount: course.studentCount,
+          materialsCount: course.materialsCount
+        },
+        showEditModal: true
+      });
+    }
+  },
+
+  // 保存编辑
+  saveEdit: function () {
+    const editedCourse = this.data.editForm;
+    const courseIndex = this.data.courses.findIndex(c => c.id === editedCourse.id);
+    const originalIndex = this.data.originalCourses.findIndex(c => c.id === editedCourse.id);
+    
+    if (courseIndex !== -1 && originalIndex !== -1) {
+      // 更新课程列表
+      const updatedCourses = [...this.data.courses];
+      updatedCourses[courseIndex] = {
+        ...updatedCourses[courseIndex],
+        name: editedCourse.name,
+        subject: editedCourse.subject,
+        grade: editedCourse.grade,
+        type: editedCourse.type,
+        description: editedCourse.description,
+        startDate: editedCourse.startDate,
+        endDate: editedCourse.endDate,
+        studentCount: editedCourse.studentCount,
+        materialsCount: editedCourse.materialsCount
+      };
+      
+      // 更新原始课程列表
+      const updatedOriginalCourses = [...this.data.originalCourses];
+      updatedOriginalCourses[originalIndex] = {
+        ...updatedOriginalCourses[originalIndex],
+        name: editedCourse.name,
+        subject: editedCourse.subject,
+        grade: editedCourse.grade,
+        type: editedCourse.type,
+        description: editedCourse.description,
+        startDate: editedCourse.startDate,
+        endDate: editedCourse.endDate,
+        studentCount: editedCourse.studentCount,
+        materialsCount: editedCourse.materialsCount
+      };
+      
+      this.setData({
+        courses: updatedCourses,
+        originalCourses: updatedOriginalCourses,
+        showEditModal: false
+      });
+      
+      wx.showToast({
+        title: '课程编辑成功',
+        icon: 'success'
+      });
+    }
+  },
+
+  // 取消编辑
+  cancelEdit: function () {
+    this.setData({ showEditModal: false });
+  },
+
+  // 处理编辑表单输入变化
+  onEditFormChange: function (e) {
+    const field = e.currentTarget.dataset.field;
+    const value = e.detail.value;
+    
+    this.setData({
+      [`editForm.${field}`]: value
     });
   },
 

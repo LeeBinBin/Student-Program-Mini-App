@@ -429,6 +429,136 @@
   font-weight: bold;
 }
 
+/* 编辑模态框样式 */
+.edit-modal {
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  background-color: #FFFFFF;
+  border-radius: 24rpx;
+  box-shadow: 0 20rpx 60rpx rgba(0, 0, 0, 0.3);
+}
+
+.form-group {
+  margin-bottom: 36rpx;
+}
+
+.form-row {
+  display: flex;
+  gap: 28rpx;
+  margin-bottom: 36rpx;
+}
+
+.form-group.half {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.form-label {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #1F2937;
+  margin-bottom: 16rpx;
+  display: block;
+  line-height: 1.4;
+}
+
+.form-input {
+  width: 100%;
+  padding: 28rpx 32rpx;
+  border: 2rpx solid #D1D5DB;
+  border-radius: 16rpx;
+  font-size: 32rpx;
+  color: #1F2937;
+  background-color: #FFFFFF;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  line-height: 1.4;
+  min-height: 100rpx;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #3B82F6;
+  box-shadow: 0 0 0 8rpx rgba(59, 130, 246, 0.1);
+}
+
+.form-input::placeholder {
+  color: #9CA3AF;
+  font-size: 30rpx;
+}
+
+.form-textarea {
+  width: 100%;
+  padding: 24rpx 28rpx;
+  border: 2rpx solid #D1D5DB;
+  border-radius: 16rpx;
+  font-size: 32rpx;
+  color: #1F2937;
+  background-color: #FFFFFF;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  min-height: 200rpx;
+  resize: none;
+  line-height: 1.4;
+}
+
+.form-textarea:focus {
+  outline: none;
+  border-color: #3B82F6;
+  box-shadow: 0 0 0 8rpx rgba(59, 130, 246, 0.1);
+}
+
+.form-textarea::placeholder {
+  color: #9CA3AF;
+  font-size: 30rpx;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 28rpx;
+  margin-top: 48rpx;
+  padding-top: 32rpx;
+  border-top: 2rpx solid #E5E7EB;
+  justify-content: center;
+}
+
+.modal-actions .action-btn {
+  flex: 0 0 auto;
+  width: 300rpx;
+  text-align: center;
+  padding: 28rpx;
+  border-radius: 16rpx;
+  font-size: 32rpx;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  line-height: 1.4;
+}
+
+.modal-actions .action-btn.primary-btn {
+  background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%);
+  color: #FFFFFF;
+  box-shadow: 0 6rpx 16rpx rgba(59, 130, 246, 0.4);
+}
+
+.modal-actions .action-btn.primary-btn:hover {
+  transform: translateY(-2rpx);
+  box-shadow: 0 8rpx 20rpx rgba(59, 130, 246, 0.5);
+}
+
+.modal-actions .action-btn.secondary-btn {
+  background-color: #F3F4F6;
+  color: #333333;
+  border: 2rpx solid #E5E7EB;
+}
+
+.modal-actions .action-btn.secondary-btn:hover {
+  background-color: #E5E7EB;
+  transform: translateY(-2rpx);
+  box-shadow: 0 6rpx 16rpx rgba(0, 0, 0, 0.15);
+}
+
 /* 响应式设计 */
 @media (max-width: 768px) {
   .top-nav {
@@ -476,5 +606,41 @@
 
   .meta-item {
     justify-content: flex-start;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+
+  .form-group.half {
+    margin-bottom: 36rpx;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+    gap: 24rpx;
+    align-items: center;
+  }
+
+  .form-label {
+    font-size: 28rpx;
+  }
+
+  .form-input {
+    font-size: 28rpx;
+    padding: 24rpx 28rpx;
+    min-height: 90rpx;
+  }
+
+  .form-textarea {
+    font-size: 28rpx;
+    padding: 24rpx 28rpx;
+    min-height: 160rpx;
+  }
+
+  .modal-actions .action-btn {
+    font-size: 28rpx;
+    padding: 24rpx;
+    width: 280rpx;
   }
 }

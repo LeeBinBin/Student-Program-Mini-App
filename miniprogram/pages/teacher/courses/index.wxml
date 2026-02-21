@@ -186,4 +186,62 @@
       </view>
     </view>
   </view>
+
+  <!-- 编辑课程模态框 -->
+  <view wx:if="{{showEditModal}}" class="modal" catchtap="cancelEdit">
+    <view class="modal-content edit-modal" catchtap="catchTap">
+      <view class="modal-header">
+        <view class="modal-title">编辑课程</view>
+        <view class="modal-close" bindtap="cancelEdit">×</view>
+      </view>
+      <view class="modal-body">
+        <view class="form-group">
+          <view class="form-label">课程名称</view>
+          <input class="form-input" value="{{editForm.name}}" bindinput="onEditFormChange" data-field="name" placeholder="请输入课程名称" />
+        </view>
+        <view class="form-row">
+          <view class="form-group half">
+            <view class="form-label">学科</view>
+            <input class="form-input" value="{{editForm.subject}}" bindinput="onEditFormChange" data-field="subject" placeholder="请输入学科" />
+          </view>
+          <view class="form-group half">
+            <view class="form-label">年级</view>
+            <input class="form-input" value="{{editForm.grade}}" bindinput="onEditFormChange" data-field="grade" placeholder="请输入年级" />
+          </view>
+        </view>
+        <view class="form-group">
+          <view class="form-label">课程类型</view>
+          <input class="form-input" value="{{editForm.type}}" bindinput="onEditFormChange" data-field="type" placeholder="请输入课程类型" />
+        </view>
+        <view class="form-group">
+          <view class="form-label">课程描述</view>
+          <textarea class="form-textarea" value="{{editForm.description}}" bindinput="onEditFormChange" data-field="description" placeholder="请输入课程描述" />
+        </view>
+        <view class="form-row">
+          <view class="form-group half">
+            <view class="form-label">开始日期</view>
+            <input class="form-input" value="{{editForm.startDate}}" bindinput="onEditFormChange" data-field="startDate" placeholder="请输入开始日期" />
+          </view>
+          <view class="form-group half">
+            <view class="form-label">结束日期</view>
+            <input class="form-input" value="{{editForm.endDate}}" bindinput="onEditFormChange" data-field="endDate" placeholder="请输入结束日期" />
+          </view>
+        </view>
+        <view class="form-row">
+          <view class="form-group half">
+            <view class="form-label">学生人数</view>
+            <input class="form-input" type="number" value="{{editForm.studentCount}}" bindinput="onEditFormChange" data-field="studentCount" placeholder="请输入学生人数" />
+          </view>
+          <view class="form-group half">
+            <view class="form-label">资料数量</view>
+            <input class="form-input" type="number" value="{{editForm.materialsCount}}" bindinput="onEditFormChange" data-field="materialsCount" placeholder="请输入资料数量" />
+          </view>
+        </view>
+        <view class="modal-actions">
+          <view class="action-btn secondary-btn" bindtap="cancelEdit">取消</view>
+          <view class="action-btn primary-btn" bindtap="saveEdit">保存</view>
+        </view>
+      </view>
+    </view>
+  </view>
 </view>
