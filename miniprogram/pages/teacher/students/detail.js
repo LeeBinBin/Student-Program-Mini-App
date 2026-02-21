@@ -350,9 +350,9 @@ Page({
   },
 
   editStudent: function () {
-    wx.showToast({
-      title: '编辑功能开发中',
-      icon: 'info'
+    const studentId = this.data.studentId;
+    wx.navigateTo({
+      url: `/pages/teacher/students/edit?id=${studentId}`
     });
   },
 
@@ -384,9 +384,9 @@ Page({
   },
 
   viewProgress: function () {
-    wx.showToast({
-      title: '学习进度功能开发中',
-      icon: 'info'
+    const studentId = this.data.studentId;
+    wx.navigateTo({
+      url: `/pages/teacher/students/progress?id=${studentId}`
     });
   }
 });

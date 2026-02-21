@@ -1,0 +1,168 @@
+<view class="container">
+  <view class="top-nav">
+    <view class="nav-back" bindtap="navigateBack">
+      <text class="back-icon">←</text>
+    </view>
+    <view class="nav-title">学习进度</view>
+    <view class="nav-placeholder"></view>
+  </view>
+
+  <view class="content-container">
+    <view class="student-info">
+      <view class="student-avatar">
+        <text class="avatar-icon">🎓</text>
+      </view>
+      <view class="student-details">
+        <view class="student-name">{{student.name}}</view>
+        <view class="student-meta">
+          <text class="meta-item">{{student.id}}</text>
+          <text class="meta-divider">|</text>
+          <text class="meta-item">{{student.school}}</text>
+          <text class="meta-divider">|</text>
+          <text class="meta-item">{{student.grade}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="progress-section">
+      <view class="section-header">
+        <view class="section-title">科目进度</view>
+        <view class="add-progress-btn" bindtap="showAddProgressModal">
+          <text class="add-icon">+</text>
+          <text class="add-text">添加记录</text>
+        </view>
+      </view>
+
+      <view class="subject-progress-list">
+        <view wx:for="{{progressData}}" wx:key="id" class="subject-progress-item">
+          <view class="subject-header">
+            <view class="subject-info">
+              <text class="subject-name">{{item.subject}}</text>
+              <text class="subject-date">{{item.date}}</text>
+            </view>
+            <view class="progress-actions">
+              <view class="action-icon" bindtap="editProgress" data-id="{{item.id}}">
+                <text>✎</text>
+              </view>
+              <view class="action-icon delete" bindtap="deleteProgress" data-id="{{item.id}}">
+                <text>🗑</text>
+              </view>
+            </view>
+          </view>
+          
+          <view class="progress-content">
+            <view class="progress-item">
+              <text class="progress-label">完成度：</text>
+              <view class="progress-bar">
+                <view class="progress-fill" style="width: {{item.completion}}%"></view>
+              </view>
+              <text class="progress-value">{{item.completion}}%</text>
+            </view>
+            
+            <view class="progress-item">
+              <text class="progress-label">掌握程度：</text>
+              <view class="mastery-level {{item.masteryLevel}}">
+                <text class="mastery-text">{{item.masteryText}}</text>
+              </view>
+            </view>
+
+            <view class="progress-item">
+              <text class="progress-label">备注：</text>
+              <text class="progress-remark">{{item.remark || '暂无备注'}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view wx:if="{{progressData.length === 0}}" class="empty-state">
+        <text class="empty-icon">📊</text>
+        <view class="empty-text">暂无学习进度记录</view>
+        <view class="empty-desc">点击右上角添加记录</view>
+      </view>
+    </view>
+
+    <view class="stats-section">
+      <view class="section-title">学习统计</view>
+      <view class="stats-grid">
+        <view class="stat-item">
+          <view class="stat-value">{{stats.totalSubjects}}</view>
+          <view class="stat-label">学习科目</view>
+        </view>
+        <view class="stat-item">
+          <view class="stat-value">{{stats.totalRecords}}</view>
+          <view class="stat-label">记录总数</view>
+        </view>
+        <view class="stat-item">
+          <view class="stat-value">{{stats.avgCompletion}}%</view>
+          <view class="stat-label">平均完成度</view>
+        </view>
+        <view class="stat-item">
+          <view class="stat-value">{{stats.masteryCount}}</view>
+          <view class="stat-label">已掌握</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{showModal}}" class="modal" catchtap="hideModal">
+    <view class="modal-content" catchtap="catchTap">
+      <view class="modal-header">
+        <view class="modal-title">{{modalTitle}}</view>
+        <view class="modal-close" bindtap="hideModal">×</view>
+      </view>
+      <view class="modal-body">
+        <view class="form-item">
+          <view class="form-label">科目 <text class="required">*</text></view>
+          <picker mode="selector" range="{{subjectOptions}}" bindchange="onSubjectChange">
+            <view class="picker-input">
+              {{progressForm.subject || '请选择科目'}}
+              <text class="picker-arrow">▼</text>
+            </view>
+          </picker>
+        </view>
+
+        <view class="form-item">
+          <view class="form-label">完成度 <text class="required">*</text></view>
+          <slider class="progress-slider" min="0" max="100" value="{{progressForm.completion}}" bindchange="onCompletionChange" show-value activeColor="#3B82F6" />
+        </view>
+
+        <view class="form-item">
+          <view class="form-label">掌握程度 <text class="required">*</text></view>
+          <view class="mastery-selector">
+            <view class="mastery-option {{progressForm.masteryLevel === 'excellent' ? 'active' : ''}}" bindtap="onMasteryChange" data-level="excellent">
+              <text class="mastery-icon">⭐⭐⭐</text>
+              <text class="mastery-label">优秀</text>
+            </view>
+            <view class="mastery-option {{progressForm.masteryLevel === 'good' ? 'active' : ''}}" bindtap="onMasteryChange" data-level="good">
+              <text class="mastery-icon">⭐⭐</text>
+              <text class="mastery-label">良好</text>
+            </view>
+            <view class="mastery-option {{progressForm.masteryLevel === 'average' ? 'active' : ''}}" bindtap="onMasteryChange" data-level="average">
+              <text class="mastery-icon">⭐</text>
+              <text class="mastery-label">一般</text>
+            </view>
+          </view>
+        </view>
+
+        <view class="form-item">
+          <view class="form-label">日期 <text class="required">*</text></view>
+          <picker mode="date" value="{{progressForm.date}}" bindchange="onDateChange">
+            <view class="picker-input">
+              {{progressForm.date || '请选择日期'}}
+              <text class="picker-arrow">▼</text>
+            </view>
+          </picker>
+        </view>
+
+        <view class="form-item">
+          <view class="form-label">备注</view>
+          <textarea class="form-textarea" placeholder="请输入备注信息" value="{{progressForm.remark}}" bindinput="onRemarkChange" maxlength="200"></textarea>
+        </view>
+      </view>
+      <view class="modal-footer">
+        <view class="modal-btn cancel" bindtap="hideModal">取消</view>
+        <view class="modal-btn confirm" bindtap="submitProgress">保存</view>
+      </view>
+    </view>
+  </view>
+</view>

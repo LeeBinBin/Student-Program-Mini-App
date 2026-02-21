@@ -68,7 +68,10 @@
         </view>
       </view>
       <view class="student-actions">
-        <view class="action-btn" bindtap="viewStudentDetail" data-id="{{item.id}}">
+        <view class="action-btn edit-btn" bindtap="editStudent" data-id="{{item.id}}">
+          <text class="action-text">编辑</text>
+        </view>
+        <view class="action-btn detail-btn" bindtap="viewStudentDetail" data-id="{{item.id}}">
           <text class="action-text">详情</text>
         </view>
       </view>

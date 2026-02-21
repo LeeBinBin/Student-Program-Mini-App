@@ -617,6 +617,14 @@ Page({
     });
   },
 
+  // 编辑学生
+  editStudent: function (e) {
+    const studentId = e.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: `/pages/teacher/students/edit?id=${studentId}`
+    });
+  },
+
   // 联系学生
   contactStudent: function (e) {
     const phone = e.currentTarget.dataset.phone;
