@@ -1,7 +1,31 @@
-// index.js
+// detail.js
 Page({
   data: {
-    courses: [
+    course: {
+      id: '',
+      name: '',
+      subject: '',
+      grade: '',
+      type: '',
+      status: '',
+      description: '',
+      startDate: '',
+      endDate: '',
+      studentCount: 0,
+      materialsCount: 0,
+      crossBorderInfo: null
+    }
+  },
+
+  onLoad: function (options) {
+    const courseId = options.id;
+    this.loadCourseDetail(courseId);
+  },
+
+  // 加载课程详情
+  loadCourseDetail: function (courseId) {
+    // 模拟从课程列表中获取课程详情
+    const courseList = [
       {
         id: 'C001',
         name: '粤港数学三年级跨境适配课程',
@@ -10,9 +34,9 @@ Page({
         type: '跨境适配',
         status: 'active',
         description: '针对粤港两地数学课程标准差异，设计的跨境学生适配课程，涵盖两地核心知识点',
-        studentCount: 28,
         startDate: '2026-02-01',
         endDate: '2026-10-31',
+        studentCount: 28,
         materialsCount: 12,
         crossBorderInfo: {
           guangdongStandards: ['数与代数', '图形与几何', '统计与概率'],
@@ -270,32 +294,34 @@ Page({
         materialsCount: 30,
         crossBorderInfo: null
       }
-    ],
-    searchKeyword: '',
-    selectedSubject: '',
-    selectedGrade: '',
-    selectedType: '',
-    showSubjectFilter: false,
-    showGradeFilter: false,
-    showTypeFilter: false,
-    originalCourses: [],
-    showAddModal: false,
-    addForm: {
-      name: '',
-      subject: '',
-      grade: '',
-      type: '',
-      description: '',
-      startDate: '',
-      endDate: ''
-    },
-    searchTimeout: null
-  },
+    ];
 
-  onLoad: function () {
-    this.setData({
-      originalCourses: [...this.data.courses]
-    });
+    const course = courseList.find(c => c.id === courseId) || {
+      id: courseId,
+      name: '未知课程',
+      subject: '未知',
+      grade: '0',
+      type: '常规课程',
+      status: 'inactive',
+      description: '课程信息加载失败',
+      startDate: '2024-01-01',
+      endDate: '2024-12-31',
+      studentCount: 0,
+      materialsCount: 0,
+      crossBorderInfo: null
+    };
+
+    // 为课程对象添加适配难度颜色属性
+    if (course.crossBorderInfo && course.crossBorderInfo.adaptationLevel) {
+      const colorMap = {
+        '高': '#10B981',
+        '中': '#F59E0B',
+        '低': '#EF4444'
+      };
+      course.adaptationColor = colorMap[course.crossBorderInfo.adaptationLevel] || '#6B7280';
+    }
+    
+    this.setData({ course });
   },
 
   // 返回上一页
@@ -303,227 +329,8 @@ Page({
     wx.navigateBack();
   },
 
-  // 添加课程
-  addCourse: function () {
-    wx.showModal({
-      title: '添加课程',
-      content: '请选择课程类型',
-      cancelText: '常规课程',
-      confirmText: '跨境适配课程',
-      success: (res) => {
-        if (res.confirm) {
-          this.createCrossBorderCourse();
-        } else if (res.cancel) {
-          this.createRegularCourse();
-        }
-      }
-    });
-  },
-
-  // 创建常规课程
-  createRegularCourse: function () {
-    const newCourse = {
-      id: 'C' + (this.data.courses.length + 1).toString().padStart(3, '0'),
-      name: '新建常规课程',
-      subject: '数学',
-      grade: '3',
-      type: '常规课程',
-      status: 'inactive',
-      description: '新创建的常规课程',
-      startDate: '2026-02-01',
-      endDate: '2026-10-31',
-      studentCount: 0,
-      materialsCount: 0,
-      crossBorderInfo: null
-    };
-
-    this.data.courses.unshift(newCourse);
-    this.data.originalCourses.unshift(newCourse);
-    this.setData({ courses: this.data.courses });
-
-    wx.showToast({
-      title: '常规课程创建成功',
-      icon: 'success'
-    });
-  },
-
-  // 创建跨境适配课程
-  createCrossBorderCourse: function () {
-    const newCourse = {
-      id: 'C' + (this.data.courses.length + 1).toString().padStart(3, '0'),
-      name: '新建跨境适配课程',
-      subject: '数学',
-      grade: '3',
-      type: '跨境适配',
-      status: 'inactive',
-      description: '新创建的跨境适配课程',
-      startDate: '2026-02-01',
-      endDate: '2026-10-31',
-      studentCount: 0,
-      materialsCount: 0,
-      crossBorderInfo: {
-        guangdongStandards: ['数与代数', '图形与几何'],
-        hongkongStandards: ['Number', 'Shape and Space'],
-        adaptationLevel: '中'
-      }
-    };
-
-    this.data.courses.unshift(newCourse);
-    this.data.originalCourses.unshift(newCourse);
-    this.setData({ courses: this.data.courses });
-
-    wx.showToast({
-      title: '跨境适配课程创建成功',
-      icon: 'success'
-    });
-  },
-
-  // 搜索课程（带防抖）
-  onSearch: function (e) {
-    const keyword = e.detail.value;
-    this.setData({ searchKeyword: keyword });
-
-    // 清除之前的定时器
-    if (this.data.searchTimeout) {
-      clearTimeout(this.data.searchTimeout);
-    }
-
-    // 设置新的定时器，实现防抖
-    this.data.searchTimeout = setTimeout(() => {
-      this.filterCourses();
-      this.setData({ searchTimeout: null });
-    }, 300);
-  },
-
-  // 显示学科筛选弹窗
-  showFilter: function () {
-    this.setData({ showSubjectFilter: true });
-  },
-
-  // 隐藏学科筛选弹窗
-  hideSubjectFilter: function () {
-    this.setData({ showSubjectFilter: false });
-  },
-
-  // 显示年级筛选弹窗
-  showGradeFilter: function () {
-    this.setData({ showGradeFilter: true });
-  },
-
-  // 隐藏年级筛选弹窗
-  hideGradeFilter: function () {
-    this.setData({ showGradeFilter: false });
-  },
-
-  // 显示课程类型筛选弹窗
-  showTypeFilter: function () {
-    this.setData({ showTypeFilter: true });
-  },
-
-  // 隐藏课程类型筛选弹窗
-  hideTypeFilter: function () {
-    this.setData({ showTypeFilter: false });
-  },
-
-  // 选择学科
-  selectSubject: function (e) {
-    const subject = e.currentTarget.dataset.value;
-    this.setData({ 
-      selectedSubject: subject,
-      showSubjectFilter: false 
-    });
-    this.filterCourses();
-  },
-
-  // 选择年级
-  selectGrade: function (e) {
-    const grade = e.currentTarget.dataset.value;
-    this.setData({ 
-      selectedGrade: grade,
-      showGradeFilter: false 
-    });
-    this.filterCourses();
-  },
-
-  // 选择课程类型
-  selectType: function (e) {
-    const type = e.currentTarget.dataset.value;
-    this.setData({ 
-      selectedType: type,
-      showTypeFilter: false 
-    });
-    this.filterCourses();
-  },
-
-  // 筛选课程
-  filterCourses: function () {
-    let filteredCourses = [...this.data.originalCourses];
-
-    // 按关键词搜索
-    if (this.data.searchKeyword) {
-      const keyword = this.data.searchKeyword.toLowerCase();
-      filteredCourses = filteredCourses.filter(course => 
-        course.name.toLowerCase().includes(keyword) ||
-        course.subject.toLowerCase().includes(keyword) ||
-        course.grade.includes(keyword) ||
-        course.type.toLowerCase().includes(keyword) ||
-        course.description.toLowerCase().includes(keyword)
-      );
-    }
-
-    // 按学科筛选
-    if (this.data.selectedSubject) {
-      filteredCourses = filteredCourses.filter(course => 
-        course.subject === this.data.selectedSubject
-      );
-    }
-
-    // 按年级筛选
-    if (this.data.selectedGrade) {
-      filteredCourses = filteredCourses.filter(course => 
-        course.grade === this.data.selectedGrade
-      );
-    }
-
-    // 按课程类型筛选
-    if (this.data.selectedType) {
-      filteredCourses = filteredCourses.filter(course => 
-        course.type === this.data.selectedType
-      );
-    }
-
-    this.setData({ courses: filteredCourses });
-
-    // 添加搜索结果提示
-    if (this.data.searchKeyword || this.data.selectedSubject || this.data.selectedGrade || this.data.selectedType) {
-      const count = filteredCourses.length;
-      if (count === 0) {
-        wx.showToast({
-          title: '未找到匹配的课程',
-          icon: 'none',
-          duration: 1500
-        });
-      } else {
-        wx.showToast({
-          title: `找到 ${count} 个匹配课程`,
-          icon: 'none',
-          duration: 1500
-        });
-      }
-    }
-  },
-
-  // 查看课程详情
-  viewCourseDetail: function (e) {
-    const courseId = e.currentTarget.dataset.id;
-    wx.navigateTo({
-      url: `/pages/teacher/courses/detail?id=${courseId}`
-    });
-  },
-
   // 编辑课程
-  editCourse: function (e) {
-    const courseId = e.currentTarget.dataset.id;
+  editCourse: function () {
     wx.showModal({
       title: '编辑课程',
       content: '请选择编辑内容',
@@ -545,7 +352,129 @@ Page({
     });
   },
 
-  // 阻止事件冒泡
-  catchTap: function () {
+  // 管理学生
+  manageStudents: function () {
+    wx.showModal({
+      title: '学生管理',
+      content: `当前课程共有 ${this.data.course.studentCount} 名学生`,
+      confirmText: '查看学生列表',
+      cancelText: '取消',
+      success: (res) => {
+        if (res.confirm) {
+          wx.showToast({
+            title: '学生列表功能开发中',
+            icon: 'info'
+          });
+        }
+      }
+    });
+  },
+
+  // 管理课程资料
+  manageMaterials: function () {
+    wx.showModal({
+      title: '课程资料',
+      content: `当前课程共有 ${this.data.course.materialsCount} 份资料`,
+      confirmText: '查看资料列表',
+      cancelText: '取消',
+      success: (res) => {
+        if (res.confirm) {
+          wx.showToast({
+            title: '资料管理功能开发中',
+            icon: 'info'
+          });
+        }
+      }
+    });
+  },
+
+  // 管理课程作业
+  manageAssignments: function () {
+    wx.showToast({
+      title: '作业管理功能开发中',
+      icon: 'info'
+    });
+  },
+
+  // 查看学习统计
+  viewStatistics: function () {
+    wx.showToast({
+      title: '学习统计功能开发中',
+      icon: 'info'
+    });
+  },
+
+  // 开始课程
+  startCourse: function () {
+    wx.showModal({
+      title: '开始课程',
+      content: '确定要开始此课程吗？',
+      confirmText: '确定',
+      cancelText: '取消',
+      success: (res) => {
+        if (res.confirm) {
+          this.setData({
+            'course.status': 'active'
+          });
+          wx.showToast({
+            title: '课程已开始',
+            icon: 'success'
+          });
+        }
+      }
+    });
+  },
+
+  // 结束课程
+  endCourse: function () {
+    wx.showModal({
+      title: '结束课程',
+      content: '确定要结束此课程吗？',
+      confirmText: '确定',
+      cancelText: '取消',
+      success: (res) => {
+        if (res.confirm) {
+          this.setData({
+            'course.status': 'inactive'
+          });
+          wx.showToast({
+            title: '课程已结束',
+            icon: 'success'
+          });
+        }
+      }
+    });
+  },
+
+  // 删除课程
+  deleteCourse: function () {
+    wx.showModal({
+      title: '删除课程',
+      content: '确定要删除此课程吗？删除后不可恢复。',
+      confirmText: '删除',
+      cancelText: '取消',
+      confirmColor: '#FF4D4F',
+      success: (res) => {
+        if (res.confirm) {
+          wx.showToast({
+            title: '课程删除成功',
+            icon: 'success'
+          });
+          setTimeout(() => {
+            wx.navigateBack();
+          }, 1000);
+        }
+      }
+    });
+  },
+
+  // 获取适配难度对应的颜色
+  getAdaptationColor: function (level) {
+    const colorMap = {
+      '高': '#10B981',
+      '中': '#F59E0B',
+      '低': '#EF4444'
+    };
+    return colorMap[level] || '#6B7280';
   }
 });

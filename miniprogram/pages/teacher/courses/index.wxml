@@ -19,15 +19,15 @@
       <input class="search-input" placeholder="搜索课程名称、学科或年级" bindinput="onSearch" value="{{searchKeyword}}" />
     </view>
     <view class="filter-section">
-      <view class="filter-item" bindtap="showFilter('subject')">
+      <view class="filter-item" bindtap="showFilter">
         <text>{{selectedSubject || '学科'}}</text>
         <text class="filter-arrow">▼</text>
       </view>
-      <view class="filter-item" bindtap="showFilter('grade')">
+      <view class="filter-item" bindtap="showGradeFilter">
         <text>{{selectedGrade || '年级'}}</text>
         <text class="filter-arrow">▼</text>
       </view>
-      <view class="filter-item" bindtap="showFilter('type')">
+      <view class="filter-item" bindtap="showTypeFilter">
         <text>{{selectedType || '课程类型'}}</text>
         <text class="filter-arrow">▼</text>
       </view>
@@ -83,17 +83,105 @@
     <view class="empty-desc">点击右上角添加课程</view>
   </view>
 
-  <!-- 筛选弹窗 -->
-  <view wx:if="{{showFilterModal}}" class="modal" catchtap="hideFilter">
+  <!-- 学科筛选弹窗 -->
+  <view wx:if="{{showSubjectFilter}}" class="modal" catchtap="hideSubjectFilter">
     <view class="modal-content" catchtap="catchTap">
       <view class="modal-header">
-        <view class="modal-title">{{filterTitle}}</view>
-        <view class="modal-close" bindtap="hideFilter">×</view>
+        <view class="modal-title">选择学科</view>
+        <view class="modal-close" bindtap="hideSubjectFilter">×</view>
       </view>
       <view class="modal-body">
-        <view wx:for="{{filterOptions}}" wx:key="index" class="filter-option" bindtap="selectFilter" data-value="{{item.value}}" data-label="{{item.label}}">
-          <text class="option-text">{{item.label}}</text>
-          <text wx:if="{{item.value === selectedFilterValue}}" class="option-check">✓</text>
+        <view class="filter-option" bindtap="selectSubject" data-value="">
+          <text class="option-text">全部</text>
+          <text wx:if="{{!selectedSubject}}" class="option-check">✓</text>
+        </view>
+        <view class="filter-option" bindtap="selectSubject" data-value="数学">
+          <text class="option-text">数学</text>
+          <text wx:if="{{selectedSubject === '数学'}}" class="option-check">✓</text>
+        </view>
+        <view class="filter-option" bindtap="selectSubject" data-value="英语">
+          <text class="option-text">英语</text>
+          <text wx:if="{{selectedSubject === '英语'}}" class="option-check">✓</text>
+        </view>
+        <view class="filter-option" bindtap="selectSubject" data-value="语文">
+          <text class="option-text">语文</text>
+          <text wx:if="{{selectedSubject === '语文'}}" class="option-check">✓</text>
+        </view>
+        <view class="filter-option" bindtap="selectSubject" data-value="科学">
+          <text class="option-text">科学</text>
+          <text wx:if="{{selectedSubject === '科学'}}" class="option-check">✓</text>
+        </view>
+        <view class="filter-option" bindtap="selectSubject" data-value="其他">
+          <text class="option-text">其他</text>
+          <text wx:if="{{selectedSubject === '其他'}}" class="option-check">✓</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 年级筛选弹窗 -->
+  <view wx:if="{{showGradeFilter}}" class="modal" catchtap="hideGradeFilter">
+    <view class="modal-content" catchtap="catchTap">
+      <view class="modal-header">
+        <view class="modal-title">选择年级</view>
+        <view class="modal-close" bindtap="hideGradeFilter">×</view>
+      </view>
+      <view class="modal-body">
+        <view class="filter-option" bindtap="selectGrade" data-value="">
+          <text class="option-text">全部</text>
+          <text wx:if="{{!selectedGrade}}" class="option-check">✓</text>
+        </view>
+        <view class="filter-option" bindtap="selectGrade" data-value="1">
+          <text class="option-text">1年级</text>
+          <text wx:if="{{selectedGrade === '1'}}" class="option-check">✓</text>
+        </view>
+        <view class="filter-option" bindtap="selectGrade" data-value="2">
+          <text class="option-text">2年级</text>
+          <text wx:if="{{selectedGrade === '2'}}" class="option-check">✓</text>
+        </view>
+        <view class="filter-option" bindtap="selectGrade" data-value="3">
+          <text class="option-text">3年级</text>
+          <text wx:if="{{selectedGrade === '3'}}" class="option-check">✓</text>
+        </view>
+        <view class="filter-option" bindtap="selectGrade" data-value="4">
+          <text class="option-text">4年级</text>
+          <text wx:if="{{selectedGrade === '4'}}" class="option-check">✓</text>
+        </view>
+        <view class="filter-option" bindtap="selectGrade" data-value="5">
+          <text class="option-text">5年级</text>
+          <text wx:if="{{selectedGrade === '5'}}" class="option-check">✓</text>
+        </view>
+        <view class="filter-option" bindtap="selectGrade" data-value="6">
+          <text class="option-text">6年级</text>
+          <text wx:if="{{selectedGrade === '6'}}" class="option-check">✓</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 课程类型筛选弹窗 -->
+  <view wx:if="{{showTypeFilter}}" class="modal" catchtap="hideTypeFilter">
+    <view class="modal-content" catchtap="catchTap">
+      <view class="modal-header">
+        <view class="modal-title">选择课程类型</view>
+        <view class="modal-close" bindtap="hideTypeFilter">×</view>
+      </view>
+      <view class="modal-body">
+        <view class="filter-option" bindtap="selectType" data-value="">
+          <text class="option-text">全部</text>
+          <text wx:if="{{!selectedType}}" class="option-check">✓</text>
+        </view>
+        <view class="filter-option" bindtap="selectType" data-value="常规课程">
+          <text class="option-text">常规课程</text>
+          <text wx:if="{{selectedType === '常规课程'}}" class="option-check">✓</text>
+        </view>
+        <view class="filter-option" bindtap="selectType" data-value="跨境适配">
+          <text class="option-text">跨境适配</text>
+          <text wx:if="{{selectedType === '跨境适配'}}" class="option-check">✓</text>
+        </view>
+        <view class="filter-option" bindtap="selectType" data-value="拓展课程">
+          <text class="option-text">拓展课程</text>
+          <text wx:if="{{selectedType === '拓展课程'}}" class="option-check">✓</text>
         </view>
       </view>
     </view>

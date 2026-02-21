@@ -1,0 +1,119 @@
+<view class="container">
+  <!-- 顶部导航 -->
+  <view class="top-nav">
+    <view class="nav-back" bindtap="navigateBack">
+      <text class="back-icon">←</text>
+    </view>
+    <view class="nav-title">课程详情</view>
+    <view class="nav-actions">
+      <view class="action-item" bindtap="editCourse">
+        <text class="action-icon">✏️</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 课程基本信息 -->
+  <view class="course-info">
+    <view class="course-header">
+      <view class="course-status" style="background-color: {{course.status === 'active' ? '#D9F99D' : '#FEE2E2'}}">{{course.status === 'active' ? '进行中' : '已结束'}}</view>
+      <view class="course-name">{{course.name}}</view>
+      <view class="course-meta">
+        <text class="meta-item">{{course.subject}}</text>
+        <text class="meta-divider">|</text>
+        <text class="meta-item">{{course.grade}}年级</text>
+        <text class="meta-divider">|</text>
+        <text class="meta-item">{{course.type}}</text>
+      </view>
+    </view>
+
+    <view class="course-description">
+      <view class="section-title">课程简介</view>
+      <view class="desc-content">{{course.description}}</view>
+    </view>
+
+    <view class="course-schedule">
+      <view class="section-title">课程时间</view>
+      <view class="schedule-info">
+        <text class="schedule-item">开始时间：{{course.startDate}}</text>
+        <text class="schedule-item">结束时间：{{course.endDate}}</text>
+      </view>
+    </view>
+
+    <!-- 跨境适配信息 -->
+    <view wx:if="{{course.crossBorderInfo}}" class="cross-border-info">
+      <view class="section-title">跨境适配信息</view>
+      <view class="cross-info-content">
+        <view class="cross-item">
+          <view class="cross-label">广东课程标准</view>
+          <view class="cross-tags">
+            <view wx:for="{{course.crossBorderInfo.guangdongStandards}}" wx:key="index" class="cross-tag guangdong">{{item}}</view>
+          </view>
+        </view>
+        <view class="cross-item">
+          <view class="cross-label">香港课程标准</view>
+          <view class="cross-tags">
+            <view wx:for="{{course.crossBorderInfo.hongkongStandards}}" wx:key="index" class="cross-tag hongkong">{{item}}</view>
+          </view>
+        </view>
+        <view class="cross-item">
+          <view class="cross-label">适配难度</view>
+          <view class="adaptation-level" style="background-color: {{course.adaptationColor}}">
+            {{course.crossBorderInfo.adaptationLevel}}
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 课程管理模块 -->
+  <view class="course-management">
+    <view class="section-title">课程管理</view>
+    
+    <!-- 学生管理 -->
+    <view class="management-item" bindtap="manageStudents">
+      <view class="item-icon">👥</view>
+      <view class="item-content">
+        <view class="item-title">学生管理</view>
+        <view class="item-desc">管理课程学生，查看学习进度</view>
+      </view>
+      <view class="item-arrow">></view>
+    </view>
+
+    <!-- 课程资料 -->
+    <view class="management-item" bindtap="manageMaterials">
+      <view class="item-icon">📚</view>
+      <view class="item-content">
+        <view class="item-title">课程资料</view>
+        <view class="item-desc">{{course.materialsCount || 0}} 份资料，包括课件、习题等</view>
+      </view>
+      <view class="item-arrow">></view>
+    </view>
+
+    <!-- 课程作业 -->
+    <view class="management-item" bindtap="manageAssignments">
+      <view class="item-icon">📝</view>
+      <view class="item-content">
+        <view class="item-title">课程作业</view>
+        <view class="item-desc">布置和批改作业</view>
+      </view>
+      <view class="item-arrow">></view>
+    </view>
+
+    <!-- 学习统计 -->
+    <view class="management-item" bindtap="viewStatistics">
+      <view class="item-icon">📊</view>
+      <view class="item-content">
+        <view class="item-title">学习统计</view>
+        <view class="item-desc">查看学生学习数据和课程效果</view>
+      </view>
+      <view class="item-arrow">></view>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-buttons">
+    <button class="btn-primary" bindtap="startCourse" wx:if="{{course.status === 'inactive'}}">开始课程</button>
+    <button class="btn-secondary" bindtap="endCourse" wx:if="{{course.status === 'active'}}">结束课程</button>
+    <button class="btn-danger" bindtap="deleteCourse">删除课程</button>
+  </view>
+</view>

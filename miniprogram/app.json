@@ -10,6 +10,8 @@
     "pages/teacher/students/add",
     "pages/teacher/students/edit",
     "pages/teacher/students/progress",
+    "pages/teacher/courses/index",
+    "pages/teacher/courses/detail",
     "pages/teacher/materials/index",
     "pages/teacher/statistics/index",
     "pages/profile/index",
