@@ -311,6 +311,8 @@
 
 .student-actions {
   margin-left: 24rpx;
+  display: flex;
+  gap: 12rpx;
 }
 
 .action-btn {
@@ -322,6 +324,14 @@
   font-weight: 500;
   transition: all 0.3s ease;
   cursor: pointer;
+}
+
+.edit-btn {
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+}
+
+.detail-btn {
+  background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%);
 }
 
 .action-btn:hover {

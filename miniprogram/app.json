@@ -8,6 +8,8 @@
     "pages/teacher/students/index",
     "pages/teacher/students/detail",
     "pages/teacher/students/add",
+    "pages/teacher/students/edit",
+    "pages/teacher/students/progress",
     "pages/profile/index",
     "pages/history/index",
     "pages/favorites/index"
