@@ -8,14 +8,7 @@ Page({
     totalMaterials: 36,
     
     // 筛选条件
-    selectedTimeRange: '',
-    selectedSubject: '',
-    selectedGrade: '',
-    showFilterModal: false,
-    filterType: '',
-    filterTitle: '',
-    filterOptions: [],
-    selectedFilterValue: '',
+
     
     // 学习数据
     learningData: {
@@ -56,6 +49,272 @@ Page({
   onLoad: function () {
     // 初始化数据
     console.log('教学统计页面加载');
+    
+    // 初始化图表
+    this.initCharts();
+  },
+  
+  // 初始化图表
+  initCharts: function () {
+    // 延迟执行，确保Canvas已经渲染
+    setTimeout(() => {
+      this.drawScoreTrendChart();
+      this.drawSubjectScoreChart();
+      this.drawDownloadTrendChart();
+      this.drawMaterialTypeChart();
+    }, 100);
+  },
+  
+  // 绘制成绩趋势图
+  drawScoreTrendChart: function () {
+    const ctx = wx.createCanvasContext('scoreTrendChart');
+    const data = this.data.learningData.averageScores;
+    const labels = ['1月', '2月', '3月', '4月', '5月', '6月'];
+    
+    this.drawLineChart(ctx, data, labels, '#667eea', '平均成绩趋势', 'scoreTrendChart');
+  },
+  
+  // 绘制学科成绩分布图
+  drawSubjectScoreChart: function () {
+    const ctx = wx.createCanvasContext('subjectScoreChart');
+    const data = this.data.learningData.scores;
+    const labels = this.data.learningData.subjects;
+    
+    this.drawBarChart(ctx, data, labels, '#667eea', '学科成绩分布', 'subjectScoreChart');
+  },
+  
+  // 绘制下载量趋势图
+  drawDownloadTrendChart: function () {
+    const ctx = wx.createCanvasContext('downloadTrendChart');
+    const data = this.data.resourcesData.downloads;
+    const labels = ['1月', '2月', '3月', '4月', '5月', '6月'];
+    
+    this.drawLineChart(ctx, data, labels, '#667eea', '素材下载量趋势', 'downloadTrendChart');
+  },
+  
+  // 绘制素材类型分布图
+  drawMaterialTypeChart: function () {
+    const ctx = wx.createCanvasContext('materialTypeChart');
+    const data = this.data.resourcesData.types;
+    
+    this.drawPieChart(ctx, data, '素材类型分布', 'materialTypeChart');
+  },
+  
+  // 绘制折线图
+  drawLineChart: function (ctx, data, labels, color, title, canvasId) {
+    // 获取Canvas实际尺寸
+    const query = wx.createSelectorQuery();
+    query.select('#' + canvasId).boundingClientRect();
+    query.exec((res) => {
+      if (res && res[0]) {
+        const width = res[0].width;
+        const height = res[0].height;
+        const padding = 40;
+        
+        // 清空画布
+        ctx.clearRect(0, 0, width, height);
+        
+        // 绘制标题
+        ctx.setFontSize(14);
+        ctx.setFillStyle('#333');
+        ctx.setTextAlign('center');
+        ctx.fillText(title, width / 2, 20);
+        
+        // 计算数据范围
+        const maxValue = Math.max(...data) * 1.1;
+        const minValue = Math.min(...data) * 0.9;
+        const valueRange = maxValue - minValue;
+        
+        // 绘制坐标轴
+        ctx.setStrokeStyle('#ddd');
+        ctx.setLineWidth(1);
+        
+        // X轴
+        ctx.beginPath();
+        ctx.moveTo(padding, height - padding);
+        ctx.lineTo(width - padding, height - padding);
+        ctx.stroke();
+        
+        // Y轴
+        ctx.beginPath();
+        ctx.moveTo(padding, padding);
+        ctx.lineTo(padding, height - padding);
+        ctx.stroke();
+        
+        // 绘制数据点和连线
+        ctx.setStrokeStyle(color);
+        ctx.setLineWidth(2);
+        ctx.setFillStyle(color);
+        
+        const stepX = (width - 2 * padding) / (data.length - 1);
+        
+        ctx.beginPath();
+        data.forEach((value, index) => {
+          const x = padding + index * stepX;
+          const y = height - padding - ((value - minValue) / valueRange) * (height - 2 * padding);
+          
+          if (index === 0) {
+            ctx.moveTo(x, y);
+          } else {
+            ctx.lineTo(x, y);
+          }
+          
+          // 绘制数据点
+          ctx.beginPath();
+          ctx.arc(x, y, 3, 0, 2 * Math.PI);
+          ctx.fill();
+          ctx.stroke();
+        });
+        ctx.stroke();
+        
+        // 绘制标签
+        ctx.setFontSize(12);
+        ctx.setFillStyle('#666');
+        ctx.setTextAlign('center');
+        
+        labels.forEach((label, index) => {
+          const x = padding + index * stepX;
+          ctx.fillText(label, x, height - padding + 15);
+        });
+        
+        ctx.draw();
+      }
+    });
+  },
+  
+  // 绘制柱状图
+  drawBarChart: function (ctx, data, labels, color, title, canvasId) {
+    // 获取Canvas实际尺寸
+    const query = wx.createSelectorQuery();
+    query.select('#' + canvasId).boundingClientRect();
+    query.exec((res) => {
+      if (res && res[0]) {
+        const width = res[0].width;
+        const height = res[0].height;
+        const padding = 40;
+        
+        // 清空画布
+        ctx.clearRect(0, 0, width, height);
+        
+        // 绘制标题
+        ctx.setFontSize(14);
+        ctx.setFillStyle('#333');
+        ctx.setTextAlign('center');
+        ctx.fillText(title, width / 2, 20);
+        
+        // 计算数据范围
+        const maxValue = Math.max(...data) * 1.1;
+        const minValue = 0;
+        const valueRange = maxValue - minValue;
+        
+        // 绘制坐标轴
+        ctx.setStrokeStyle('#ddd');
+        ctx.setLineWidth(1);
+        
+        // X轴
+        ctx.beginPath();
+        ctx.moveTo(padding, height - padding);
+        ctx.lineTo(width - padding, height - padding);
+        ctx.stroke();
+        
+        // Y轴
+        ctx.beginPath();
+        ctx.moveTo(padding, padding);
+        ctx.lineTo(padding, height - padding);
+        ctx.stroke();
+        
+        // 绘制柱状图
+        const barWidth = (width - 2 * padding) / data.length * 0.7;
+        const stepX = (width - 2 * padding) / data.length;
+        
+        data.forEach((value, index) => {
+          const x = padding + index * stepX + (stepX - barWidth) / 2;
+          const barHeight = ((value - minValue) / valueRange) * (height - 2 * padding);
+          const y = height - padding - barHeight;
+          
+          // 绘制柱子
+          ctx.setFillStyle(color);
+          ctx.fillRect(x, y, barWidth, barHeight);
+          
+          // 绘制数值
+          ctx.setFontSize(12);
+          ctx.setFillStyle('#333');
+          ctx.setTextAlign('center');
+          ctx.fillText(value, x + barWidth / 2, y - 8);
+        });
+        
+        // 绘制标签
+        ctx.setFontSize(12);
+        ctx.setFillStyle('#666');
+        ctx.setTextAlign('center');
+        
+        labels.forEach((label, index) => {
+          const x = padding + index * stepX + stepX / 2;
+          ctx.fillText(label, x, height - padding + 15);
+        });
+        
+        ctx.draw();
+      }
+    });
+  },
+  
+  // 绘制饼图
+  drawPieChart: function (ctx, data, title, canvasId) {
+    // 获取Canvas实际尺寸
+    const query = wx.createSelectorQuery();
+    query.select('#' + canvasId).boundingClientRect();
+    query.exec((res) => {
+      if (res && res[0]) {
+        const width = res[0].width;
+        const height = res[0].height;
+        const centerX = width / 2;
+        const centerY = height / 2;
+        const radius = Math.min(centerX, centerY) - 40;
+        
+        // 清空画布
+        ctx.clearRect(0, 0, width, height);
+        
+        // 绘制标题
+        ctx.setFontSize(14);
+        ctx.setFillStyle('#333');
+        ctx.setTextAlign('center');
+        ctx.fillText(title, width / 2, 20);
+        
+        // 计算总数据
+        const total = data.reduce((sum, item) => sum + item.count, 0);
+        
+        // 颜色数组 - 使用统一的紫色调
+        const colors = ['#667eea', '#764ba2', '#8a5cf6', '#9333ea', '#a855f7'];
+        
+        // 绘制饼图
+        let startAngle = 0;
+        
+        data.forEach((item, index) => {
+          const angle = (item.count / total) * 2 * Math.PI;
+          
+          // 绘制扇形
+          ctx.setFillStyle(colors[index % colors.length]);
+          ctx.beginPath();
+          ctx.moveTo(centerX, centerY);
+          ctx.arc(centerX, centerY, radius, startAngle, startAngle + angle);
+          ctx.closePath();
+          ctx.fill();
+          
+          // 绘制标签
+          const labelX = centerX + Math.cos(startAngle + angle / 2) * (radius + 30);
+          const labelY = centerY + Math.sin(startAngle + angle / 2) * (radius + 30);
+          
+          ctx.setFontSize(12);
+          ctx.setFillStyle('#333');
+          ctx.setTextAlign('center');
+          ctx.fillText(`${item.name}: ${item.count}`, labelX, labelY);
+          
+          startAngle += angle;
+        });
+        
+        ctx.draw();
+      }
+    });
   },
 
   // 返回上一页
@@ -88,101 +347,169 @@ Page({
     });
   },
 
-  // 显示筛选弹窗
-  showFilter: function (type) {
+
+
+  // 查看详情
+  viewDetail: function (e) {
+    const type = e.currentTarget.dataset.type;
     let title = '';
-    let options = [];
+    let content = '';
+    let detailData = {};
+    let detailedContent = '';
 
     switch (type) {
-      case 'timeRange':
-        title = '时间范围';
-        options = [
-          { label: '全部', value: '' },
-          { label: '本周', value: 'week' },
-          { label: '本月', value: 'month' },
-          { label: '本学期', value: 'semester' },
-          { label: '本年度', value: 'year' }
-        ];
+      case 'learning':
+        title = '学习数据分析详情';
+        content = '学习数据详细分析包括成绩趋势、学科表现、学习时长等多个维度的分析。';
+        
+        // 计算成绩统计信息
+        const averageScores = this.data.learningData.averageScores;
+        const subjectScores = this.data.learningData.scores;
+        const subjects = this.data.learningData.subjects;
+        
+        // 计算平均值
+        var sumScores = 0;
+        for (var i = 0; i < averageScores.length; i++) {
+          sumScores += averageScores[i];
+        }
+        const avgScore = (sumScores / averageScores.length).toFixed(1);
+        
+        // 计算最大值和最小值
+        var maxScore = averageScores[0];
+        var minScore = averageScores[0];
+        for (var i = 1; i < averageScores.length; i++) {
+          if (averageScores[i] > maxScore) {
+            maxScore = averageScores[i];
+          }
+          if (averageScores[i] < minScore) {
+            minScore = averageScores[i];
+          }
+        }
+        
+        // 找出最高和最低分的学科
+        var maxSubjectScore = subjectScores[0];
+        var minSubjectScore = subjectScores[0];
+        var maxSubjectIndex = 0;
+        var minSubjectIndex = 0;
+        for (var i = 1; i < subjectScores.length; i++) {
+          if (subjectScores[i] > maxSubjectScore) {
+            maxSubjectScore = subjectScores[i];
+            maxSubjectIndex = i;
+          }
+          if (subjectScores[i] < minSubjectScore) {
+            minSubjectScore = subjectScores[i];
+            minSubjectIndex = i;
+          }
+        }
+        const highestSubject = subjects[maxSubjectIndex];
+        const lowestSubject = subjects[minSubjectIndex];
+        
+        // 构建详细内容
+        detailedContent = "平均成绩趋势：\n";
+        averageScores.forEach(function(score, index) {
+          detailedContent += ['1月', '2月', '3月', '4月', '5月', '6月'][index] + ': ' + score + '\n';
+        });
+        detailedContent += "\n学科成绩分布：\n";
+        subjects.forEach(function(subject, index) {
+          detailedContent += subject + ': ' + subjectScores[index] + '\n';
+        });
+        detailedContent += "\n统计信息：\n";
+        detailedContent += "平均成绩：" + avgScore + "\n";
+        detailedContent += "最高成绩：" + maxScore + "\n";
+        detailedContent += "最低成绩：" + minScore + "\n";
+        detailedContent += "优势学科：" + highestSubject + "\n";
+        detailedContent += "需改进学科：" + lowestSubject;
+        
+        detailData = this.data.learningData;
         break;
-      case 'subject':
-        title = '学科';
-        options = [
-          { label: '全部', value: '' },
-          { label: '数学', value: '数学' },
-          { label: '英语', value: '英语' },
-          { label: '语文', value: '语文' },
-          { label: '科学', value: '科学' },
-          { label: '其他', value: '其他' }
-        ];
+      case 'adaptation':
+        title = '适应情况分析详情';
+        content = '适应情况详细分析包括跨境学生的适应等级分布、主要问题及解决方案等。';
+        
+        // 构建详细内容
+        detailedContent = "适应等级分布：\n";
+        this.data.adaptationData.levels.forEach(function(level) {
+          detailedContent += level.level + ': ' + level.count + '人 (' + level.percentage + '%)\n';
+        });
+        detailedContent += "\n主要适应问题：\n";
+        this.data.adaptationData.problems.forEach(function(problem) {
+          detailedContent += problem.problem + ': ' + problem.count + '人\n';
+        });
+        
+        detailData = {
+          levels: this.data.adaptationData.levels,
+          problems: this.data.adaptationData.problems
+        };
         break;
-      case 'grade':
-        title = '年级';
-        options = [
-          { label: '全部', value: '' },
-          { label: '1年级', value: '1' },
-          { label: '2年级', value: '2' },
-          { label: '3年级', value: '3' },
-          { label: '4年级', value: '4' },
-          { label: '5年级', value: '5' },
-          { label: '6年级', value: '6' }
-        ];
+      case 'resources':
+        title = '教学资源使用详情';
+        content = '教学资源使用详细分析包括素材下载量、类型分布、使用频率等。';
+        
+        // 计算资源使用统计信息
+        const downloads = this.data.resourcesData.downloads;
+        const types = this.data.resourcesData.types;
+        
+        // 计算总下载量
+        var totalDownloads = 0;
+        for (var i = 0; i < downloads.length; i++) {
+          totalDownloads += downloads[i];
+        }
+        const avgDownloads = (totalDownloads / downloads.length).toFixed(1);
+        
+        // 计算最大值和最小值
+        var maxDownloads = downloads[0];
+        var minDownloads = downloads[0];
+        for (var i = 1; i < downloads.length; i++) {
+          if (downloads[i] > maxDownloads) {
+            maxDownloads = downloads[i];
+          }
+          if (downloads[i] < minDownloads) {
+            minDownloads = downloads[i];
+          }
+        }
+        
+        // 找出最常用的素材类型
+        var mostUsedType = types[0];
+        for (var i = 1; i < types.length; i++) {
+          if (types[i].count > mostUsedType.count) {
+            mostUsedType = types[i];
+          }
+        }
+        
+        // 构建详细内容
+        detailedContent = "素材下载量趋势：\n";
+        downloads.forEach(function(download, index) {
+          detailedContent += ['1月', '2月', '3月', '4月', '5月', '6月'][index] + ': ' + download + '次\n';
+        });
+        detailedContent += "\n素材类型分布：\n";
+        types.forEach(function(type) {
+          detailedContent += type.name + ': ' + type.count + '个\n';
+        });
+        detailedContent += "\n统计信息：\n";
+        detailedContent += "总下载量：" + totalDownloads + "次\n";
+        detailedContent += "平均下载量：" + avgDownloads + "次/月\n";
+        detailedContent += "最高下载量：" + maxDownloads + "次\n";
+        detailedContent += "最低下载量：" + minDownloads + "次\n";
+        detailedContent += "最常用素材类型：" + mostUsedType.name;
+        
+        detailData = this.data.resourcesData;
         break;
     }
 
-    this.setData({
-      showFilterModal: true,
-      filterType: type,
-      filterTitle: title,
-      filterOptions: options,
-      selectedFilterValue: this.data[`selected${type.charAt(0).toUpperCase() + type.slice(1)}`] || ''
-    });
-  },
-
-  // 隐藏筛选弹窗
-  hideFilter: function () {
-    this.setData({ showFilterModal: false });
-  },
-
-  // 选择筛选条件
-  selectFilter: function (e) {
-    const value = e.currentTarget.dataset.value;
-    const label = e.currentTarget.dataset.label;
-    const type = this.data.filterType;
-
-    this.setData({
-      [`selected${type.charAt(0).toUpperCase() + type.slice(1)}`]: value ? label : '',
-      showFilterModal: false
-    });
-
-    // 根据筛选条件更新数据
-    this.updateStatsData();
-  },
-
-  // 更新统计数据
-  updateStatsData: function () {
-    // 模拟数据更新
-    console.log('更新统计数据', {
-      timeRange: this.data.selectedTimeRange,
-      subject: this.data.selectedSubject,
-      grade: this.data.selectedGrade
-    });
-    
-    // 这里可以根据筛选条件从服务器获取真实数据
-    // 目前使用模拟数据
-  },
-
-  // 查看详情
-  viewDetail: function (type) {
+    // 显示详情弹窗
     wx.showModal({
-      title: '查看详情',
-      content: `查看${type === 'learning' ? '学习数据' : type === 'adaptation' ? '适应情况' : '资源使用'}详细分析`,
-      confirmText: '确定',
+      title: title,
+      content: content,
+      confirmText: '查看详细数据',
+      cancelText: '取消',
       success: (res) => {
         if (res.confirm) {
-          // 跳转到详情页面
-          wx.showToast({
-            title: '详情页面功能开发中',
-            icon: 'info'
+          // 显示详细数据
+          wx.showModal({
+            title: title,
+            content: detailedContent,
+            confirmText: '确定',
+            showCancel: false
           });
         }
       }

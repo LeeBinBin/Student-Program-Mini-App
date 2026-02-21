@@ -11,6 +11,7 @@
     "pages/teacher/students/edit",
     "pages/teacher/students/progress",
     "pages/teacher/materials/index",
+    "pages/teacher/statistics/index",
     "pages/profile/index",
     "pages/history/index",
     "pages/favorites/index"
