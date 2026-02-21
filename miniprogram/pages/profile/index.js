@@ -167,7 +167,7 @@ Page({
     setTimeout(() => {
       const userInfo = {
         id: '10001',
-        nickname: '粤港学习者',
+        nickname: userType === 'teacher' ? '粤港教师' : '粤港学习者',
         avatar: '🎓'
       };
 
@@ -286,7 +286,7 @@ Page({
     setTimeout(() => {
       const userInfo = {
         id: '10002',
-        nickname: '粤港学习者',
+        nickname: userType === 'teacher' ? '粤港教师' : '粤港学习者',
         avatar: '🎓'
       };
 
