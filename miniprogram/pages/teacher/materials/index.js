@@ -1,299 +1,513 @@
-// index.js
 Page({
   data: {
-    materials: [
-      {
-        id: 'M001',
-        name: '粤港数学三年级知识点对标表',
-        subject: '数学',
-        grade: '3',
-        type: '文档',
-        fileSize: '2.3MB',
-        description: '详细对比粤港两地三年级数学课程知识点，帮助跨境学生适应不同教学体系',
-        thumbnail: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=educational%20math%20document%20thumbnail%20with%20comparison%20chart&image_size=square',
-        uploadDate: '2024-09-15',
-        downloadCount: 128,
-        crossBorder: true,
-        url: '#'
-      },
-      {
-        id: 'M002',
-        name: '英语阅读训练课件',
-        subject: '英语',
-        grade: '4',
-        type: '课件',
-        fileSize: '5.7MB',
-        description: '针对四年级学生的英语阅读训练课件，融合粤港两地英语教学特点',
-        thumbnail: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=english%20reading%20lesson%20ppt%20thumbnail&image_size=square',
-        uploadDate: '2024-09-10',
-        downloadCount: 95,
-        crossBorder: false,
-        url: '#'
-      },
-      {
-        id: 'M003',
-        name: '中文作文指导视频',
-        subject: '语文',
-        grade: '5',
-        type: '视频',
-        fileSize: '15.2MB',
-        description: '五年级中文作文写作指导视频，帮助学生提高写作能力',
-        thumbnail: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=chinese%20composition%20teaching%20video%20thumbnail&image_size=square',
-        uploadDate: '2024-09-05',
-        downloadCount: 87,
-        crossBorder: false,
-        url: '#'
-      },
-      {
-        id: 'M004',
-        name: '粤港科学四年级实验手册',
-        subject: '科学',
-        grade: '4',
-        type: '文档',
-        fileSize: '3.1MB',
-        description: '粤港两地四年级科学实验对比手册，包含实验步骤和注意事项',
-        thumbnail: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=science%20experiment%20manual%20thumbnail&image_size=square',
-        uploadDate: '2024-08-28',
-        downloadCount: 64,
-        crossBorder: true,
-        url: '#'
-      },
-      {
-        id: 'M005',
-        name: '数学思维训练题集',
-        subject: '数学',
-        grade: '6',
-        type: '文档',
-        fileSize: '1.8MB',
-        description: '六年级数学思维训练题集，包含详细解答',
-        thumbnail: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=math%20problem%20set%20thumbnail&image_size=square',
-        uploadDate: '2024-08-20',
-        downloadCount: 112,
-        crossBorder: false,
-        url: '#'
-      },
-      {
-        id: 'M006',
-        name: '粤港历史文化对比课件',
-        subject: '历史',
-        grade: '5',
-        type: '课件',
-        fileSize: '8.4MB',
-        description: '粤港两地历史文化对比课件，帮助学生了解两地历史文化差异',
-        thumbnail: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=history%20culture%20comparison%20ppt%20thumbnail&image_size=square',
-        uploadDate: '2024-08-15',
-        downloadCount: 73,
-        crossBorder: true,
-        url: '#'
-      }
-    ],
     searchKeyword: '',
-    selectedSubject: '',
-    selectedGrade: '',
-    selectedType: '',
-    showFilterModal: false,
-    filterType: '',
-    filterTitle: '',
-    filterOptions: [],
-    selectedFilterValue: ''
+    currentCategory: 'all',
+    categories: [
+      { id: 'all', name: '全部', icon: '📚' },
+      { id: 'ppt', name: '课件', icon: '📊' },
+      { id: 'video', name: '视频', icon: '🎬' },
+      { id: 'document', name: '文档', icon: '📄' },
+      { id: 'exercise', name: '练习', icon: '✏️' },
+      { id: 'reference', name: '参考资料', icon: '📖' }
+    ],
+    uploadCategories: [
+      { id: 'ppt', name: '课件' },
+      { id: 'video', name: '视频' },
+      { id: 'document', name: '文档' },
+      { id: 'exercise', name: '练习' },
+      { id: 'reference', name: '参考资料' }
+    ],
+    subjects: ['数学', '语文', '英语', '科学', '物理', '化学', '生物'],
+    grades: ['一年级', '二年级', '三年级', '四年级', '五年级', '六年级', '七年级', '八年级', '九年级'],
+    materials: [],
+    filteredMaterials: [],
+    showUploadModal: false,
+    showDetailModal: false,
+    currentMaterial: {},
+    uploadForm: {
+      title: '',
+      categoryId: 'ppt',
+      subject: '数学',
+      grade: '一年级',
+      description: '',
+      fileName: ''
+    },
+    uploadCategoryIndex: 0,
+    uploadSubjectIndex: 0,
+    uploadGradeIndex: 0
   },
 
   onLoad: function () {
-    // 初始化数据
+    this.loadMaterials();
+  },
+
+  onPullDownRefresh: function () {
+    this.loadMaterials();
+    setTimeout(() => {
+      wx.stopPullDownRefresh();
+    }, 1000);
+  },
+
+  loadMaterials: function () {
+    const savedMaterials = wx.getStorageSync('teacher_materials') || [];
+    
+    if (savedMaterials.length === 0) {
+      const mockMaterials = this.generateMockMaterials();
+      this.setData({
+        materials: mockMaterials,
+        filteredMaterials: mockMaterials
+      });
+      wx.setStorageSync('teacher_materials', mockMaterials);
+    } else {
+      this.setData({
+        materials: savedMaterials,
+        filteredMaterials: savedMaterials
+      });
+    }
+    
+    this.filterMaterials();
+  },
+
+  generateMockMaterials: function () {
+    return [
+      {
+        id: 'M001',
+        title: '粤港数学三年级知识点对比',
+        icon: '📊',
+        categoryId: 'ppt',
+        categoryName: '课件',
+        subject: '数学',
+        grade: '三年级',
+        description: '详细对比粤港两地数学三年级教材的知识点差异，帮助教师更好地进行跨版本教学。',
+        author: '陈老师',
+        uploadTime: '2026-02-18',
+        views: 156,
+        isFavorite: false,
+        fileSize: '2.5MB'
+      },
+      {
+        id: 'M002',
+        title: '跨境学生英语口语训练视频',
+        icon: '🎬',
+        categoryId: 'video',
+        categoryName: '视频',
+        subject: '英语',
+        grade: '四年级',
+        description: '针对跨境学生设计的英语口语训练视频，包含日常对话和情景模拟。',
+        author: '李老师',
+        uploadTime: '2026-02-17',
+        views: 234,
+        isFavorite: true,
+        fileSize: '15.8MB'
+      },
+      {
+        id: 'M003',
+        title: '粤港语文古诗文教学指南',
+        icon: '📄',
+        categoryId: 'document',
+        categoryName: '文档',
+        subject: '语文',
+        grade: '五年级',
+        description: '整理了粤港两地语文教材中的古诗文篇目，提供教学建议和重点解析。',
+        author: '王老师',
+        uploadTime: '2026-02-16',
+        views: 189,
+        isFavorite: false,
+        fileSize: '1.2MB'
+      },
+      {
+        id: 'M004',
+        title: '科学实验操作手册',
+        icon: '✏️',
+        categoryId: 'exercise',
+        categoryName: '练习',
+        subject: '科学',
+        grade: '六年级',
+        description: '包含多个适合小学科学课程的实验操作步骤和注意事项。',
+        author: '张老师',
+        uploadTime: '2026-02-15',
+        views: 145,
+        isFavorite: false,
+        fileSize: '3.6MB'
+      },
+      {
+        id: 'M005',
+        title: '物理概念教学参考资料',
+        icon: '📖',
+        categoryId: 'reference',
+        categoryName: '参考资料',
+        subject: '物理',
+        grade: '七年级',
+        description: '收集了多个版本的物理教材，对比分析不同版本对同一概念的讲解方式。',
+        author: '刘老师',
+        uploadTime: '2026-02-14',
+        views: 178,
+        isFavorite: true,
+        fileSize: '4.2MB'
+      },
+      {
+        id: 'M006',
+        title: '化学实验安全规范',
+        icon: '📄',
+        categoryId: 'document',
+        categoryName: '文档',
+        subject: '化学',
+        grade: '八年级',
+        description: '详细说明化学实验室的安全规范和应急处理措施。',
+        author: '赵老师',
+        uploadTime: '2026-02-13',
+        views: 167,
+        isFavorite: false,
+        fileSize: '0.8MB'
+      },
+      {
+        id: 'M007',
+        title: '生物细胞结构教学课件',
+        icon: '📊',
+        categoryId: 'ppt',
+        categoryName: '课件',
+        subject: '生物',
+        grade: '七年级',
+        description: '使用图文并茂的方式讲解细胞结构，包含多个高清图片和动画演示。',
+        author: '周老师',
+        uploadTime: '2026-02-12',
+        views: 198,
+        isFavorite: false,
+        fileSize: '5.3MB'
+      },
+      {
+        id: 'M008',
+        title: '数学应用题解题技巧',
+        icon: '🎬',
+        categoryId: 'video',
+        categoryName: '视频',
+        subject: '数学',
+        grade: '五年级',
+        description: '讲解小学数学应用题的常见类型和解题技巧，帮助学生提高解题能力。',
+        author: '吴老师',
+        uploadTime: '2026-02-11',
+        views: 212,
+        isFavorite: true,
+        fileSize: '18.5MB'
+      },
+      {
+        id: 'M009',
+        title: '英语语法练习题集',
+        icon: '✏️',
+        categoryId: 'exercise',
+        categoryName: '练习',
+        subject: '英语',
+        grade: '六年级',
+        description: '包含小学英语重点语法点的练习题，适合课堂练习和课后作业。',
+        author: '郑老师',
+        uploadTime: '2026-02-10',
+        views: 176,
+        isFavorite: false,
+        fileSize: '2.1MB'
+      },
+      {
+        id: 'M010',
+        title: '语文阅读理解教学策略',
+        icon: '📖',
+        categoryId: 'reference',
+        categoryName: '参考资料',
+        subject: '语文',
+        grade: '四年级',
+        description: '总结语文阅读理解的教学方法和策略，提供多个教学案例。',
+        author: '孙老师',
+        uploadTime: '2026-02-09',
+        views: 193,
+        isFavorite: false,
+        fileSize: '3.8MB'
+      }
+    ];
+  },
+
+  filterMaterials: function () {
+    let filtered = [...this.data.materials];
+
+    if (this.data.currentCategory !== 'all') {
+      filtered = filtered.filter(item => item.categoryId === this.data.currentCategory);
+    }
+
+    if (this.data.searchKeyword) {
+      const keyword = this.data.searchKeyword.toLowerCase();
+      filtered = filtered.filter(item => 
+        item.title.toLowerCase().includes(keyword) ||
+        item.description.toLowerCase().includes(keyword) ||
+        item.subject.toLowerCase().includes(keyword)
+      );
+    }
+
     this.setData({
-      originalMaterials: [...this.data.materials]
+      filteredMaterials: filtered
     });
   },
 
-  // 返回上一页
+  onSearchInput: function (e) {
+    this.setData({
+      searchKeyword: e.detail.value
+    });
+  },
+
+  onSearch: function () {
+    this.filterMaterials();
+  },
+
+  onCategoryChange: function (e) {
+    const categoryId = e.currentTarget.dataset.id;
+    this.setData({
+      currentCategory: categoryId
+    });
+    this.filterMaterials();
+  },
+
+  showUpload: function () {
+    this.setData({
+      showUploadModal: true,
+      uploadForm: {
+        title: '',
+        categoryId: 'ppt',
+        subject: '数学',
+        grade: '一年级',
+        description: '',
+        fileName: ''
+      },
+      uploadCategoryIndex: 0,
+      uploadSubjectIndex: 0,
+      uploadGradeIndex: 0
+    });
+  },
+
+  hideUploadModal: function () {
+    this.setData({
+      showUploadModal: false
+    });
+  },
+
+  onUploadTitleChange: function (e) {
+    this.setData({
+      'uploadForm.title': e.detail.value
+    });
+  },
+
+  onUploadCategoryChange: function (e) {
+    const index = e.detail.value;
+    this.setData({
+      uploadCategoryIndex: index,
+      'uploadForm.categoryId': this.data.uploadCategories[index].id
+    });
+  },
+
+  onUploadSubjectChange: function (e) {
+    const index = e.detail.value;
+    this.setData({
+      uploadSubjectIndex: index,
+      'uploadForm.subject': this.data.subjects[index]
+    });
+  },
+
+  onUploadGradeChange: function (e) {
+    const index = e.detail.value;
+    this.setData({
+      uploadGradeIndex: index,
+      'uploadForm.grade': this.data.grades[index]
+    });
+  },
+
+  onUploadDescChange: function (e) {
+    this.setData({
+      'uploadForm.description': e.detail.value
+    });
+  },
+
+  chooseFile: function () {
+    wx.chooseMessageFile({
+      count: 1,
+      type: 'file',
+      success: (res) => {
+        const file = res.tempFiles[0];
+        this.setData({
+          'uploadForm.fileName': file.name
+        });
+        wx.showToast({
+          title: '文件已选择',
+          icon: 'success'
+        });
+      }
+    });
+  },
+
+  submitUpload: function () {
+    const form = this.data.uploadForm;
+
+    if (!form.title.trim()) {
+      wx.showToast({
+        title: '请输入素材标题',
+        icon: 'none'
+      });
+      return;
+    }
+
+    if (!form.fileName) {
+      wx.showToast({
+        title: '请选择文件',
+        icon: 'none'
+      });
+      return;
+    }
+
+    const category = this.data.uploadCategories.find(c => c.id === form.categoryId);
+    const categoryIcons = {
+      'ppt': '📊',
+      'video': '🎬',
+      'document': '📄',
+      'exercise': '✏️',
+      'reference': '📖'
+    };
+
+    const newMaterial = {
+      id: 'M' + Date.now(),
+      title: form.title,
+      icon: categoryIcons[form.categoryId] || '📄',
+      categoryId: form.categoryId,
+      categoryName: category.name,
+      subject: form.subject,
+      grade: form.grade,
+      description: form.description || '暂无描述',
+      author: '陈老师',
+      uploadTime: this.formatDate(new Date()),
+      views: 0,
+      isFavorite: false,
+      fileSize: '未知'
+    };
+
+    const materials = [newMaterial, ...this.data.materials];
+    this.setData({
+      materials: materials
+    });
+
+    wx.setStorageSync('teacher_materials', materials);
+
+    this.filterMaterials();
+    this.hideUploadModal();
+
+    wx.showToast({
+      title: '上传成功',
+      icon: 'success'
+    });
+  },
+
+  viewMaterialDetail: function (e) {
+    const materialId = e.currentTarget.dataset.id;
+    const material = this.data.materials.find(m => m.id === materialId);
+
+    if (material) {
+      this.setData({
+        currentMaterial: material,
+        showDetailModal: true
+      });
+
+      const materials = this.data.materials.map(m => {
+        if (m.id === materialId) {
+          return { ...m, views: m.views + 1 };
+        }
+        return m;
+      });
+
+      this.setData({
+        materials: materials
+      });
+
+      wx.setStorageSync('teacher_materials', materials);
+    }
+  },
+
+  hideDetailModal: function () {
+    this.setData({
+      showDetailModal: false
+    });
+  },
+
+  downloadMaterial: function (e) {
+    const materialId = e.currentTarget.dataset.id;
+    const material = this.data.materials.find(m => m.id === materialId);
+
+    if (material) {
+      wx.showModal({
+        title: '下载素材',
+        content: `确定要下载"${material.title}"吗？`,
+        success: (res) => {
+          if (res.confirm) {
+            wx.showToast({
+              title: '下载成功',
+              icon: 'success'
+            });
+          }
+        }
+      });
+    }
+  },
+
+  downloadMaterialFromDetail: function () {
+    const material = this.data.currentMaterial;
+    wx.showModal({
+      title: '下载素材',
+      content: `确定要下载"${material.title}"吗？`,
+      success: (res) => {
+        if (res.confirm) {
+          wx.showToast({
+            title: '下载成功',
+            icon: 'success'
+          });
+          this.hideDetailModal();
+        }
+      }
+    });
+  },
+
+  toggleFavorite: function (e) {
+    const materialId = e.currentTarget.dataset.id;
+    const materials = this.data.materials.map(m => {
+      if (m.id === materialId) {
+        return { ...m, isFavorite: !m.isFavorite };
+      }
+      return m;
+    });
+
+    this.setData({
+      materials: materials
+    });
+
+    wx.setStorageSync('teacher_materials', materials);
+    this.filterMaterials();
+
+    const material = materials.find(m => m.id === materialId);
+    if (material && material.isFavorite) {
+      wx.showToast({
+        title: '已收藏',
+        icon: 'success'
+      });
+    } else {
+      wx.showToast({
+        title: '已取消收藏',
+        icon: 'none'
+      });
+    }
+  },
+
+  stopPropagation: function () {
+    // 阻止事件冒泡
+  },
+
   navigateBack: function () {
     wx.navigateBack();
   },
 
-  // 上传素材
-  uploadMaterial: function () {
-    wx.chooseMessageFile({
-      count: 1,
-      type: 'all',
-      success: (res) => {
-        const tempFilePaths = res.tempFiles;
-        console.log('选择的文件:', tempFilePaths);
-        
-        // 模拟上传成功
-        wx.showToast({
-          title: '素材上传功能开发中',
-          icon: 'info'
-        });
-      },
-      fail: (err) => {
-        console.error('选择文件失败', err);
-      }
-    });
-  },
-
-  // 搜索素材
-  onSearch: function (e) {
-    const keyword = e.detail.value;
-    this.setData({ searchKeyword: keyword });
-    this.filterMaterials();
-  },
-
-  // 显示筛选弹窗
-  showFilter: function (type) {
-    let title = '';
-    let options = [];
-
-    switch (type) {
-      case 'subject':
-        title = '学科';
-        options = [
-          { label: '全部', value: '' },
-          { label: '数学', value: '数学' },
-          { label: '英语', value: '英语' },
-          { label: '语文', value: '语文' },
-          { label: '科学', value: '科学' },
-          { label: '历史', value: '历史' },
-          { label: '其他', value: '其他' }
-        ];
-        break;
-      case 'grade':
-        title = '年级';
-        options = [
-          { label: '全部', value: '' },
-          { label: '1年级', value: '1' },
-          { label: '2年级', value: '2' },
-          { label: '3年级', value: '3' },
-          { label: '4年级', value: '4' },
-          { label: '5年级', value: '5' },
-          { label: '6年级', value: '6' }
-        ];
-        break;
-      case 'type':
-        title = '素材类型';
-        options = [
-          { label: '全部', value: '' },
-          { label: '文档', value: '文档' },
-          { label: '课件', value: '课件' },
-          { label: '视频', value: '视频' },
-          { label: '音频', value: '音频' },
-          { label: '图片', value: '图片' }
-        ];
-        break;
-    }
-
-    this.setData({
-      showFilterModal: true,
-      filterType: type,
-      filterTitle: title,
-      filterOptions: options,
-      selectedFilterValue: this.data[`selected${type.charAt(0).toUpperCase() + type.slice(1)}`] || ''
-    });
-  },
-
-  // 隐藏筛选弹窗
-  hideFilter: function () {
-    this.setData({ showFilterModal: false });
-  },
-
-  // 选择筛选条件
-  selectFilter: function (e) {
-    const value = e.currentTarget.dataset.value;
-    const label = e.currentTarget.dataset.label;
-    const type = this.data.filterType;
-
-    this.setData({
-      [`selected${type.charAt(0).toUpperCase() + type.slice(1)}`]: value ? label : '',
-      showFilterModal: false
-    });
-
-    this.filterMaterials();
-  },
-
-  // 筛选素材
-  filterMaterials: function () {
-    let filteredMaterials = [...this.data.originalMaterials];
-
-    // 按关键词搜索
-    if (this.data.searchKeyword) {
-      const keyword = this.data.searchKeyword.toLowerCase();
-      filteredMaterials = filteredMaterials.filter(material => 
-        material.name.toLowerCase().includes(keyword) ||
-        material.description.toLowerCase().includes(keyword) ||
-        material.subject.toLowerCase().includes(keyword)
-      );
-    }
-
-    // 按学科筛选
-    if (this.data.selectedSubject && this.data.selectedSubject !== '全部') {
-      filteredMaterials = filteredMaterials.filter(material => 
-        material.subject === this.data.selectedSubject
-      );
-    }
-
-    // 按年级筛选
-    if (this.data.selectedGrade && this.data.selectedGrade !== '全部') {
-      filteredMaterials = filteredMaterials.filter(material => 
-        material.grade === this.data.selectedGrade.replace('年级', '')
-      );
-    }
-
-    // 按素材类型筛选
-    if (this.data.selectedType && this.data.selectedType !== '全部') {
-      filteredMaterials = filteredMaterials.filter(material => 
-        material.type === this.data.selectedType
-      );
-    }
-
-    this.setData({ materials: filteredMaterials });
-  },
-
-  // 下载素材
-  downloadMaterial: function (e) {
-    const materialId = e.currentTarget.dataset.id;
-    const material = this.data.materials.find(m => m.id === materialId);
-    
-    if (material) {
-      // 模拟下载
-      wx.showToast({
-        title: `正在下载${material.name}`,
-        icon: 'loading',
-        duration: 1000
-      });
-      
-      setTimeout(() => {
-        wx.showToast({
-          title: '下载成功',
-          icon: 'success'
-        });
-        
-        // 更新下载次数
-        const updatedMaterials = this.data.materials.map(m => {
-          if (m.id === materialId) {
-            return { ...m, downloadCount: m.downloadCount + 1 };
-          }
-          return m;
-        });
-        
-        this.setData({ materials: updatedMaterials });
-      }, 1000);
-    }
-  },
-
-  // 预览素材
-  previewMaterial: function (e) {
-    const materialId = e.currentTarget.dataset.id;
-    const material = this.data.materials.find(m => m.id === materialId);
-    
-    if (material) {
-      wx.showToast({
-        title: `预览${material.name}`,
-        icon: 'info'
-      });
-    }
-  },
-
-  // 阻止事件冒泡
-  catchTap: function () {
-    // 空函数，用于阻止事件冒泡
+  formatDate: function (date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 });

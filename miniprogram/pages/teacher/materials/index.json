@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "素材中心",
+  "navigationBarBackgroundColor": "#1E40AF",
+  "navigationBarTextStyle": "white",
+  "enablePullDownRefresh": true,
+  "backgroundColor": "#F8F9FA"
+}
