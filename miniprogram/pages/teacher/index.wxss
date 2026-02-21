@@ -87,12 +87,10 @@ page {
 }
 
 .profile-avatar {
-  width: 160rpx;
-  height: 160rpx;
+  width: 230rpx;
+  height: 230rpx;
   border-radius: 50%;
   overflow: hidden;
-  margin-right: 40rpx;
-  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.1);
 }
 
 .profile-avatar image {
@@ -101,7 +99,7 @@ page {
 }
 
 .profile-info {
-  flex: 1;
+  /* flex: 1; */
 }
 
 .profile-name {
@@ -119,7 +117,7 @@ page {
 
 .profile-stats {
   display: flex;
-  gap: 48rpx;
+  gap: 40rpx;
 }
 
 .stat-item {

@@ -16,11 +16,13 @@
   <!-- 教师个人信息 -->
   <view class="teacher-profile">
     <view class="profile-avatar">
-      <image src="/images/icons/avatar.png" mode="aspectFill"></image>
+      <image src="/images/icons/avatar.png"></image>
     </view>
     <view class="profile-info">
-      <view class="profile-name">陈老师</view>
-      <view class="profile-subject">数学教师 | 跨境教育专家</view>
+      <view class="profile-stats-up">
+        <view class="profile-name">陈老师</view>
+        <view class="profile-subject">数学教师 | 跨境教育专家</view>
+      </view>
       <view class="profile-stats">
         <view class="stat-item">
           <view class="stat-value">{{studentsCount}}</view>

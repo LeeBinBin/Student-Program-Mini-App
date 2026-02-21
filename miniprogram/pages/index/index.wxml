@@ -219,10 +219,4 @@
       </view>
     </view>
   </view>
-
-  <!-- 底部信息 -->
-  <view class="footer">
-    <view class="footer-text">© 2026 粤港通学 - 大湾区跨境教育</view>
-    <view class="footer-desc">为大湾区跨境中小学生提供学业适配辅导</view>
-  </view>
 </view>

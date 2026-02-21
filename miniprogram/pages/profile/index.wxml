@@ -9,7 +9,6 @@
         <view class="title">粤港通学</view>
         <view class="subtitle">大湾区跨境教育 · 学业适配辅导</view>
         <button class="btn-login" open-type="getUserProfile" bindtap="wechatLogin">
-          <text class="btn-icon">🔐</text>
           <text>微信快捷登录</text>
         </button>
         <view class="agreement">登录即表示同意《用户协议》和《隐私政策》</view>
