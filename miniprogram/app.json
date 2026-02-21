@@ -10,6 +10,7 @@
     "pages/teacher/students/add",
     "pages/teacher/students/edit",
     "pages/teacher/students/progress",
+    "pages/teacher/materials/index",
     "pages/profile/index",
     "pages/history/index",
     "pages/favorites/index"

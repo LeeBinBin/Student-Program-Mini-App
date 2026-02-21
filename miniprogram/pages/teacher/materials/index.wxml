@@ -1,101 +1,158 @@
 <view class="container">
-  <!-- 顶部导航 -->
   <view class="top-nav">
     <view class="nav-back" bindtap="navigateBack">
       <text class="back-icon">←</text>
     </view>
     <view class="nav-title">素材中心</view>
     <view class="nav-actions">
-      <view class="action-item" bindtap="uploadMaterial">
-        <text class="action-icon">+</text>
+      <view class="action-item" bindtap="showUpload">
+        <text class="action-icon">➕</text>
       </view>
     </view>
   </view>
 
-  <!-- 搜索和筛选 -->
-  <view class="search-filter">
-    <view class="search-box">
-      <text class="search-icon">🔍</text>
-      <input class="search-input" placeholder="搜索素材名称、关键词" bindinput="onSearch" value="{{searchKeyword}}" />
-    </view>
-    <view class="filter-section">
-      <view class="filter-item" bindtap="showFilter('subject')">
-        <text>{{selectedSubject || '学科'}}</text>
-        <text class="filter-arrow">▼</text>
-      </view>
-      <view class="filter-item" bindtap="showFilter('grade')">
-        <text>{{selectedGrade || '年级'}}</text>
-        <text class="filter-arrow">▼</text>
-      </view>
-      <view class="filter-item" bindtap="showFilter('type')">
-        <text>{{selectedType || '素材类型'}}</text>
-        <text class="filter-arrow">▼</text>
+  <view class="content-container">
+    <view class="search-bar">
+      <view class="search-input-wrapper">
+        <text class="search-icon">🔍</text>
+        <input class="search-input" placeholder="搜索教学素材..." value="{{searchKeyword}}" bindinput="onSearchInput" bindconfirm="onSearch" />
       </view>
     </view>
-  </view>
 
-  <!-- 素材列表 -->
-  <view class="materials-list">
-    <view wx:for="{{materials}}" wx:key="id" class="material-item">
-      <view class="material-thumbnail">
-        <image src="{{item.thumbnail}}" mode="aspectFill"></image>
-        <view class="material-type-tag">{{item.type}}</view>
+    <view class="category-tabs">
+      <view wx:for="{{categories}}" wx:key="id" class="category-tab {{currentCategory === item.id ? 'active' : ''}}" bindtap="onCategoryChange" data-id="{{item.id}}">
+        <text class="category-icon">{{item.icon}}</text>
+        <text class="category-name">{{item.name}}</text>
       </view>
-      <view class="material-info">
-        <view class="material-name">{{item.name}}</view>
-        <view class="material-details">
-          <text class="detail-item">{{item.subject}}</text>
-          <text class="detail-divider">|</text>
-          <text class="detail-item">{{item.grade}}年级</text>
-          <text class="detail-divider">|</text>
-          <text class="detail-item">{{item.fileSize}}</text>
+    </view>
+    <view class="materials-list" style="padding: 0 24rpx;">
+      <view wx:for="{{filteredMaterials}}" wx:key="id" class="material-item" bindtap="viewMaterialDetail" data-id="{{item.id}}">
+        <view class="material-icon">{{item.icon}}</view>
+        <view class="material-info">
+          <view class="material-title">{{item.title}}</view>
+          <view class="material-meta">
+            <text class="meta-tag">{{item.categoryName}}</text>
+            <text class="meta-divider">|</text>
+            <text class="meta-text">{{item.subject}}</text>
+            <text class="meta-divider">|</text>
+            <text class="meta-text">{{item.grade}}</text>
+          </view>
+          <view class="material-desc">{{item.description}}</view>
+          <view class="material-footer">
+            <text class="material-author">{{item.author}}</text>
+            <text class="material-time">{{item.uploadTime}}</text>
+            <text class="material-views">{{item.views}}次浏览</text>
+          </view>
         </view>
-        <view class="material-description">{{item.description}}</view>
-        <view class="material-meta">
-          <view class="meta-item">
-            <text class="meta-icon">📅</text>
-            <text class="meta-text">{{item.uploadDate}}</text>
+        <view class="material-actions">
+          <view class="action-btn download" bindtap="downloadMaterial" data-id="{{item.id}}" catchtap="stopPropagation">
+            <text class="action-btn-icon">📥</text>
           </view>
-          <view class="meta-item">
-            <text class="meta-icon">📥</text>
-            <text class="meta-text">{{item.downloadCount}}次下载</text>
-          </view>
-          <view class="meta-item" wx:if="{{item.crossBorder}}">
-            <text class="meta-icon">🌉</text>
-            <text class="meta-text">跨境适配</text>
+          <view class="action-btn favorite" bindtap="toggleFavorite" data-id="{{item.id}}" catchtap="stopPropagation">
+            <text class="action-btn-icon">{{item.isFavorite ? '❤️' : '🤍'}}</text>
           </view>
         </view>
       </view>
-      <view class="material-actions">
-        <view class="action-btn primary-btn" bindtap="downloadMaterial" data-id="{{item.id}}">
-          <text class="action-text">下载</text>
-        </view>
-        <view class="action-btn secondary-btn" bindtap="previewMaterial" data-id="{{item.id}}">
-          <text class="action-text">预览</text>
-        </view>
-      </view>
+    </view>
+
+    <view wx:if="{{filteredMaterials.length === 0}}" class="empty-state">
+      <text class="empty-icon">📁</text>
+      <text class="empty-text">暂无素材</text>
+      <text class="empty-desc">点击右上角上传您的教学素材</text>
     </view>
   </view>
 
-  <!-- 无数据提示 -->
-  <view wx:if="{{materials.length === 0}}" class="empty-state">
-    <text class="empty-icon">📖</text>
-    <view class="empty-text">暂无素材数据</view>
-    <view class="empty-desc">点击右上角上传素材</view>
-  </view>
-
-  <!-- 筛选弹窗 -->
-  <view wx:if="{{showFilterModal}}" class="modal" catchtap="hideFilter">
-    <view class="modal-content" catchtap="catchTap">
+  <view class="modal" wx:if="{{showUploadModal}}" bindtap="hideUploadModal">
+    <view class="modal-content" catchtap="stopPropagation">
       <view class="modal-header">
-        <view class="modal-title">{{filterTitle}}</view>
-        <view class="modal-close" bindtap="hideFilter">×</view>
+        <view class="modal-title">上传素材</view>
+        <view class="modal-close" bindtap="hideUploadModal">×</view>
       </view>
       <view class="modal-body">
-        <view wx:for="{{filterOptions}}" wx:key="index" class="filter-option" bindtap="selectFilter" data-value="{{item.value}}" data-label="{{item.label}}">
-          <text class="option-text">{{item.label}}</text>
-          <text wx:if="{{item.value === selectedFilterValue}}" class="option-check">✓</text>
+        <view class="form-item">
+          <view class="form-label">素材标题 <text class="required">*</text></view>
+          <input class="form-input" placeholder="请输入素材标题" value="{{uploadForm.title}}" bindinput="onUploadTitleChange" />
         </view>
+        <view class="form-item">
+          <view class="form-label">素材类型 <text class="required">*</text></view>
+          <picker class="form-picker" mode="selector" range="{{uploadCategories}}" range-key="name" value="{{uploadCategoryIndex}}" bindchange="onUploadCategoryChange">
+            <view class="picker-value">{{uploadCategories[uploadCategoryIndex].name}}</view>
+            <text class="picker-arrow">▼</text>
+          </picker>
+        </view>
+        <view class="form-item">
+          <view class="form-label">学科 <text class="required">*</text></view>
+          <picker class="form-picker" mode="selector" range="{{subjects}}" value="{{uploadSubjectIndex}}" bindchange="onUploadSubjectChange">
+            <view class="picker-value">{{subjects[uploadSubjectIndex]}}</view>
+            <text class="picker-arrow">▼</text>
+          </picker>
+        </view>
+        <view class="form-item">
+          <view class="form-label">年级 <text class="required">*</text></view>
+          <picker class="form-picker" mode="selector" range="{{grades}}" value="{{uploadGradeIndex}}" bindchange="onUploadGradeChange">
+            <view class="picker-value">{{grades[uploadGradeIndex]}}</view>
+            <text class="picker-arrow">▼</text>
+          </picker>
+        </view>
+        <view class="form-item">
+          <view class="form-label">素材描述</view>
+          <textarea class="form-textarea" placeholder="请输入素材描述" value="{{uploadForm.description}}" bindinput="onUploadDescChange" maxlength="200" />
+        </view>
+        <view class="form-item">
+          <view class="form-label">上传文件</view>
+          <view class="upload-area" bindtap="chooseFile">
+            <text class="upload-icon">📤</text>
+            <text class="upload-text">点击选择文件</text>
+            <text wx:if="{{uploadForm.fileName}}" class="upload-file-name">{{uploadForm.fileName}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="modal-footer">
+        <view class="modal-btn cancel" bindtap="hideUploadModal">取消</view>
+        <view class="modal-btn confirm" bindtap="submitUpload">上传</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="modal" wx:if="{{showDetailModal}}" bindtap="hideDetailModal">
+    <view class="modal-content detail-modal" catchtap="stopPropagation">
+      <view class="modal-header">
+        <view class="modal-title">素材详情</view>
+        <view class="modal-close" bindtap="hideDetailModal">×</view>
+      </view>
+      <view class="modal-body">
+        <view class="detail-icon">{{currentMaterial.icon}}</view>
+        <view class="detail-title">{{currentMaterial.title}}</view>
+        <view class="detail-meta">
+          <text class="detail-tag">{{currentMaterial.categoryName}}</text>
+          <text class="detail-divider">|</text>
+          <text class="detail-text">{{currentMaterial.subject}}</text>
+          <text class="detail-divider">|</text>
+          <text class="detail-text">{{currentMaterial.grade}}</text>
+        </view>
+        <view class="detail-desc">{{currentMaterial.description}}</view>
+        <view class="detail-info">
+          <view class="info-row">
+            <text class="info-label">上传者：</text>
+            <text class="info-value">{{currentMaterial.author}}</text>
+          </view>
+          <view class="info-row">
+            <text class="info-label">上传时间：</text>
+            <text class="info-value">{{currentMaterial.uploadTime}}</text>
+          </view>
+          <view class="info-row">
+            <text class="info-label">浏览次数：</text>
+            <text class="info-value">{{currentMaterial.views}}次</text>
+          </view>
+          <view class="info-row">
+            <text class="info-label">文件大小：</text>
+            <text class="info-value">{{currentMaterial.fileSize}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="modal-footer">
+        <view class="modal-btn cancel" bindtap="hideDetailModal">关闭</view>
+        <view class="modal-btn confirm" bindtap="downloadMaterialFromDetail">下载</view>
       </view>
     </view>
   </view>
