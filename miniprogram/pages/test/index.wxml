@@ -175,7 +175,7 @@
     </view>
 
     <view class="result-feedback">
-      <view class="feedback-title">知识点薄弱点提示</view>
+      <view class="feedback-title">知识薄弱点提示</view>
       <view class="feedback-content">{{feedback}}</view>
     </view>
     <view class="result-actions">

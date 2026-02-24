@@ -8,54 +8,63 @@ page {
 }
 
 .container {
+  padding: 0 32rpx 40rpx;
   min-height: 100vh;
-  padding-bottom: 40rpx;
+  box-sizing: border-box;
   width: 100%;
   max-width: 100%;
-  box-sizing: border-box;
   overflow-x: hidden;
+  background-color: #F8F9FA;
 }
 
 /* 顶部导航 */
 .top-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 40rpx 32rpx;
-  background-color: #FFFFFF;
-  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.08);
+  background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%);
+  padding: 35rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.1);
+  border-radius: 24rpx;
   width: 100%;
   box-sizing: border-box;
   position: relative;
-  z-index: 100;
+  margin: 32rpx 32rpx 32rpx;
 }
 
 .nav-title {
-  font-size: 40rpx;
+  font-size: 48rpx;
   font-weight: bold;
-  color: #333333;
+  color: #FFFFFF;
+  text-align: center;
+  text-shadow: 0 4rpx 8rpx rgba(0,0,0,0.1);
+  margin-bottom: 16rpx;
 }
 
 .nav-actions {
+  position: absolute;
+  bottom: 20rpx;
+  right: 32rpx;
   display: flex;
   align-items: center;
-  gap: 32rpx;
+  gap: 20rpx;
 }
 
 .action-item {
   position: relative;
   cursor: pointer;
-  padding: 16rpx;
-  border-radius: 16rpx;
+  padding: 12rpx;
+  border-radius: 12rpx;
   transition: all 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
 }
 
 .action-item:hover {
-  background-color: #F0F0F0;
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2rpx);
 }
 
 .action-icon {
-  font-size: 40rpx;
+  font-size: 28rpx;
+  color: #FFFFFF;
 }
 
 .badge {
@@ -64,12 +73,13 @@ page {
   right: 0;
   background-color: #FF3B30;
   color: #FFFFFF;
-  font-size: 20rpx;
+  font-size: 16rpx;
   font-weight: bold;
-  padding: 4rpx 12rpx;
-  border-radius: 20rpx;
-  min-width: 32rpx;
+  padding: 4rpx 10rpx;
+  border-radius: 16rpx;
+  min-width: 24rpx;
   text-align: center;
+  transform: translate(50%, -50%);
 }
 
 /* 教师个人信息 */
@@ -422,12 +432,26 @@ page {
 
 /* 响应式设计 */
 @media (max-width: 375px) {
+  .container {
+    padding: 0 24rpx 40rpx;
+  }
+  
   .top-nav {
-    padding: 32rpx 24rpx;
+    padding: 48rpx;
+    margin: 32rpx 24rpx 32rpx;
   }
   
   .nav-title {
-    font-size: 36rpx;
+    font-size: 40rpx;
+  }
+  
+  .nav-actions {
+    bottom: 16rpx;
+    right: 24rpx;
+  }
+  
+  .action-icon {
+    font-size: 24rpx;
   }
   
   .teacher-profile {
@@ -484,6 +508,28 @@ page {
 }
 
 @media (max-width: 320px) {
+  .container {
+    padding: 0 20rpx 40rpx;
+  }
+  
+  .top-nav {
+    padding: 32rpx;
+    margin: 24rpx 20rpx 24rpx;
+  }
+  
+  .nav-title {
+    font-size: 36rpx;
+  }
+  
+  .nav-actions {
+    bottom: 12rpx;
+    right: 20rpx;
+  }
+  
+  .action-icon {
+    font-size: 20rpx;
+  }
+  
   .teacher-profile {
     padding: 24rpx 16rpx;
   }

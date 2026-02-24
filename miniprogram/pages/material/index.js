@@ -25,6 +25,7 @@ Page({
   onLoad: function () {
     this.initData();
     this.initAudioContext();
+    this.checkFavoriteStatus();
   },
 
   onShow: function () {
@@ -37,7 +38,10 @@ Page({
         tabBar.updateSelected();
       }
     }
+    this.checkFavoriteStatus();
   },
+
+
 
   initData: function () {
     var materialData = [
@@ -1135,6 +1139,55 @@ Page({
     this.setData({
       currentPage: page
     });
+  },
+
+  // 检查收藏状态
+  checkFavoriteStatus: function () {
+    let favorites = wx.getStorageSync('favorites') || [];
+    let materials = this.data.materials;
+    
+    materials = materials.map(item => {
+      item.isFavorite = favorites.some(fav => fav.id === item.id);
+      return item;
+    });
+    
+    this.setData({ materials });
+  },
+
+  // 切换收藏状态
+  toggleFavorite: function (e) {
+    const item = e.currentTarget.dataset.item;
+    let favorites = wx.getStorageSync('favorites') || [];
+    
+    const isFavorite = favorites.some(fav => fav.id === item.id);
+    
+    if (isFavorite) {
+      // 取消收藏
+      favorites = favorites.filter(fav => fav.id !== item.id);
+      wx.setStorageSync('favorites', favorites);
+      wx.showToast({
+        title: '已取消收藏',
+        icon: 'success'
+      });
+    } else {
+      // 添加收藏
+      const favoriteItem = {
+        id: item.id,
+        title: item.title,
+        type: 'material',
+        typeName: '辅导资料',
+        time: new Date().toLocaleString('zh-CN')
+      };
+      favorites.push(favoriteItem);
+      wx.setStorageSync('favorites', favorites);
+      wx.showToast({
+        title: '收藏成功',
+        icon: 'success'
+      });
+    }
+    
+    // 更新本地状态
+    this.checkFavoriteStatus();
   },
 
   // tabBar 更新回调

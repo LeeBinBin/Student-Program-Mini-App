@@ -62,7 +62,7 @@ Page({
       this.drawSubjectScoreChart();
       this.drawDownloadTrendChart();
       this.drawMaterialTypeChart();
-    }, 100);
+    }, 500);
   },
   
   // 绘制成绩趋势图
@@ -158,14 +158,19 @@ Page({
           } else {
             ctx.lineTo(x, y);
           }
+        });
+        ctx.stroke();
+        
+        // 绘制数据点
+        data.forEach((value, index) => {
+          const x = padding + index * stepX;
+          const y = height - padding - ((value - minValue) / valueRange) * (height - 2 * padding);
           
-          // 绘制数据点
           ctx.beginPath();
           ctx.arc(x, y, 3, 0, 2 * Math.PI);
           ctx.fill();
           ctx.stroke();
         });
-        ctx.stroke();
         
         // 绘制标签
         ctx.setFontSize(12);
@@ -178,6 +183,8 @@ Page({
         });
         
         ctx.draw();
+      } else {
+        console.log('Canvas element not found:', canvasId);
       }
     });
   },
@@ -313,6 +320,8 @@ Page({
         });
         
         ctx.draw();
+      } else {
+        console.log('Canvas element not found:', canvasId);
       }
     });
   },

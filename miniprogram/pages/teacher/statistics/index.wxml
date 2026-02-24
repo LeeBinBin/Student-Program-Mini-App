@@ -132,10 +132,10 @@
     </view>
   </view>
 
-  <!-- 教学资源使用情况 -->
+  <!-- 学生辅导资料使用情况 -->
   <view class="stats-section">
     <view class="section-header">
-      <view class="section-title">教学资源使用情况</view>
+      <view class="section-title">学生辅导资料使用情况</view>
       <view class="section-action" bindtap="viewDetail" data-type="resources">
         <text class="action-text">查看详情</text>
         <text class="action-arrow">→</text>

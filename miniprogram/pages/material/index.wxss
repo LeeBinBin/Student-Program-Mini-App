@@ -5,27 +5,30 @@
 }
 
 .container {
+  padding: 40rpx 32rpx 150rpx;
   min-height: 100vh;
   background-color: #F8F9FA;
-  width: 100%;
-  overflow-x: hidden;
   box-sizing: border-box;
-  padding: 0 32rpx 150rpx;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 /* 页面标题 */
 .page-header {
-  background-color: #FFFFFF;
-  padding: 48rpx;
-  box-shadow: 0 4rpx 8rpx rgba(0,0,0,0.05);
+  background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%);
+  padding: 64rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.1);
   margin-bottom: 48rpx;
+  border-radius: 24rpx;
 }
 
 .page-title {
-  font-size: 60rpx;
+  font-size: 48rpx;
   font-weight: bold;
-  color: #333333;
+  color: #FFFFFF;
   text-align: center;
+  text-shadow: 0 4rpx 8rpx rgba(0,0,0,0.1);
 }
 
 /* 分类导航 */
@@ -556,11 +559,12 @@
   }
   
   .page-header {
-    padding: 24rpx;
+    padding: 48rpx;
+    margin-bottom: 32rpx;
   }
   
   .page-title {
-    font-size: 48rpx;
+    font-size: 40rpx;
   }
   
   .audio-player {
@@ -620,7 +624,16 @@
 
 @media (max-width: 480px) {
   .container {
-    padding: 0 20rpx 150rpx;
+    padding: 24rpx 20rpx 150rpx;
+  }
+  
+  .page-header {
+    padding: 32rpx;
+    margin-bottom: 24rpx;
+  }
+  
+  .page-title {
+    font-size: 36rpx;
   }
   
   .material-grid {

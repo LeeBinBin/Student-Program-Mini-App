@@ -46,10 +46,14 @@ Page({
         guangdong_knowledge: "100以内数的认识",
         hongkong_knowledge: "数字的认识",
         match_type: "重合",
-        description: "认识100以内的数，掌握数的读写",
-        description_en: "Understand numbers within 100 and master reading and writing of numbers",
-        description_zh: "認識100以內的數，掌握數的讀寫",
-        example: "1, 2, 3, ..., 100"
+        description: "认识100以内的数，掌握数的读写，理解数的组成和顺序",
+        description_en: "Understand numbers within 100, master reading and writing of numbers, and comprehend number composition and order",
+        description_zh: "認識100以內的數，掌握數的讀寫，理解數的組成和順序",
+        example: "1, 2, 3, ..., 100；25由2个十和5个一组成",
+        materials: [
+          { type: "视频", title: "100以内数的认识", url: "https://example.com/video1" },
+          { type: "练习", title: "数的读写练习", url: "https://example.com/exercise1" }
+        ]
       },
       {
         grade: "一年级",
@@ -57,32 +61,168 @@ Page({
         guangdong_knowledge: "20以内加减法",
         hongkong_knowledge: "简单加减法",
         match_type: "重合",
-        description: "掌握20以内的加减法运算",
-        description_en: "Master addition and subtraction within 20",
-        description_zh: "掌握20以內的加減法運算",
-        example: "5 + 3 = 8, 10 - 4 = 6"
+        description: "掌握20以内的加减法运算，包括进位加法和退位减法",
+        description_en: "Master addition and subtraction within 20, including carrying addition and borrowing subtraction",
+        description_zh: "掌握20以內的加減法運算，包括進位加法和退位減法",
+        example: "5 + 3 = 8, 10 - 4 = 6, 9 + 7 = 16, 15 - 8 = 7",
+        materials: [
+          { type: "视频", title: "20以内加减法技巧", url: "https://example.com/video2" },
+          { type: "练习", title: "加减法口算练习", url: "https://example.com/exercise2" }
+        ]
       },
       {
         grade: "一年级",
         subject: "数学",
         guangdong_knowledge: "认识图形",
+        hongkong_knowledge: "平面图形",
+        match_type: "重合",
+        description: "认识长方形、正方形、圆形、三角形等基本平面图形，了解其特征",
+        description_en: "Recognize basic plane shapes like rectangles, squares, circles, triangles, and understand their characteristics",
+        description_zh: "認識長方形、正方形、圓形、三角形等基本平面圖形，了解其特徵",
+        example: "长方形有四个直角，三角形有三个角",
+        materials: [
+          { type: "视频", title: "认识基本图形", url: "https://example.com/video3" },
+          { type: "练习", title: "图形识别练习", url: "https://example.com/exercise3" }
+        ]
+      },
+      {
+        grade: "一年级",
+        subject: "数学",
+        guangdong_knowledge: "立体图形认识",
         hongkong_knowledge: "",
         match_type: "粤拓展",
-        description: "认识长方形、正方形、圆形等基本图形",
-        description_en: "Recognize basic shapes like rectangles, squares, circles",
-        description_zh: "認識長方形、正方形、圓形等基本圖形",
-        example: "长方形有四个角，圆形没有角"
+        description: "认识长方体、正方体、圆柱、球等基本立体图形，了解其特征",
+        description_en: "Recognize basic solid shapes like cuboids, cubes, cylinders, spheres, and understand their characteristics",
+        description_zh: "認識長方體、正方體、圓柱、球等基本立體圖形，了解其特徵",
+        example: "正方体有6个面，每个面都是正方形",
+        materials: [
+          { type: "视频", title: "认识立体图形", url: "https://example.com/video9" },
+          { type: "练习", title: "立体图形识别练习", url: "https://example.com/exercise9" },
+          { type: "课件", title: "立体图形特征详解", url: "https://example.com/courseware1" }
+        ]
       },
       {
         grade: "一年级",
         subject: "数学",
         guangdong_knowledge: "",
-        hongkong_knowledge: "比较大小",
+        hongkong_knowledge: "序数与基数",
         match_type: "港拓展",
-        description: "掌握数字大小的比较",
-        description_en: "Master comparison of numbers",
-        description_zh: "掌握數字大小的比較",
-        example: "5 > 3, 8 < 10"
+        description: "理解序数（第几）和基数（多少）的区别与应用",
+        description_en: "Understand the difference and application of ordinal numbers (position) and cardinal numbers (quantity)",
+        description_zh: "理解序數（第幾）和基數（多少）的區別與應用",
+        example: "基数：5个苹果；序数：第5个苹果",
+        materials: [
+          { type: "视频", title: "序数与基数", url: "https://example.com/video10" },
+          { type: "练习", title: "序数与基数练习", url: "https://example.com/exercise10" },
+          { type: "游戏", title: "序数与基数互动游戏", url: "https://example.com/game1" }
+        ]
+      },
+      {
+        grade: "一年级",
+        subject: "数学",
+        guangdong_knowledge: "比较大小",
+        hongkong_knowledge: "数字比较",
+        match_type: "重合",
+        description: "掌握数字大小的比较，使用大于、小于、等于符号",
+        description_en: "Master comparison of numbers, use greater than, less than, and equal to symbols",
+        description_zh: "掌握數字大小的比較，使用大於、小於、等於符號",
+        example: "5 > 3, 8 < 10, 6 = 6",
+        materials: [
+          { type: "视频", title: "数字大小比较", url: "https://example.com/video4" },
+          { type: "练习", title: "比较大小练习", url: "https://example.com/exercise4" }
+        ]
+      },
+      {
+        grade: "一年级",
+        subject: "数学",
+        guangdong_knowledge: "人民币认识",
+        hongkong_knowledge: "",
+        match_type: "粤拓展",
+        description: "认识人民币的基本单位和面值，学会简单的人民币计算",
+        description_en: "Recognize basic units and denominations of RMB, learn simple RMB calculations",
+        description_zh: "認識人民幣的基本單位和面值，學會簡單的人民幣計算",
+        example: "1元=10角，1角=10分",
+        materials: [
+          { type: "视频", title: "认识人民币", url: "https://example.com/video11" },
+          { type: "练习", title: "人民币计算练习", url: "https://example.com/exercise11" },
+          { type: "课件", title: "人民币使用指南", url: "https://example.com/courseware2" }
+        ]
+      },
+      {
+        grade: "一年级",
+        subject: "数学",
+        guangdong_knowledge: "",
+        hongkong_knowledge: "时间表达",
+        match_type: "港拓展",
+        description: "掌握时间的英文表达和24小时制时间的认识",
+        description_en: "Master English expression of time and understanding of 24-hour clock",
+        description_zh: "掌握時間的英文表達和24小時制時間的認識",
+        example: "8:30 AM, 2:45 PM, 14:45",
+        materials: [
+          { type: "视频", title: "时间的英文表达", url: "https://example.com/video12" },
+          { type: "练习", title: "时间表达练习", url: "https://example.com/exercise12" },
+          { type: "游戏", title: "时间认读游戏", url: "https://example.com/game2" }
+        ]
+      },
+      {
+        grade: "一年级",
+        subject: "数学",
+        guangdong_knowledge: "认识钟表",
+        hongkong_knowledge: "时间认识",
+        match_type: "重合",
+        description: "认识钟表的基本结构，会看整时和半时",
+        description_en: "Recognize the basic structure of clocks, tell time to the hour and half hour",
+        description_zh: "認識鐘錶的基本結構，會看整時和半時",
+        example: "3:00（三点整）, 4:30（四点半）",
+        materials: [
+          { type: "视频", title: "认识钟表", url: "https://example.com/video5" },
+          { type: "练习", title: "时间认识练习", url: "https://example.com/exercise5" }
+        ]
+      },
+      {
+        grade: "一年级",
+        subject: "数学",
+        guangdong_knowledge: "分类与整理",
+        hongkong_knowledge: "物品分类",
+        match_type: "重合",
+        description: "根据物体的特征进行分类和整理",
+        description_en: "Classify and organize objects based on their characteristics",
+        description_zh: "根據物體的特徵進行分類和整理",
+        example: "按颜色分类、按形状分类",
+        materials: [
+          { type: "视频", title: "分类与整理", url: "https://example.com/video6" },
+          { type: "练习", title: "分类练习", url: "https://example.com/exercise6" }
+        ]
+      },
+      {
+        grade: "一年级",
+        subject: "数学",
+        guangdong_knowledge: "位置与方向",
+        hongkong_knowledge: "空间位置",
+        match_type: "重合",
+        description: "认识上下、前后、左右等位置关系",
+        description_en: "Recognize positional relationships like up, down, front, back, left, right",
+        description_zh: "認識上下、前後、左右等位置關係",
+        example: "苹果在桌子上面，书包在椅子下面",
+        materials: [
+          { type: "视频", title: "位置与方向", url: "https://example.com/video7" },
+          { type: "练习", title: "位置判断练习", url: "https://example.com/exercise7" }
+        ]
+      },
+      {
+        grade: "一年级",
+        subject: "数学",
+        guangdong_knowledge: "找规律",
+        hongkong_knowledge: "模式识别",
+        match_type: "重合",
+        description: "发现并延续简单的数字和图形规律",
+        description_en: "Discover and continue simple number and shape patterns",
+        description_zh: "發現並延續簡單的數字和圖形規律",
+        example: "1, 3, 5, 7, ...（奇数序列）",
+        materials: [
+          { type: "视频", title: "找规律", url: "https://example.com/video8" },
+          { type: "练习", title: "规律识别练习", url: "https://example.com/exercise8" }
+        ]
       },
 
       // 一年级语文

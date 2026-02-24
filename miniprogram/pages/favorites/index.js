@@ -18,6 +18,7 @@ Page({
         tabBar.updateSelected();
       }
     }
+    this.loadFavorites();
   },
 
   loadFavorites: function () {
